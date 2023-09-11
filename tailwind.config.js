@@ -20,6 +20,7 @@ export default {
       },
       textColor: {
         'primary': '#FFF',
+        'secondary': '#B9C5C7',
         'number-red' : '#C92A34',
         'number-green': '#2BB12B',
         'chat-green': '#16BCDB',
