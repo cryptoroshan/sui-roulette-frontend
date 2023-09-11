@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Poppins-Regular";
+  src: url("/fonts/Poppins-Regular.ttf");
+}
+
+@font-face {
+  font-family: "monumentextended-regular";
+  src: url("/fonts/monumentextended-regular.otf");
+}
+
+@font-face {
+  font-family: "monumentextended-ultrabold";
+  src: url("/fonts/monumentextended-ultrabold.otf");
+}
