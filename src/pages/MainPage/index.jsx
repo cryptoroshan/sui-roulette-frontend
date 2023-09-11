@@ -21,17 +21,17 @@ const MainPage = () => {
       <section className="flex flex-col justify-between min-h-screen bg-primary">
         <section className="flex flex-col px-14 pt-8 2xl:pt-12">
           <div className="flex flex-row justify-between bg-secondary rounded-3xl px-12 py-4 font-[Poppins-Regular]">
-            <img className="w-[350px] h-fit my-auto" src={logoIcon} />
-            <div className="flex flex-row gap-12">
+            <img className="w-[320px] h-fit my-auto" src={logoIcon} />
+            <div className="flex flex-row gap-6 items-center">
               <div className="flex flex-row gap-4 items-center">
                 <img className="w-6" src={suiIcon} />
-                <p className="text-primary text-xl font-bold">$0.4982</p>
+                <p className="text-primary text-md font-bold">$0.4982</p>
               </div>
-              <button className="flex flex-row gap-4 items-center bg-[#060606] px-6 py-3 rounded-md">
-                <p className="text-primary text-xl font-bold">BUY SUI</p>
+              <button className="flex flex-row gap-4 items-center bg-[#060606] px-4 h-10 rounded-md">
+                <p className="text-primary text-sm font-bold">BUY SUI</p>
                 <img className="w-6" src={repeatIcon} />
               </button>
-              <button className="bg-wallet-color px-6 py-3 text-primary text-xl font-bold rounded-md uppercase">
+              <button className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase">
                 connect wallet
               </button>
             </div>
