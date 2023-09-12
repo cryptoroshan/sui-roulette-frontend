@@ -104,13 +104,13 @@ const MainPage = () => {
             </div>
             <div className="flex flex-col gap-2 w-full">
               <div className="flex flex-row justify-between w-full items-center">
-                <div className="flex flex-row gap-4 items-center bg-secondary rounded-md px-4 py-1">
-                  <p className="text-xl text-primary font-[Poppins-Regular]">
+                <div className="flex flex-row gap-4 items-center bg-secondary rounded-md px-4 py-1.5">
+                  <p className="text-sm font-bold text-primary font-[Poppins-Regular]">
                     Proof of fairness
                   </p>
-                  <img className="w-8 h-fit" src={codesvgIcon} />
+                  <img className="w-6 h-fit" src={codesvgIcon} />
                 </div>
-                <div className="flex flex-row gap-4 items-center bg-secondary rounded-lg px-6 py-4 font-[monumentextended-regular]">
+                <div className="flex flex-row gap-4 items-center bg-secondary rounded-lg px-5 py-3 font-[monumentextended-regular]">
                   <p className="text-md text-primary uppercase">recent spins</p>
                   <div className="flex flex-row gap-1">
                     <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
@@ -150,73 +150,73 @@ const MainPage = () => {
                 <div className="absolute w-[35%] 2xl:w-[40%] h-[100%] m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
                   <div className="absolute w-[63%] 2xl:w-[65%] h-[100%] m-auto top-[-20px] 2xl:top-[-25px] bottom-0 left-1.5 2xl:left-2.5 right-0 bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center animate-spin"></div>
                 </div>
-                <div className="absolute flex flex-row gap-2 left-[50%] top-[75%]">
-                  <img className="w-14 2xl:w-16 cursor-pointer" src={chip1Icon} />
-                  <img className="w-14 2xl:w-16 cursor-pointer" src={chip2Icon} />
-                  <img className="w-14 2xl:w-16 cursor-pointer" src={chip5Icon} />
-                  <img className="w-14 2xl:w-16 cursor-pointer" src={chip10Icon} />
-                  <img className="w-14 2xl:w-16 cursor-pointer" src={chip25Icon} />
-                  <img className="w-14 2xl:w-16 cursor-pointer" src={chip50Icon} />
+                <div className="absolute flex flex-row gap-4 left-[50%] top-[75%]">
+                  <img className="w-12 2xl:w-14 cursor-pointer" src={chip1Icon} />
+                  <img className="w-12 2xl:w-14 cursor-pointer" src={chip2Icon} />
+                  <img className="w-12 2xl:w-14 cursor-pointer" src={chip5Icon} />
+                  <img className="w-12 2xl:w-14 cursor-pointer" src={chip10Icon} />
+                  <img className="w-12 2xl:w-14 cursor-pointer" src={chip25Icon} />
+                  <img className="w-12 2xl:w-14 cursor-pointer" src={chip50Icon} />
                 </div>
               </div>
-              <div className="flex flex-nowrap px-8 py-4 bg-secondary gap-8 rounded-xl font-[monumentextended-regular]">
-                <div className="flex flex-row gap-4 items-center">
-                  <div className="flex flex-row gap-4">
-                    <img className="w-10 h-fit" src={profileIcon} />
+              <div className="flex flex-nowrap px-8 py-4 bg-secondary gap-6 rounded-xl font-[monumentextended-regular] text-ellipsis whitespace-nowrap overflow-hidden">
+                <div className="flex flex-row gap-3 items-center min-w-fit">
+                  <div className="flex flex-row gap-3">
+                    <img className="w-8 h-fit" src={profileIcon} />
                     <div className="flex flex-col">
-                      <p className="text-md text-primary">Player10</p>
-                      <p className="text-xs text-primary">0x36df...6b69</p>
+                      <p className="text-sm text-primary">Player10</p>
+                      <p className="text-[8px] text-primary">0x36df...6b69</p>
                     </div>
                   </div>
                   <div className="w-[2px] h-full bg-[#323232]"></div>
-                  <div className="flex flex-row gap-2 text-md text-number-green">
+                  <div className="flex flex-row gap-2 text-sm text-number-green">
                     <p>+</p>
                     <p>10</p>
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="flex flex-row gap-4 items-center">
-                  <div className="flex flex-row gap-4">
-                    <img className="w-10 h-fit" src={profileIcon} />
+                <div className="flex flex-row gap-3 items-center min-w-fit">
+                  <div className="flex flex-row gap-3">
+                    <img className="w-8 h-fit" src={profileIcon} />
                     <div className="flex flex-col">
-                      <p className="text-md text-primary">Player10</p>
-                      <p className="text-xs text-primary">0x36df...6b69</p>
+                      <p className="text-sm text-primary">coinfipking</p>
+                      <p className="text-[8px] text-primary">0x36df...6b69</p>
                     </div>
                   </div>
                   <div className="w-[2px] h-full bg-[#323232]"></div>
-                  <div className="flex flex-row gap-2 text-md text-number-green">
-                    <p>+</p>
-                    <p>10</p>
+                  <div className="flex flex-row gap-2 text-sm text-number-red">
+                    <p>-</p>
+                    <p>5</p>
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="flex flex-row gap-4 items-center">
-                  <div className="flex flex-row gap-4">
-                    <img className="w-10 h-fit" src={profileIcon} />
+                <div className="flex flex-row gap-3 items-center min-w-fit">
+                  <div className="flex flex-row gap-3">
+                    <img className="w-8 h-fit" src={profileIcon} />
                     <div className="flex flex-col">
-                      <p className="text-md text-primary">Player10</p>
-                      <p className="text-xs text-primary">0x36df...6b69</p>
+                      <p className="text-sm text-primary">Lividassasin</p>
+                      <p className="text-[8px] text-primary">0x36df...6b69</p>
                     </div>
                   </div>
                   <div className="w-[2px] h-full bg-[#323232]"></div>
-                  <div className="flex flex-row gap-2 text-md text-number-green">
-                    <p>+</p>
-                    <p>10</p>
+                  <div className="flex flex-row gap-2 text-sm text-number-red">
+                    <p>-</p>
+                    <p>5</p>
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="hidden flex flex-row gap-4 items-center">
-                  <div className="flex flex-row gap-4">
-                    <img className="w-10 h-fit" src={profileIcon} />
+                <div className="flex flex-row gap-3 items-center min-w-fit">
+                  <div className="flex flex-row gap-3">
+                    <img className="w-8 h-fit" src={profileIcon} />
                     <div className="flex flex-col">
-                      <p className="text-md text-primary">Player10</p>
-                      <p className="text-xs text-primary">0x36df...6b69</p>
+                      <p className="text-sm text-primary">Honeywoman</p>
+                      <p className="text-[8px] text-primary">0x36df...6b69</p>
                     </div>
                   </div>
                   <div className="w-[2px] h-full bg-[#323232]"></div>
-                  <div className="flex flex-row gap-2 text-md text-number-green">
-                    <p>+</p>
-                    <p>10</p>
+                  <div className="flex flex-row gap-2 text-sm bg-clip-text text-transparent bg-gradient-to-r from-[#C92A34]">
+                    <p>-</p>
+                    <p>5</p>
                     <p>SUI</p>
                   </div>
                 </div>
@@ -226,7 +226,7 @@ const MainPage = () => {
               <p className="text-md text-primary uppercase font-[monumentextended-regular]">
                 live chat
               </p>
-              <div className="flex flex-col justify-between gap-4 px-6 py-4 bg-secondary rounded-lg h-[450px]">
+              <div className="flex flex-col justify-between gap-4 px-6 py-4 bg-secondary rounded-lg h-[450px] w-[300px]">
                 <div className="flex flex-col gap-4 font-[Poppins-Regular]">
                   <div className="flex flex-col gap-4">
                     <div className="flex flex-row gap-2 items-center">
@@ -236,7 +236,7 @@ const MainPage = () => {
                           username100
                         </p>
                         <p className="text-sm text-primary">
-                          Hey guys, how's it going?
+                          Hey guys, how is it going?
                         </p>
                       </div>
                     </div>
@@ -274,7 +274,7 @@ const MainPage = () => {
                 <div className="relative">
                   <input
                     type="text"
-                    className="relative bg-[#060606] rounded-lg text-xl text-primary pl-4 py-4 focus:outline-none"
+                    className="relative bg-[#060606] rounded-lg text-sm text-primary pl-4 py-4 focus:outline-none font-[Poppins-Regular] w-full"
                     placeholder="Message here"
                     value={chat}
                     onChange={(e) => setChat(e.target.value)}
