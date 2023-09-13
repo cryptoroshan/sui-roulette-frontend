@@ -24,7 +24,7 @@ const MainPage = () => {
     7, 28, 12, 35, 3, 26
   ];
 
-  const [number, setNumber] = useState(null);
+  const [number, setNumber] = useState(17);
 
   const [chat, setChat] = useState("");
 
