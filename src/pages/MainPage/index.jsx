@@ -16,17 +16,20 @@ import chip25Icon from "/imgs/chip-25.png";
 import chip50Icon from "/imgs/chip-50.png";
 import profileIcon from "/imgs/profile.png";
 
+const rouletteWheelNumbers = [
+  0, 32, 15, 19, 4, 21, 2, 25,
+  17, 34, 6, 27, 13, 36, 11,
+  30, 8, 23, 10, 5, 24, 16, 33,
+  1, 20, 14, 31, 9, 22, 18, 29,
+  7, 28, 12, 35, 3, 26
+];
+
 const MainPage = () => {
-  const rouletteWheelNumbers = [
-    0, 32, 15, 19, 4, 21, 2, 25,
-    17, 34, 6, 27, 13, 36, 11,
-    30, 8, 23, 10, 5, 24, 16, 33,
-    1, 20, 14, 31, 9, 22, 18, 29,
-    7, 28, 12, 35, 3, 26
-  ];
-
-  const [number, setNumber] = useState(null);
-
+  const [number, setNumber] = useState(17);
+  const [chipsData, setChipsData] = useState({
+    selectedChip: null,
+    placedChips: new Map()
+  });
   const [chat, setChat] = useState("");
 
   return (
@@ -161,7 +164,7 @@ const MainPage = () => {
               </div>
               <div className="relative h-[calc(60vh)] 2xl:h-[calc(50vh)] bg-[url('/imgs/roulette-background.png')] bg-contain bg-no-repeat bg-center">
                 <Wheel rouletteData = {rouletteWheelNumbers} number = {number} />
-                <Board />
+                <Board chipsData = {chipsData} rouletteData = {rouletteWheelNumbers} />
                 <div className="absolute flex flex-row gap-4 left-[50%] top-[75%]">
                   <img
                     className="w-12 2xl:w-14 cursor-pointer"
