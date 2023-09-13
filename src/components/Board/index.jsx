@@ -282,7 +282,7 @@ const Board = (props) => {
 
   return (
     <div className="absolute w-[50%] h-[50%] top-[15%] 2xl:top-[17%] right-[8%] bg-[url('/imgs/roulette-board.png')] bg-contain bg-no-repeat bg-center">
-      <div className="grid w-auto h-[67%] ml-[52px] mr-4 mt-4 mb-2">
+      <div className="grid w-auto h-[67%] ml-12 mr-4 mt-4 mb-2">
         <table>
           <tbody>
             {numbers.map((item, index) => {

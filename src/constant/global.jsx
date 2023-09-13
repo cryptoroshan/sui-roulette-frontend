@@ -18,3 +18,10 @@ export const ValueType = {
   NUMBERS_2R_12: 16,
   NUMBERS_3R_12: 17,
 };
+
+export const GameStages = {
+  PLACE_BET: 0,
+  NO_MORE_BETS: 1,
+  WINNERS: 2,
+  NONE: 3
+};

@@ -41,7 +41,6 @@
   
 }
 
-
 .board-cell-number-3-12:hover {
   animation-name: pulsesplit;
   animation-duration: 500ms;
@@ -53,7 +52,6 @@
   border-radius: 10%;
   
 }
-
 
 .board-cell-number-1-18:hover {
   animation-name: pulsesplit;
@@ -67,8 +65,6 @@
  
 }
 
-
-
 .board-cell-number-19-36:hover {
   animation-name: pulsesplit;
   animation-duration: 500ms;
@@ -81,7 +77,6 @@
   transform: scale(1);
 }
 
-
 .board-cell-odd:hover {
   animation-name: pulsesplit;
   animation-duration: 500ms;
@@ -93,8 +88,6 @@
   border-radius: 10%;
 
 }
-
-
 
 .board-cell-black:hover {
   animation-name: pulsesplit;
@@ -119,7 +112,6 @@
   border-radius: 10%;
  
 }
-
 
 .board-cell-even:hover {
   animation-name: pulsesplit;
@@ -157,8 +149,6 @@
   transform: scale(1.1);
 }
 
-
-
 .board-cell-double-split:hover {
   animation-name: pulsesplit;
   animation-duration: 500ms;
@@ -171,10 +161,6 @@
   transform: scale(1.1);
 }
 
-
-
-
-
 .board-cell-number:hover {
   animation-name: pulse;
   animation-duration: 500ms;
@@ -186,4 +172,12 @@
   border-radius: 10%;
   transform: scale(1.1);
   
+}
+
+.chip_selected {
+  color: #ffee10;
+  box-shadow: 0 0 1em #ffee10;
+  text-shadow: 0 0 5px #ccc128;
+  background: #ccc128;
+  transform: scale(1.2);
 }

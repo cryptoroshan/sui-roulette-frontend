@@ -1,4 +1,6 @@
 import { useState } from "react";
+import classNames from "classnames";
+import clsx from "clsx";
 
 import Wheel from "../../components/Wheel";
 import Board from "../../components/Board";
@@ -31,6 +33,53 @@ const MainPage = () => {
     placedChips: new Map()
   });
   const [chat, setChat] = useState("");
+
+  // const onCellClick = (item) => {
+  //   if (this.state.stage !== GameStages.PLACE_BET) return;
+  //   var currentChips = this.state.chipsData.placedChips;
+  //   var currentChipIterator= currentChips.values()
+  //   var placedSum = 0
+  //   var curIteratorValue = currentChipIterator.next().value
+  //   while (curIteratorValue !== undefined) {
+  //     placedSum += curIteratorValue.sum
+  //     curIteratorValue = currentChipIterator.next().value
+  //   }
+  //   var chipValue = this.state.chipsData.selectedChip;
+  //   if (chipValue === 0 || chipValue === null || chipValue === undefined) {
+  //     toast.error("You should select the chip.",{position: toast.POSITION.BOTTOM_CENTER});
+  //     return;
+  //   }
+  //   if (placedSum + chipValue > 100) 
+  //   {
+  //     toast.error("Only 100 Hbar bet is allowed during beta testing.",{position: toast.POSITION.BOTTOM_CENTER});
+  //     return;
+  //   }
+  //   let currentChip = {} as PlacedChip;
+  //   currentChip.item = item;
+  //   currentChip.sum = chipValue;
+
+  //   if (currentChips.get(item) !== undefined) {
+  //     currentChip.sum += currentChips.get(item).sum;
+  //   }
+
+  //   //console.log(currentChips[item]);
+  //   currentChips.set(item, currentChip);
+  //   this.setState({
+  //     chipsData: {
+  //       selectedChip: this.state.chipsData.selectedChip,
+  //       placedChips: currentChips
+  //     }
+  //   });
+  // }
+
+  const onChipClick = (chip) => {
+    if (chip != null) {
+      setChipsData({
+        selectedChip: chip,
+        placedChips: chipsData.placedChips
+      });
+    }
+  }
 
   return (
     <>
@@ -167,27 +216,33 @@ const MainPage = () => {
                 <Board chipsData = {chipsData} rouletteData = {rouletteWheelNumbers} />
                 <div className="absolute flex flex-row gap-4 left-[50%] top-[75%]">
                   <img
-                    className="w-12 2xl:w-14 cursor-pointer"
+                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 1 ? "chip_selected" : "")}
+                    onClick={() => onChipClick(1)}
                     src={chip1Icon}
                   />
                   <img
-                    className="w-12 2xl:w-14 cursor-pointer"
+                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 2 ? "chip_selected" : "")}
+                    onClick={() => onChipClick(2)}
                     src={chip2Icon}
                   />
                   <img
-                    className="w-12 2xl:w-14 cursor-pointer"
+                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 5 ? "chip_selected" : "")}
+                    onClick={() => onChipClick(5)}
                     src={chip5Icon}
                   />
                   <img
-                    className="w-12 2xl:w-14 cursor-pointer"
+                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 10 ? "chip_selected" : "")}
+                    onClick={() => onChipClick(10)}
                     src={chip10Icon}
                   />
                   <img
-                    className="w-12 2xl:w-14 cursor-pointer"
+                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 25 ? "chip_selected" : "")}
+                    onClick={() => onChipClick(25)}
                     src={chip25Icon}
                   />
                   <img
-                    className="w-12 2xl:w-14 cursor-pointer"
+                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 50 ? "chip_selected" : "")}
+                    onClick={() => onChipClick(50)}
                     src={chip50Icon}
                   />
                 </div>
