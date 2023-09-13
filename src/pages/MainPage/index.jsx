@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Wheel from "../../components/Wheel";
+import Board from "../../components/Board";
 
 import logoIcon from "/imgs/logo.png";
 import repeatIcon from "/imgs/repeat.png";
@@ -24,7 +25,7 @@ const MainPage = () => {
     7, 28, 12, 35, 3, 26
   ];
 
-  const [number, setNumber] = useState(17);
+  const [number, setNumber] = useState(null);
 
   const [chat, setChat] = useState("");
 
@@ -160,6 +161,7 @@ const MainPage = () => {
               </div>
               <div className="relative h-[calc(60vh)] 2xl:h-[calc(50vh)] bg-[url('/imgs/roulette-background.png')] bg-contain bg-no-repeat bg-center">
                 <Wheel rouletteData = {rouletteWheelNumbers} number = {number} />
+                <Board />
                 <div className="absolute flex flex-row gap-4 left-[50%] top-[75%]">
                   <img
                     className="w-12 2xl:w-14 cursor-pointer"

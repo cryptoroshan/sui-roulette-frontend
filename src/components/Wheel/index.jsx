@@ -54,7 +54,7 @@ const Wheel = (props) => {
   };
 
   function spinWheel(number) {
-    const bezier = [0.165, 0.84, 0.94, 1.005];
+    const bezier = [0.165, 0.84, 0.44, 1.005];
     var ballMinNumberOfSpins = 2;
     var ballMaxNumberOfSpins = 4;
     var wheelMinNumberOfSpins = 2;
@@ -126,13 +126,14 @@ const Wheel = (props) => {
 
   return (
     <div className="absolute w-[35%] 2xl:w-[40%] h-[100%] m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
-      <div className="layer-2 absolute w-[63%] 2xl:w-[85%] h-[100%] m-auto top-[-20px] 2xl:top-[-25px] bottom-0 left-1.5 2xl:left-2.5 right-0 bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center"></div>
-      <div className="ball-container absolute top-0 left-0 w-full h-full bg-[length:380px_380px] will-change-transform rotate-0">
+      <div className="layer-2 absolute w-[63%] 2xl:w-[75%] h-[100%] m-auto top-[-20px] 2xl:top-[-25px] bottom-0 left-1.5 2xl:left-2.5 right-0 bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center"></div>
+      <div className="ball-container absolute top-0 left-0 w-full h-full will-change-transform rotate-0">
         <div
-          className="ball absolute w-[14px] h-[14px] rounded-[7px] top-[45%] left-1/2 m-[-7px] will-change-transform translate-y-[-116px]"
+          className="ball absolute w-[14px] h-[14px] rounded-[7px] top-[55%] left-1/2 m-[-5px] will-change-transform translate-y-[-116px]"
           style={{
             background: "#fff radial-gradient(circle at 5px 5px, #fff, #444)",
             boxShadow: "1px 1px 4px #000",
+            transform: "translate(0, -163.221px)"
           }}
         ></div>
       </div>
