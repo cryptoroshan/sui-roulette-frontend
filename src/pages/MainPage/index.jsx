@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import Wheel from "../../components/Wheel";
+
 import logoIcon from "/imgs/logo.png";
 import repeatIcon from "/imgs/repeat.png";
 import suiIcon from "/imgs/sui.png";
@@ -14,6 +16,16 @@ import chip50Icon from "/imgs/chip-50.png";
 import profileIcon from "/imgs/profile.png";
 
 const MainPage = () => {
+  const rouletteWheelNumbers = [
+    0, 32, 15, 19, 4, 21, 2, 25,
+    17, 34, 6, 27, 13, 36, 11,
+    30, 8, 23, 10, 5, 24, 16, 33,
+    1, 20, 14, 31, 9, 22, 18, 29,
+    7, 28, 12, 35, 3, 26
+  ];
+
+  const [number, setNumber] = useState(null);
+
   const [chat, setChat] = useState("");
 
   return (
@@ -147,19 +159,7 @@ const MainPage = () => {
                 </div>
               </div>
               <div className="relative h-[calc(60vh)] 2xl:h-[calc(50vh)] bg-[url('/imgs/roulette-background.png')] bg-contain bg-no-repeat bg-center">
-                <div className="absolute w-[35%] 2xl:w-[40%] h-[100%] m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
-                  <div className="absolute w-[63%] 2xl:w-[65%] h-[100%] m-auto top-[-20px] 2xl:top-[-25px] bottom-0 left-1.5 2xl:left-2.5 right-0 bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center animate-spin"></div>
-                  <div className="absolute top-0 left-0 w-full h-full bg-[length:380px_380px] will-change-transform rotate-0">
-                    <div
-                      className="absolute w-[14px] h-[14px] rounded-[7px] top-[40%] left-1/2 m-[-7px] will-change-transform translate-y-[-116px]"
-                      style={{
-                        background:
-                          "#fff radial-gradient(circle at 5px 5px, #fff, #444)",
-                        boxShadow: "1px 1px 4px #000",
-                      }}
-                    ></div>
-                  </div>
-                </div>
+                <Wheel rouletteData = {rouletteWheelNumbers} number = {number} />
                 <div className="absolute flex flex-row gap-4 left-[50%] top-[75%]">
                   <img
                     className="w-12 2xl:w-14 cursor-pointer"
