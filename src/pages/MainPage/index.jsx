@@ -1,9 +1,11 @@
 import { useState } from "react";
 import classNames from "classnames";
 import clsx from "clsx";
+import { toast } from 'react-toastify'
 
 import Wheel from "../../components/Wheel";
 import Board from "../../components/Board";
+import { GameStages } from "../../constant/global";
 
 import logoIcon from "/imgs/logo.png";
 import repeatIcon from "/imgs/repeat.png";
@@ -32,45 +34,44 @@ const MainPage = () => {
     selectedChip: null,
     placedChips: new Map()
   });
+  const [stage, setStage] = useState(GameStages.PLACE_BET);
   const [chat, setChat] = useState("");
 
-  // const onCellClick = (item) => {
-  //   if (this.state.stage !== GameStages.PLACE_BET) return;
-  //   var currentChips = this.state.chipsData.placedChips;
-  //   var currentChipIterator= currentChips.values()
-  //   var placedSum = 0
-  //   var curIteratorValue = currentChipIterator.next().value
-  //   while (curIteratorValue !== undefined) {
-  //     placedSum += curIteratorValue.sum
-  //     curIteratorValue = currentChipIterator.next().value
-  //   }
-  //   var chipValue = this.state.chipsData.selectedChip;
-  //   if (chipValue === 0 || chipValue === null || chipValue === undefined) {
-  //     toast.error("You should select the chip.",{position: toast.POSITION.BOTTOM_CENTER});
-  //     return;
-  //   }
-  //   if (placedSum + chipValue > 100) 
-  //   {
-  //     toast.error("Only 100 Hbar bet is allowed during beta testing.",{position: toast.POSITION.BOTTOM_CENTER});
-  //     return;
-  //   }
-  //   let currentChip = {} as PlacedChip;
-  //   currentChip.item = item;
-  //   currentChip.sum = chipValue;
+  const onCellClick = (item) => {
+    console.log("------------onCellClick-----------");
+    console.log(stage);
+    if (stage !== GameStages.PLACE_BET) return;
+    let currentChips = chipsData.placedChips;
+    let currentChipIterator= currentChips.values()
+    let placedSum = 0
+    let curIteratorValue = currentChipIterator.next().value
+    console.log(curIteratorValue);
+    while (curIteratorValue !== undefined) {
+      placedSum += curIteratorValue.sum
+      curIteratorValue = currentChipIterator.next().value
+      console.log(curIteratorValue);
+    }
+    let chipValue = chipsData.selectedChip;
+    console.log(chipValue);
+    if (chipValue === 0 || chipValue === null || chipValue === undefined) {
+      toast.error("You should select the chip.");
+      return;
+    }
+    let currentChip = {};
+    currentChip.item = item;
+    currentChip.sum = chipValue;
 
-  //   if (currentChips.get(item) !== undefined) {
-  //     currentChip.sum += currentChips.get(item).sum;
-  //   }
+    if (currentChips.get(item) !== undefined) {
+      currentChip.sum += currentChips.get(item).sum;
+    }
 
-  //   //console.log(currentChips[item]);
-  //   currentChips.set(item, currentChip);
-  //   this.setState({
-  //     chipsData: {
-  //       selectedChip: this.state.chipsData.selectedChip,
-  //       placedChips: currentChips
-  //     }
-  //   });
-  // }
+    //console.log(currentChips[item]);
+    currentChips.set(item, currentChip);
+    setChipsData({
+      selectedChip: chipsData.selectedChip,
+      placedChips: currentChips
+    });
+  }
 
   const onChipClick = (chip) => {
     if (chip != null) {
@@ -213,7 +214,7 @@ const MainPage = () => {
               </div>
               <div className="relative h-[calc(60vh)] 2xl:h-[calc(50vh)] bg-[url('/imgs/roulette-background.png')] bg-contain bg-no-repeat bg-center">
                 <Wheel rouletteData = {rouletteWheelNumbers} number = {number} />
-                <Board chipsData = {chipsData} rouletteData = {rouletteWheelNumbers} />
+                <Board onCellClick = {onCellClick} chipsData = {chipsData} rouletteData = {rouletteWheelNumbers} />
                 <div className="absolute flex flex-row gap-4 left-[50%] top-[75%]">
                   <img
                     className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 1 ? "chip_selected" : "")}

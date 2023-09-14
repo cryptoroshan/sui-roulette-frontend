@@ -1,20 +1,6 @@
 import Chip from "../Chip";
 
-const ChipComponent = (props) => {
-  const {
-    currentItemChips,
-    tdKey,
-    cellClass,
-    chipKey,
-    cell,
-    leftMin,
-    leftMax,
-    topMin,
-    topMax,
-    rowSpan,
-    colSpan,
-  } = props;
-
+const ChipComponent = ({ currentItemChips, tdKey, cellClass, chipKey, cell, leftMin, leftMax, topMin, topMax, rowSpan, colSpan, onCellClick }) => {
   let sum = "";
   if (currentItemChips !== undefined) {
     if (currentItemChips.sum !== 0) {
@@ -43,6 +29,9 @@ const ChipComponent = (props) => {
       className={cellClass}
       rowSpan={rowSpan}
       colSpan={colSpan}
+      onClick={() => {
+        onCellClick(cell);
+      }}
     >
       <Chip
         leftMin={leftMin}

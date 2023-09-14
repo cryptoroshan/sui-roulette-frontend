@@ -6,25 +6,29 @@ import { ValueType } from "../../constant/global.jsx";
 
 const totalNumbers = 37;
 
+let other_1_12 = { type: ValueType.NUMBERS_1_12 };
+let other_2_12 = { type: ValueType.NUMBERS_2_12 };
+let other_3_12 = { type: ValueType.NUMBERS_3_12 };
+let other_1_18 = { type: ValueType.NUMBERS_1_18 };
+let other_1R_12 = { type: ValueType.NUMBERS_1R_12 };
+let other_2R_12 = { type: ValueType.NUMBERS_2R_12 };
+let other_3R_12 = { type: ValueType.NUMBERS_3R_12 };
+let other_19_36 = { type: ValueType.NUMBERS_19_36 };
+let other_even = { type: ValueType.EVEN };
+let other_odd = { type: ValueType.ODD };
+let other_red = { type: ValueType.RED };
+let other_black = { type: ValueType.BLACK };
+
 const Board = (props) => {
   const { chipsData, rouletteData } = props;
-
-  let other_1_12 = { type: ValueType.NUMBERS_1_12 };
-  let other_2_12 = { type: ValueType.NUMBERS_2_12 };
-  let other_3_12 = { type: ValueType.NUMBERS_3_12 };
-  let other_1_18 = { type: ValueType.NUMBERS_1_18 };
-  let other_1R_12 = { type: ValueType.NUMBERS_1R_12 };
-  let other_2R_12 = { type: ValueType.NUMBERS_2R_12 };
-  let other_3R_12 = { type: ValueType.NUMBERS_3R_12 };
-  let other_19_36 = { type: ValueType.NUMBERS_19_36 };
-  let other_even = { type: ValueType.EVEN };
-  let other_odd = { type: ValueType.ODD };
-  let other_red = { type: ValueType.RED };
-  let other_black = { type: ValueType.BLACK };
+  console.log("-------------render-----------");
+  console.log(chipsData);
+  console.log("-------------end-----------");
 
   let currentItemChips_1R_12 = chipsData.placedChips.get({
     type: ValueType.NUMBERS_1R_12,
   });
+  console.log(currentItemChips_1R_12);
   let currentItemChips_2R_12 = chipsData.placedChips.get({
     type: ValueType.NUMBERS_2R_12,
   });
@@ -60,6 +64,11 @@ const Board = (props) => {
   useEffect(() => {
     getNumbersList();
   }, []);
+
+  const onCellClick = (item) => {
+    console.log("--------Board onCellClick---------");
+    props.onCellClick(item);
+  };
 
   const getNumbersList = () => {
     let colList = [];
@@ -309,6 +318,7 @@ const Board = (props) => {
                           cellClass={cellClass}
                           rowSpan={6}
                           colSpan={1}
+                          onCellClick={onCellClick}
                           leftMin={undefined}
                           leftMax={undefined}
                           topMin={undefined}
@@ -356,6 +366,7 @@ const Board = (props) => {
                           rowSpan={1}
                           colSpan={1}
                           cellClass={cellClass}
+                          onCellClick={onCellClick}
                           leftMin={undefined}
                           leftMax={undefined}
                           topMin={undefined}
@@ -389,6 +400,7 @@ const Board = (props) => {
                             rowSpan={1}
                             colSpan={1}
                             cellClass={cellClass}
+                            onCellClick={onCellClick}
                             leftMin={undefined}
                             leftMax={undefined}
                             topMin={undefined}

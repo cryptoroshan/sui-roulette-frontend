@@ -10,10 +10,12 @@ const Chip = (props) => {
   //console.log(chipsData);
   function getChipClasses(chip) {
     let cellClass = classNames({
-      "chip-100-placed": chip === 100,
-      "chip-20-placed": chip === 20,
+      "chip-50-placed": chip === 50,
+      "chip-25-placed": chip === 25,
       "chip-10-placed": chip === 10,
       "chip-5-placed": chip === 5,
+      "chip-2-placed": chip === 2,
+      "chip-1-placed": chip === 1,
       chipValueImage: true,
     });
 
@@ -21,6 +23,8 @@ const Chip = (props) => {
   }
 
   if (currentItemChips !== undefined) {
+    console.log("---------Chip------------");
+    console.log(currentItemChips);
     let total = 0;
     let chipData = currentItemChips;
     const chipsImgs = [];
@@ -28,13 +32,13 @@ const Chip = (props) => {
     while (total < chipData.sum) {
       let currentChip = 100;
       let totalSum = chipData.sum - total;
-      if (totalSum >= 100) {
-        currentChip = 100;
+      if (totalSum >= 50) {
+        currentChip = 50;
         let calc = totalSum - (totalSum % currentChip);
         total += calc;
         currentChipPlaced = calc / currentChip;
-      } else if (totalSum >= 20) {
-        currentChip = 20;
+      } else if (totalSum >= 25) {
+        currentChip = 25;
         let calc = totalSum - (totalSum % currentChip);
         total += calc;
         currentChipPlaced = calc / currentChip;
@@ -43,8 +47,18 @@ const Chip = (props) => {
         let calc = totalSum - (totalSum % currentChip);
         total += calc;
         currentChipPlaced = calc / currentChip;
-      } else {
+      } else if (totalSum >= 5) {
         currentChip = 5;
+        let calc = totalSum - (totalSum % currentChip);
+        total += calc;
+        currentChipPlaced = calc / currentChip;
+      } else if (totalSum >= 2) {
+        currentChip = 2;
+        let calc = totalSum - (totalSum % currentChip);
+        total += calc;
+        currentChipPlaced = calc / currentChip;
+      } else {
+        currentChip = 1;
         let calc = totalSum - (totalSum % currentChip);
         total += calc;
         currentChipPlaced = calc / currentChip;
