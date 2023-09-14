@@ -1,10 +1,12 @@
 import { useState } from "react";
 import classNames from "classnames";
 import clsx from "clsx";
-import { toast } from 'react-toastify'
+import { toast } from "react-toastify";
 
 import Wheel from "../../components/Wheel";
 import Board from "../../components/Board";
+import ProgressBar from "../../components/ProgressBar";
+
 import { GameStages } from "../../constant/global";
 
 import logoIcon from "/imgs/logo.png";
@@ -21,20 +23,20 @@ import chip50Icon from "/imgs/chip-50.png";
 import profileIcon from "/imgs/profile.png";
 
 const rouletteWheelNumbers = [
-  0, 32, 15, 19, 4, 21, 2, 25,
-  17, 34, 6, 27, 13, 36, 11,
-  30, 8, 23, 10, 5, 24, 16, 33,
-  1, 20, 14, 31, 9, 22, 18, 29,
-  7, 28, 12, 35, 3, 26
+  0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24,
+  16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26,
 ];
 
 const MainPage = () => {
   const [number, setNumber] = useState(17);
   const [chipsData, setChipsData] = useState({
     selectedChip: null,
-    placedChips: new Map()
+    placedChips: new Map(),
   });
   const [stage, setStage] = useState(GameStages.PLACE_BET);
+  const [endTime, setEndTime] = useState(59);
+  const [time_remaining, setTimeRemaining] = useState(35);
+
   const [chat, setChat] = useState("");
 
   const onCellClick = (item) => {
@@ -42,13 +44,13 @@ const MainPage = () => {
     console.log(stage);
     if (stage !== GameStages.PLACE_BET) return;
     let currentChips = chipsData.placedChips;
-    let currentChipIterator= currentChips.values()
-    let placedSum = 0
-    let curIteratorValue = currentChipIterator.next().value
+    let currentChipIterator = currentChips.values();
+    let placedSum = 0;
+    let curIteratorValue = currentChipIterator.next().value;
     console.log(curIteratorValue);
     while (curIteratorValue !== undefined) {
-      placedSum += curIteratorValue.sum
-      curIteratorValue = currentChipIterator.next().value
+      placedSum += curIteratorValue.sum;
+      curIteratorValue = currentChipIterator.next().value;
       console.log(curIteratorValue);
     }
     let chipValue = chipsData.selectedChip;
@@ -69,18 +71,18 @@ const MainPage = () => {
     currentChips.set(item, currentChip);
     setChipsData({
       selectedChip: chipsData.selectedChip,
-      placedChips: currentChips
+      placedChips: currentChips,
     });
-  }
+  };
 
   const onChipClick = (chip) => {
     if (chip != null) {
       setChipsData({
         selectedChip: chip,
-        placedChips: chipsData.placedChips
+        placedChips: chipsData.placedChips,
       });
     }
-  }
+  };
 
   return (
     <>
@@ -213,39 +215,80 @@ const MainPage = () => {
                 </div>
               </div>
               <div className="relative h-[calc(60vh)] 2xl:h-[calc(50vh)] bg-[url('/imgs/roulette-background.png')] bg-contain bg-no-repeat bg-center">
-                <Wheel rouletteData = {rouletteWheelNumbers} number = {number} />
-                <Board onCellClick = {onCellClick} chipsData = {chipsData} rouletteData = {rouletteWheelNumbers} />
+                <Wheel rouletteData={rouletteWheelNumbers} number={number} />
+                <Board
+                  onCellClick={onCellClick}
+                  chipsData={chipsData}
+                  rouletteData={rouletteWheelNumbers}
+                />
                 <div className="absolute flex flex-row gap-4 left-[50%] top-[75%]">
                   <img
-                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 1 ? "chip_selected" : "")}
+                    className={clsx(
+                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                      chipsData.selectedChip === 1 ? "chip_selected" : ""
+                    )}
                     onClick={() => onChipClick(1)}
                     src={chip1Icon}
                   />
                   <img
-                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 2 ? "chip_selected" : "")}
+                    className={clsx(
+                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                      chipsData.selectedChip === 2 ? "chip_selected" : ""
+                    )}
                     onClick={() => onChipClick(2)}
                     src={chip2Icon}
                   />
                   <img
-                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 5 ? "chip_selected" : "")}
+                    className={clsx(
+                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                      chipsData.selectedChip === 5 ? "chip_selected" : ""
+                    )}
                     onClick={() => onChipClick(5)}
                     src={chip5Icon}
                   />
                   <img
-                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 10 ? "chip_selected" : "")}
+                    className={clsx(
+                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                      chipsData.selectedChip === 10 ? "chip_selected" : ""
+                    )}
                     onClick={() => onChipClick(10)}
                     src={chip10Icon}
                   />
                   <img
-                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 25 ? "chip_selected" : "")}
+                    className={clsx(
+                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                      chipsData.selectedChip === 25 ? "chip_selected" : ""
+                    )}
                     onClick={() => onChipClick(25)}
                     src={chip25Icon}
                   />
                   <img
-                    className={clsx("w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full", chipsData.selectedChip === 50 ? "chip_selected" : "")}
+                    className={clsx(
+                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                      chipsData.selectedChip === 50 ? "chip_selected" : ""
+                    )}
                     onClick={() => onChipClick(50)}
                     src={chip50Icon}
                   />
+                </div>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row gap-4">
+                  <button className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase">
+                    deposit
+                  </button>
+                  <button className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase">
+                    withdraw
+                  </button>
+                </div>
+                <ProgressBar stage={stage} maxDuration={endTime} currentDuration={time_remaining} />
+                <div className="flex flex-row gap-4">
+                  <button className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase">
+                    place bet
+                  </button>
+                  <button className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase">
+                    clear bet
+                  </button>
                 </div>
               </div>
               <div className="flex flex-nowrap px-8 py-4 bg-secondary gap-6 rounded-xl font-[monumentextended-regular] text-ellipsis whitespace-nowrap overflow-hidden">
