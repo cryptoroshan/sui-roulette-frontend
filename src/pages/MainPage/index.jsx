@@ -23,6 +23,10 @@ import chip10Icon from "/imgs/chip-10.png";
 import chip25Icon from "/imgs/chip-25.png";
 import chip50Icon from "/imgs/chip-50.png";
 import profileIcon from "/imgs/profile.png";
+import closeIcon from "/imgs/close.png";
+import ethosIcon from "/imgs/ethos.png";
+import martianIcon from "/imgs/martian.png";
+import suietIcon from "/imgs/suiet.png";
 
 const socketServer = io(env.SERVER_URL);
 
@@ -32,7 +36,7 @@ const rouletteWheelNumbers = [
 ];
 
 const MainPage = () => {
-  const [number, setNumber] = useState({next: null});
+  const [number, setNumber] = useState({ next: null });
   const [selectedChip, setSelectedChip] = useState(null);
   const [placedChips, setPlacedChips] = useState(new Map());
   const [stage, setStage] = useState(GameStages.PLACE_BET);
@@ -45,6 +49,7 @@ const MainPage = () => {
   const [history, setHistory] = useState([]);
 
   const [chat, setChat] = useState("");
+  const [walletConnectDialogView, setWalletConnectDialogView] = useState(false);
 
   useEffect(() => {
     socketServer.open();
@@ -71,32 +76,33 @@ const MainPage = () => {
 
   const getBalance = (gameData, wallet_address) => {
     const balances = gameData.balances;
-    if(balances.length > 0){
-      for(let i = 0; i < balances.length; i++ )
-      {
-        if( balances[i].wallet_address == wallet_address ){
-          console.log('This Wallet\'s Balance: ', balances[i].balance);
+    if (balances.length > 0) {
+      for (let i = 0; i < balances.length; i++) {
+        if (balances[i].wallet_address == wallet_address) {
+          console.log("This Wallet's Balance: ", balances[i].balance);
           return balances[i].balance;
         }
       }
     } else {
       return 0;
     }
-  }
+  };
 
   const setGameData = (gameData) => {
     setDepositedAmount(getBalance(gameData, walletAddress));
-    console.log('depositedAmount: ', getBalance(gameData, walletAddress));
+    console.log("depositedAmount: ", getBalance(gameData, walletAddress));
 
-    if (gameData.stage === GameStages.NO_MORE_BETS) { // PLACE BET from 25 to 35
+    if (gameData.stage === GameStages.NO_MORE_BETS) {
+      // PLACE BET from 25 to 35
       const endTime = 35;
-      const nextNumber = gameData.value
+      const nextNumber = gameData.value;
       setEndTime(endTime);
       setProgressCountdown(endTime - gameData.time_remaining);
       setNumber({ next: nextNumber });
       setStage(gameData.stage);
       setTimeRemaining(gameData.time_remaining);
-    } else if (gameData.stage === GameStages.WINNERS) { // PLACE BET from 35 to 59
+    } else if (gameData.stage === GameStages.WINNERS) {
+      // PLACE BET from 35 to 59
       const endTime = 59;
       if (gameData.wins.length > 0) {
         setEndTime(endTime);
@@ -112,7 +118,8 @@ const MainPage = () => {
         setTimeRemaining(gameData.time_remaining);
         setHistory(gameData.history);
       }
-    } else { // PLACE BET from 0 to 25
+    } else {
+      // PLACE BET from 0 to 25
       const endTime = 25;
 
       setEndTime(endTime);
@@ -120,7 +127,7 @@ const MainPage = () => {
       setStage(gameData.stage);
       setTimeRemaining(gameData.time_remaining);
     }
-  }
+  };
 
   const clearBet = () => {
     setPlacedChips(new Map());
@@ -167,20 +174,23 @@ const MainPage = () => {
 
   return (
     <>
-      <section className="flex flex-col justify-between min-h-screen bg-primary">
+      <section className="relative flex flex-col justify-between min-h-screen bg-primary">
         <section className="flex flex-col px-14 pt-8 2xl:pt-12">
           <div className="flex flex-row justify-between bg-secondary rounded-3xl px-12 py-4 font-[Poppins-Regular]">
             <img className="w-[320px] h-fit my-auto" src={logoIcon} />
             <div className="flex flex-row gap-6 items-center">
               <div className="flex flex-row gap-4 items-center">
-                <img className="w-6" src={suiIcon} />
+                <img className="w-6 h-fit" src={suiIcon} />
                 <p className="text-primary text-md font-bold">$0.4982</p>
               </div>
               <button className="flex flex-row gap-4 items-center bg-[#060606] px-4 h-10 rounded-md">
                 <p className="text-primary text-sm font-bold">BUY SUI</p>
                 <img className="w-6" src={repeatIcon} />
               </button>
-              <button className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase">
+              <button
+                className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase"
+                onClick={() => setWalletConnectDialogView(true)}
+              >
                 connect wallet
               </button>
             </div>
@@ -512,6 +522,57 @@ const MainPage = () => {
         </section>
         <section className="h-2 bg-[#1E1E1E]"></section>
       </section>
+      {walletConnectDialogView === true && (
+        <div
+          className="fixed bg-blend-lighten top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full backdrop-blur-sm"
+          onClick={() => setWalletConnectDialogView(false)}
+        >
+          <div className="absolute left-0 right-0 top-0 bottom-0 m-auto w-1/2 h-1/2 bg-[url('/imgs/background.png')] bg-contain bg-no-repeat bg-center" onClick={(e) => e.stopPropagation()}>
+            <img
+              className="absolute top-8 right-3 w-4 h-fit cursor-pointer"
+              src={closeIcon}
+              onClick={() => setWalletConnectDialogView(false)}
+            />
+            <div className="flex flex-col gap-4 w-1/2 h-full items-center font-[Poppins-Regular]">
+              <img className="w-[320px] h-fit mt-16" src={logoIcon} />
+              <div className="flex flex-row gap-2 mt-12 w-full px-14">
+                <div className="flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2 cursor-pointer">
+                  <img className="w-6 h-fit" src={suiIcon} />
+                  <p className="text-md text-primary">SUI Wallet</p>
+                </div>
+                <div className="flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2 cursor-pointer">
+                  <img className="w-6" src={ethosIcon} />
+                  <p className="text-md text-primary">Ethos Wallet</p>
+                </div>
+              </div>
+              <div className="flex flex-row gap-2 w-full px-14">
+                <div className="flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2 cursor-pointer">
+                  <img className="w-6 h-fit" src={martianIcon} />
+                  <p className="text-md text-primary">Martian</p>
+                </div>
+                <div className="flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2 cursor-pointer">
+                  <img className="w-6" src={suietIcon} />
+                  <p className="text-md text-primary">Suiet Wallet</p>
+                </div>
+              </div>
+              <div className="flex flex-row pt-6 px-16">
+                <input
+                  id="warning-checkbox"
+                  type="checkbox"
+                  className="cursor-pointer w-5 h-5 text-blue-600 bg-[#323334] border-[#323334] rounded focus:ring-0 focus:ring-offset-0"
+                />
+                <label
+                  htmlFor="warning-checkbox"
+                  className="cursor-pointer ml-2 text-xs text-[#7C7E81]"
+                >
+                  Gambling isn&apos;t forbidden by my local authorities and
+                  I&apos;m at least 18 years old.
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
