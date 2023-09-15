@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import clsx from "clsx";
 import { toast } from "react-toastify";
+import { ConnectButton, useWallet, addressEllipsis } from "@suiet/wallet-kit";
+import "@suiet/wallet-kit/style.css";
 
 import * as env from "../../env";
 
@@ -36,6 +38,8 @@ const rouletteWheelNumbers = [
 ];
 
 const MainPage = () => {
+  const { select, configuredWallets, detectedWallets } = useWallet();
+
   const [number, setNumber] = useState({ next: null });
   const [selectedChip, setSelectedChip] = useState(null);
   const [placedChips, setPlacedChips] = useState(new Map());
@@ -51,6 +55,24 @@ const MainPage = () => {
   const [chat, setChat] = useState("");
   const [walletConnectDialogView, setWalletConnectDialogView] = useState(false);
   const [allowWalletConnect, setAllowWalletConnect] = useState(false);
+  const [suiWalletInstalled, setSuiWalletInstalled] = useState(false);
+  const [ethosWalletInstalled, setEthosWalletInstalled] = useState(false);
+  const [martianWalletInstalled, setMartianWalletInstalled] = useState(false);
+  const [suietWalletInstalled, setSuietWalletInstalled] = useState(false);
+
+  useEffect(() => {
+    [...configuredWallets, ...detectedWallets].map((wallet) => {
+      console.log(wallet.name, wallet.installed);
+      if (wallet.name === "Sui Wallet" && wallet.installed)
+        setSuiWalletInstalled(true);
+      else if (wallet.name === "Ethos Wallet" && wallet.installed)
+        setEthosWalletInstalled(true);
+      else if (wallet.name === "Martian Sui Wallet" && wallet.installed)
+        setMartianWalletInstalled(true);
+      else if (wallet.name === "Suiet" && wallet.installed)
+        setSuietWalletInstalled(true);
+    })
+  }, [detectedWallets])
 
   useEffect(() => {
     socketServer.open();
@@ -543,8 +565,12 @@ const MainPage = () => {
                 <div
                   className={clsx(
                     "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
-                    allowWalletConnect === true ? "cursor-pointer" : ""
+                    allowWalletConnect === true && suiWalletInstalled === true ? "cursor-pointer" : ""
                   )}
+                  onClick={() => {
+                    if (allowWalletConnect && suiWalletInstalled)
+                      select("Sui Wallet")
+                  }}
                 >
                   <img className="w-6 h-fit" src={suiIcon} />
                   <p className="text-md text-primary">SUI Wallet</p>
@@ -552,8 +578,12 @@ const MainPage = () => {
                 <div
                   className={clsx(
                     "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
-                    allowWalletConnect === true ? "cursor-pointer" : ""
+                    allowWalletConnect === true && ethosWalletInstalled === true ? "cursor-pointer" : ""
                   )}
+                  onClick={() => {
+                    if (allowWalletConnect && ethosWalletInstalled)
+                      select("Ethos Wallet")
+                  }}
                 >
                   <img className="w-6" src={ethosIcon} />
                   <p className="text-md text-primary">Ethos Wallet</p>
@@ -563,8 +593,12 @@ const MainPage = () => {
                 <div
                   className={clsx(
                     "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
-                    allowWalletConnect === true ? "cursor-pointer" : ""
+                    allowWalletConnect === true && martianWalletInstalled === true ? "cursor-pointer" : ""
                   )}
+                  onClick={() => {
+                    if (allowWalletConnect && martianWalletInstalled)
+                      select("Martian Sui Wallet")
+                  }}
                 >
                   <img className="w-6 h-fit" src={martianIcon} />
                   <p className="text-md text-primary">Martian</p>
@@ -572,8 +606,12 @@ const MainPage = () => {
                 <div
                   className={clsx(
                     "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
-                    allowWalletConnect === true ? "cursor-pointer" : ""
+                    allowWalletConnect === true && suietWalletInstalled === true ? "cursor-pointer" : ""
                   )}
+                  onClick={() => {
+                    if (allowWalletConnect && suietWalletInstalled)
+                      select("Suiet")
+                  }}
                 >
                   <img className="w-6" src={suietIcon} />
                   <p className="text-md text-primary">Suiet Wallet</p>
