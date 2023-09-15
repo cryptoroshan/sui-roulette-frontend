@@ -32,44 +32,105 @@ const rouletteWheelNumbers = [
 ];
 
 const MainPage = () => {
-  const [number, setNumber] = useState(17);
-  const [chipsData, setChipsData] = useState({
-    selectedChip: null,
-    placedChips: new Map(),
-  });
+  const [number, setNumber] = useState({next: null});
+  const [selectedChip, setSelectedChip] = useState(null);
+  const [placedChips, setPlacedChips] = useState(new Map());
   const [stage, setStage] = useState(GameStages.PLACE_BET);
-  const [endTime, setEndTime] = useState(59);
-  const [time_remaining, setTimeRemaining] = useState(35);
+  const [endTime, setEndTime] = useState(0);
+  const [time_remaining, setTimeRemaining] = useState(0);
+  const [depositedAmount, setDepositedAmount] = useState(0);
+  const [walletAddress, setWalletAddress] = useState("");
+  const [progressCountdown, setProgressCountdown] = useState(0);
+  const [winners, setWinners] = useState([]);
+  const [history, setHistory] = useState([]);
 
   const [chat, setChat] = useState("");
 
   useEffect(() => {
     socketServer.open();
 
-    this.socketServer.on('stage-change', (data) => {
-      console.log('State-Change Event: Occured');
+    socketServer.on("stage-change", (data) => {
+      console.log("State-Change Event: Occured");
 
-      // var gameData = JSON.parse(data);
-      // console.log("------gameData--------");
-      // console.log(gameData);
-      // this.setGameData(gameData)
-      // if( this.state.stage == GameStages.WINNERS - 1)
-      //   this.clearBet();
+      const gameData = JSON.parse(data);
+      console.log("------gameData--------");
+      console.log(gameData);
+      setGameData(gameData);
+      if (stage == GameStages.WINNERS - 1) clearBet();
     });
 
-    this.socketServer.on("connect", () => {
-      this.setState({ username: this.props.username }, () => {
-        console.log('Enter Event: Occured');
-        // this.socketServer.emit("enter", this.state.username);
-      });
+    socketServer.on("connect", () => {
+      console.log("Enter Event: Occured");
+      socketServer.emit("enter", "0.0.3680385");
+      // this.setState({ username: this.props.username }, () => {
+      //   console.log('Enter Event: Occured');
+      //   socketServer.emit("enter", this.state.username);
+      // });
     });
-  })
+  });
+
+  const getBalance = (gameData, wallet_address) => {
+    const balances = gameData.balances;
+    if(balances.length > 0){
+      for(let i = 0; i < balances.length; i++ )
+      {
+        if( balances[i].wallet_address == wallet_address ){
+          console.log('This Wallet\'s Balance: ', balances[i].balance);
+          return balances[i].balance;
+        }
+      }
+    } else {
+      return 0;
+    }
+  }
+
+  const setGameData = (gameData) => {
+    setDepositedAmount(getBalance(gameData, walletAddress));
+    console.log('depositedAmount: ', getBalance(gameData, walletAddress));
+
+    if (gameData.stage === GameStages.NO_MORE_BETS) { // PLACE BET from 25 to 35
+      const endTime = 35;
+      const nextNumber = gameData.value
+      setEndTime(endTime);
+      setProgressCountdown(endTime - gameData.time_remaining);
+      setNumber({ next: nextNumber });
+      setStage(gameData.stage);
+      setTimeRemaining(gameData.time_remaining);
+    } else if (gameData.stage === GameStages.WINNERS) { // PLACE BET from 35 to 59
+      const endTime = 59;
+      if (gameData.wins.length > 0) {
+        setEndTime(endTime);
+        setProgressCountdown(endTime - gameData.time_remaining);
+        setWinners(gameData.wins);
+        setStage(gameData.stage);
+        setTimeRemaining(gameData.time_remaining);
+        setHistory(gameData.history);
+      } else {
+        setEndTime(endTime);
+        setProgressCountdown(endTime - gameData.time_remaining);
+        setStage(gameData.stage);
+        setTimeRemaining(gameData.time_remaining);
+        setHistory(gameData.history);
+      }
+    } else { // PLACE BET from 0 to 25
+      const endTime = 25;
+
+      setEndTime(endTime);
+      setProgressCountdown(endTime - gameData.time_remaining);
+      setStage(gameData.stage);
+      setTimeRemaining(gameData.time_remaining);
+    }
+  }
+
+  const clearBet = () => {
+    setPlacedChips(new Map());
+  };
 
   const onCellClick = (item) => {
     console.log("------------onCellClick-----------");
     console.log(stage);
     if (stage !== GameStages.PLACE_BET) return;
-    let currentChips = chipsData.placedChips;
+    let currentChips = placedChips;
     let currentChipIterator = currentChips.values();
     let placedSum = 0;
     let curIteratorValue = currentChipIterator.next().value;
@@ -79,7 +140,7 @@ const MainPage = () => {
       curIteratorValue = currentChipIterator.next().value;
       console.log(curIteratorValue);
     }
-    let chipValue = chipsData.selectedChip;
+    let chipValue = selectedChip;
     console.log(chipValue);
     if (chipValue === 0 || chipValue === null || chipValue === undefined) {
       toast.error("You should select the chip.");
@@ -95,18 +156,12 @@ const MainPage = () => {
 
     //console.log(currentChips[item]);
     currentChips.set(item, currentChip);
-    setChipsData({
-      selectedChip: chipsData.selectedChip,
-      placedChips: currentChips,
-    });
+    setPlacedChips(currentChips);
   };
 
   const onChipClick = (chip) => {
     if (chip != null) {
-      setChipsData({
-        selectedChip: chip,
-        placedChips: chipsData.placedChips,
-      });
+      setSelectedChip(chip);
     }
   };
 
@@ -244,14 +299,17 @@ const MainPage = () => {
                 <Wheel rouletteData={rouletteWheelNumbers} number={number} />
                 <Board
                   onCellClick={onCellClick}
-                  chipsData={chipsData}
+                  chipsData={{
+                    selectedChip: selectedChip,
+                    placedChips: placedChips,
+                  }}
                   rouletteData={rouletteWheelNumbers}
                 />
                 <div className="absolute flex flex-row gap-4 left-[50%] top-[75%]">
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      chipsData.selectedChip === 1 ? "chip_selected" : ""
+                      selectedChip === 1 ? "chip_selected" : ""
                     )}
                     onClick={() => onChipClick(1)}
                     src={chip1Icon}
@@ -259,7 +317,7 @@ const MainPage = () => {
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      chipsData.selectedChip === 2 ? "chip_selected" : ""
+                      selectedChip === 2 ? "chip_selected" : ""
                     )}
                     onClick={() => onChipClick(2)}
                     src={chip2Icon}
@@ -267,7 +325,7 @@ const MainPage = () => {
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      chipsData.selectedChip === 5 ? "chip_selected" : ""
+                      selectedChip === 5 ? "chip_selected" : ""
                     )}
                     onClick={() => onChipClick(5)}
                     src={chip5Icon}
@@ -275,7 +333,7 @@ const MainPage = () => {
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      chipsData.selectedChip === 10 ? "chip_selected" : ""
+                      selectedChip === 10 ? "chip_selected" : ""
                     )}
                     onClick={() => onChipClick(10)}
                     src={chip10Icon}
@@ -283,7 +341,7 @@ const MainPage = () => {
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      chipsData.selectedChip === 25 ? "chip_selected" : ""
+                      selectedChip === 25 ? "chip_selected" : ""
                     )}
                     onClick={() => onChipClick(25)}
                     src={chip25Icon}
@@ -291,7 +349,7 @@ const MainPage = () => {
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      chipsData.selectedChip === 50 ? "chip_selected" : ""
+                      selectedChip === 50 ? "chip_selected" : ""
                     )}
                     onClick={() => onChipClick(50)}
                     src={chip50Icon}
@@ -307,7 +365,11 @@ const MainPage = () => {
                     withdraw
                   </button>
                 </div>
-                <ProgressBar stage={stage} maxDuration={endTime} currentDuration={time_remaining} />
+                <ProgressBar
+                  stage={stage}
+                  maxDuration={endTime}
+                  currentDuration={time_remaining}
+                />
                 <div className="flex flex-row gap-4">
                   <button className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase">
                     place bet

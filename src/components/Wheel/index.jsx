@@ -114,7 +114,7 @@ const Wheel = (props) => {
   }
 
   useEffect(() => {
-    var nextNubmer = number;
+    var nextNubmer = number.next;
     if (nextNubmer != null && nextNubmer !== "") {
       console.log("spinWheel");
       var nextNumberInt = parseInt(nextNubmer);
