@@ -1,7 +1,9 @@
-import { useState } from "react";
-import classNames from "classnames";
+import { useState, useEffect } from "react";
+import { io } from "socket.io-client";
 import clsx from "clsx";
 import { toast } from "react-toastify";
+
+import * as env from "../../env";
 
 import Wheel from "../../components/Wheel";
 import Board from "../../components/Board";
@@ -22,6 +24,8 @@ import chip25Icon from "/imgs/chip-25.png";
 import chip50Icon from "/imgs/chip-50.png";
 import profileIcon from "/imgs/profile.png";
 
+const socketServer = io(env.SERVER_URL);
+
 const rouletteWheelNumbers = [
   0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24,
   16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26,
@@ -38,6 +42,28 @@ const MainPage = () => {
   const [time_remaining, setTimeRemaining] = useState(35);
 
   const [chat, setChat] = useState("");
+
+  useEffect(() => {
+    socketServer.open();
+
+    this.socketServer.on('stage-change', (data) => {
+      console.log('State-Change Event: Occured');
+
+      // var gameData = JSON.parse(data);
+      // console.log("------gameData--------");
+      // console.log(gameData);
+      // this.setGameData(gameData)
+      // if( this.state.stage == GameStages.WINNERS - 1)
+      //   this.clearBet();
+    });
+
+    this.socketServer.on("connect", () => {
+      this.setState({ username: this.props.username }, () => {
+        console.log('Enter Event: Occured');
+        // this.socketServer.emit("enter", this.state.username);
+      });
+    });
+  })
 
   const onCellClick = (item) => {
     console.log("------------onCellClick-----------");
