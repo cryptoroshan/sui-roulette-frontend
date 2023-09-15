@@ -50,6 +50,7 @@ const MainPage = () => {
 
   const [chat, setChat] = useState("");
   const [walletConnectDialogView, setWalletConnectDialogView] = useState(false);
+  const [allowWalletConnect, setAllowWalletConnect] = useState(false);
 
   useEffect(() => {
     socketServer.open();
@@ -527,7 +528,10 @@ const MainPage = () => {
           className="fixed bg-blend-lighten top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full backdrop-blur-sm"
           onClick={() => setWalletConnectDialogView(false)}
         >
-          <div className="absolute left-0 right-0 top-0 bottom-0 m-auto w-1/2 h-1/2 bg-[url('/imgs/background.png')] bg-contain bg-no-repeat bg-center" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="absolute left-0 right-0 top-0 bottom-0 m-auto w-1/2 h-1/2 bg-[url('/imgs/background.png')] bg-contain bg-no-repeat bg-center"
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
               className="absolute top-8 right-3 w-4 h-fit cursor-pointer"
               src={closeIcon}
@@ -536,21 +540,41 @@ const MainPage = () => {
             <div className="flex flex-col gap-4 w-1/2 h-full items-center font-[Poppins-Regular]">
               <img className="w-[320px] h-fit mt-16" src={logoIcon} />
               <div className="flex flex-row gap-2 mt-12 w-full px-14">
-                <div className="flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2 cursor-pointer">
+                <div
+                  className={clsx(
+                    "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
+                    allowWalletConnect === true ? "cursor-pointer" : ""
+                  )}
+                >
                   <img className="w-6 h-fit" src={suiIcon} />
                   <p className="text-md text-primary">SUI Wallet</p>
                 </div>
-                <div className="flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2 cursor-pointer">
+                <div
+                  className={clsx(
+                    "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
+                    allowWalletConnect === true ? "cursor-pointer" : ""
+                  )}
+                >
                   <img className="w-6" src={ethosIcon} />
                   <p className="text-md text-primary">Ethos Wallet</p>
                 </div>
               </div>
               <div className="flex flex-row gap-2 w-full px-14">
-                <div className="flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2 cursor-pointer">
+                <div
+                  className={clsx(
+                    "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
+                    allowWalletConnect === true ? "cursor-pointer" : ""
+                  )}
+                >
                   <img className="w-6 h-fit" src={martianIcon} />
                   <p className="text-md text-primary">Martian</p>
                 </div>
-                <div className="flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2 cursor-pointer">
+                <div
+                  className={clsx(
+                    "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
+                    allowWalletConnect === true ? "cursor-pointer" : ""
+                  )}
+                >
                   <img className="w-6" src={suietIcon} />
                   <p className="text-md text-primary">Suiet Wallet</p>
                 </div>
@@ -560,6 +584,11 @@ const MainPage = () => {
                   id="warning-checkbox"
                   type="checkbox"
                   className="cursor-pointer w-5 h-5 text-blue-600 bg-[#323334] border-[#323334] rounded focus:ring-0 focus:ring-offset-0"
+                  onClick={() => {
+                    if (allowWalletConnect === false)
+                      setAllowWalletConnect(true);
+                    else setAllowWalletConnect(false);
+                  }}
                 />
                 <label
                   htmlFor="warning-checkbox"
