@@ -15,7 +15,7 @@ export default {
         'number-red' : '#C92A34',
         'number-green': '#2BB12B',
         'number-black': '#292835',
-        'wallet': '#0D0E0E'
+        'wallet': '#0D0E0E',
       },
       borderColor: {
         'primary': '#323232'
@@ -29,7 +29,8 @@ export default {
         'chat-red': '#E54545'
       },
       animation: {
-        'spin': 'spin 6s linear infinite'
+        'spin': 'spin 6s linear infinite',
+        'default-spin': 'spin 1s linear infinite',
       }
     },
   },

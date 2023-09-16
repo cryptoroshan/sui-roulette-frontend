@@ -10,6 +10,7 @@ import * as env from "../../env";
 import Wheel from "../../components/Wheel";
 import Board from "../../components/Board";
 import ProgressBar from "../../components/ProgressBar";
+import LoadingLayout from "../../components/LoadingLayout";
 
 import { GameStages } from "../../constant/global";
 
@@ -38,7 +39,7 @@ const rouletteWheelNumbers = [
 ];
 
 const MainPage = () => {
-  const { select, configuredWallets, detectedWallets } = useWallet();
+  const { select, connected, account, configuredWallets, detectedWallets } = useWallet();
 
   const [number, setNumber] = useState({ next: null });
   const [selectedChip, setSelectedChip] = useState(null);
@@ -52,6 +53,7 @@ const MainPage = () => {
   const [winners, setWinners] = useState([]);
   const [history, setHistory] = useState([]);
 
+  const [loadingView, setLoadingView] = useState(false);
   const [chat, setChat] = useState("");
   const [walletConnectDialogView, setWalletConnectDialogView] = useState(false);
   const [allowWalletConnect, setAllowWalletConnect] = useState(false);
@@ -62,7 +64,6 @@ const MainPage = () => {
 
   useEffect(() => {
     [...configuredWallets, ...detectedWallets].map((wallet) => {
-      console.log(wallet.name, wallet.installed);
       if (wallet.name === "Sui Wallet" && wallet.installed)
         setSuiWalletInstalled(true);
       else if (wallet.name === "Ethos Wallet" && wallet.installed)
@@ -71,8 +72,17 @@ const MainPage = () => {
         setMartianWalletInstalled(true);
       else if (wallet.name === "Suiet" && wallet.installed)
         setSuietWalletInstalled(true);
-    })
-  }, [detectedWallets])
+    });
+  }, [detectedWallets]);
+
+  useEffect(() => {
+    console.log("------------connected-------------");
+    console.log(connected);
+    console.log(account?.address);
+    if (connected) {
+      socketServer.emit("enter", account?.address);
+    }
+  }, [connected])
 
   useEffect(() => {
     socketServer.open();
@@ -89,7 +99,7 @@ const MainPage = () => {
 
     socketServer.on("connect", () => {
       console.log("Enter Event: Occured");
-      socketServer.emit("enter", "0.0.3680385");
+      // socketServer.emit("enter", "0.0.3680385");
       // this.setState({ username: this.props.username }, () => {
       //   console.log('Enter Event: Occured');
       //   socketServer.emit("enter", this.state.username);
@@ -565,11 +575,15 @@ const MainPage = () => {
                 <div
                   className={clsx(
                     "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
-                    allowWalletConnect === true && suiWalletInstalled === true ? "cursor-pointer" : ""
+                    allowWalletConnect === true && suiWalletInstalled === true
+                      ? "cursor-pointer"
+                      : ""
                   )}
                   onClick={() => {
-                    if (allowWalletConnect && suiWalletInstalled)
-                      select("Sui Wallet")
+                    if (allowWalletConnect && suiWalletInstalled) {
+                      setLoadingView(true);
+                      select("Sui Wallet");
+                    }
                   }}
                 >
                   <img className="w-6 h-fit" src={suiIcon} />
@@ -578,11 +592,13 @@ const MainPage = () => {
                 <div
                   className={clsx(
                     "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
-                    allowWalletConnect === true && ethosWalletInstalled === true ? "cursor-pointer" : ""
+                    allowWalletConnect === true && ethosWalletInstalled === true
+                      ? "cursor-pointer"
+                      : ""
                   )}
                   onClick={() => {
                     if (allowWalletConnect && ethosWalletInstalled)
-                      select("Ethos Wallet")
+                      select("Ethos Wallet");
                   }}
                 >
                   <img className="w-6" src={ethosIcon} />
@@ -593,11 +609,14 @@ const MainPage = () => {
                 <div
                   className={clsx(
                     "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
-                    allowWalletConnect === true && martianWalletInstalled === true ? "cursor-pointer" : ""
+                    allowWalletConnect === true &&
+                      martianWalletInstalled === true
+                      ? "cursor-pointer"
+                      : ""
                   )}
                   onClick={() => {
                     if (allowWalletConnect && martianWalletInstalled)
-                      select("Martian Sui Wallet")
+                      select("Martian Sui Wallet");
                   }}
                 >
                   <img className="w-6 h-fit" src={martianIcon} />
@@ -606,11 +625,13 @@ const MainPage = () => {
                 <div
                   className={clsx(
                     "flex flex-row gap-2 justify-center items-center bg-wallet rounded-md py-2 w-1/2",
-                    allowWalletConnect === true && suietWalletInstalled === true ? "cursor-pointer" : ""
+                    allowWalletConnect === true && suietWalletInstalled === true
+                      ? "cursor-pointer"
+                      : ""
                   )}
                   onClick={() => {
                     if (allowWalletConnect && suietWalletInstalled)
-                      select("Suiet")
+                      select("Suiet");
                   }}
                 >
                   <img className="w-6" src={suietIcon} />
@@ -640,6 +661,7 @@ const MainPage = () => {
           </div>
         </div>
       )}
+      {loadingView === true && <LoadingLayout />}
     </>
   );
 };
