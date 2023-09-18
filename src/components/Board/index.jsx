@@ -23,6 +23,7 @@ const Board = (props) => {
   const { chipsData, rouletteData } = props;
   console.log("-------------render-----------");
   console.log(chipsData);
+  console.log(chipsData.placedChips);
   console.log("-------------end-----------");
 
   let currentItemChips_1R_12 = chipsData.placedChips.get({

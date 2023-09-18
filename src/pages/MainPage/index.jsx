@@ -25,8 +25,6 @@ import chip1Icon from "/imgs/chip-1.png";
 import chip2Icon from "/imgs/chip-2.png";
 import chip5Icon from "/imgs/chip-5.png";
 import chip10Icon from "/imgs/chip-10.png";
-import chip25Icon from "/imgs/chip-25.png";
-import chip50Icon from "/imgs/chip-50.png";
 import profileIcon from "/imgs/profile.png";
 import closeIcon from "/imgs/close.png";
 import ethosIcon from "/imgs/ethos.png";
@@ -44,6 +42,8 @@ const rouletteWheelNumbers = [
   16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26,
 ];
 
+let nextId = 0;
+
 const MainPage = () => {
   const {
     select,
@@ -55,21 +55,22 @@ const MainPage = () => {
   } = useWallet();
 
   const [number, setNumber] = useState({ next: null });
-  const [selectedChip, setSelectedChip] = useState(null);
-  const [placedChips, setPlacedChips] = useState(new Map());
+  const [chipsData, setChipsData] = useState({
+    selectedChip: null,
+    placedChips: new Map(),
+  });
   const [stage, setStage] = useState(GameStages.PLACE_BET);
   const [endTime, setEndTime] = useState(0);
   const [time_remaining, setTimeRemaining] = useState(0);
   const [depositedAmount, setDepositedAmount] = useState(0);
   const [walletAddress, setWalletAddress] = useState("");
   const [progressCountdown, setProgressCountdown] = useState(0);
-  const [winners, setWinners] = useState([]);
-  const [history, setHistory] = useState([]);
 
   const [loadingView, setLoadingView] = useState(false);
   const [username, setUsername] = useState("");
   const [balance, setBalance] = useState(0);
   const [chatMessage, setChatMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
   const [walletConnectDialogView, setWalletConnectDialogView] = useState(false);
   const [accountCreateDialogView, setAccountCreateDialogView] = useState(false);
   const [allowWalletConnect, setAllowWalletConnect] = useState(false);
@@ -79,7 +80,6 @@ const MainPage = () => {
   const [suietWalletInstalled, setSuietWalletInstalled] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
   const [heroswapDialogview, setHeroswapDialogview] = useState(false);
-  const [liveChatMessage, setLiveChatMessage] = useState([]);
 
   useEffect(() => {
     [...configuredWallets, ...detectedWallets].map((wallet) => {
@@ -124,9 +124,11 @@ const MainPage = () => {
     });
 
     socketServer.on("receive_message", (data) => {
-      console.log("receive_message");
       const _username = data.username;
       const _message = data.message;
+      setMessageList(arr => [...arr, { id: nextId++, username: _username, message: _message }]);
+      console.log("receive_message");
+      console.log(messageList);
     });
   }, []);
 
@@ -148,8 +150,7 @@ const MainPage = () => {
       return;
     }
     if (_res.data !== null) {
-      if (walletConnectDialogView === true)
-        setWalletConnectDialogView(false);
+      if (walletConnectDialogView === true) setWalletConnectDialogView(false);
 
       setUsername(_res.data.username);
       setAccountCreated(true);
@@ -217,15 +218,13 @@ const MainPage = () => {
     }
   };
 
-  const clearBet = () => {
-    setPlacedChips(new Map());
-  };
+  const clearBet = () => {};
 
   const onCellClick = (item) => {
     console.log("------------onCellClick-----------");
     console.log(stage);
-    if (stage !== GameStages.PLACE_BET) return;
-    let currentChips = placedChips;
+    // if (stage !== GameStages.PLACE_BET) return;
+    let currentChips = chipsData.placedChips;
     let currentChipIterator = currentChips.values();
     let placedSum = 0;
     let curIteratorValue = currentChipIterator.next().value;
@@ -233,9 +232,8 @@ const MainPage = () => {
     while (curIteratorValue !== undefined) {
       placedSum += curIteratorValue.sum;
       curIteratorValue = currentChipIterator.next().value;
-      console.log(curIteratorValue);
     }
-    let chipValue = selectedChip;
+    let chipValue = chipsData.selectedChip;
     console.log(chipValue);
     if (chipValue === 0 || chipValue === null || chipValue === undefined) {
       toast.error("You should select the chip.");
@@ -251,12 +249,18 @@ const MainPage = () => {
 
     //console.log(currentChips[item]);
     currentChips.set(item, currentChip);
-    setPlacedChips(currentChips);
+    setChipsData({
+      selectedChip: chipsData.selectedChip,
+      placedChips: currentChips,
+    });
   };
 
   const onChipClick = (chip) => {
     if (chip != null) {
-      setSelectedChip(chip);
+      setChipsData({
+        selectedChip: chip,
+        placedChips: chipsData.placedChips,
+      });
     }
   };
 
@@ -280,8 +284,12 @@ const MainPage = () => {
   };
 
   const onHandleSendMsg = () => {
-    socketServer.emit("send_message", { username: username, message: chatMessage });
-  }
+    socketServer.emit("send_message", {
+      username: username,
+      message: chatMessage,
+    });
+    setChatMessage("");
+  };
 
   return (
     <>
@@ -294,7 +302,10 @@ const MainPage = () => {
                 <img className="w-6 h-fit" src={suiIcon} />
                 <p className="text-primary text-md font-bold">$0.4982</p>
               </div>
-              <button className="flex flex-row gap-4 items-center bg-[#060606] px-4 h-10 rounded-md" onClick={() => setHeroswapDialogview(true)}>
+              <button
+                className="flex flex-row gap-4 items-center bg-[#060606] px-4 h-10 rounded-md"
+                onClick={() => setHeroswapDialogview(true)}
+              >
                 <p className="text-primary text-sm font-bold">BUY SUI</p>
                 <img className="w-6" src={repeatIcon} />
               </button>
@@ -435,17 +446,14 @@ const MainPage = () => {
                 <Wheel rouletteData={rouletteWheelNumbers} number={number} />
                 <Board
                   onCellClick={onCellClick}
-                  chipsData={{
-                    selectedChip: selectedChip,
-                    placedChips: placedChips,
-                  }}
+                  chipsData={chipsData}
                   rouletteData={rouletteWheelNumbers}
                 />
-                <div className="absolute flex flex-row gap-4 left-[50%] top-[75%]">
+                <div className="absolute flex flex-row gap-4 left-[55%] top-[75%]">
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      selectedChip === 1 ? "chip_selected" : ""
+                      chipsData.selectedChip === 1 ? "chip_selected" : ""
                     )}
                     onClick={() => onChipClick(1)}
                     src={chip1Icon}
@@ -453,7 +461,7 @@ const MainPage = () => {
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      selectedChip === 2 ? "chip_selected" : ""
+                      chipsData.selectedChip === 2 ? "chip_selected" : ""
                     )}
                     onClick={() => onChipClick(2)}
                     src={chip2Icon}
@@ -461,7 +469,7 @@ const MainPage = () => {
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      selectedChip === 5 ? "chip_selected" : ""
+                      chipsData.selectedChip === 5 ? "chip_selected" : ""
                     )}
                     onClick={() => onChipClick(5)}
                     src={chip5Icon}
@@ -469,30 +477,14 @@ const MainPage = () => {
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      selectedChip === 10 ? "chip_selected" : ""
+                      chipsData.selectedChip === 10 ? "chip_selected" : ""
                     )}
                     onClick={() => onChipClick(10)}
                     src={chip10Icon}
                   />
-                  <img
-                    className={clsx(
-                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      selectedChip === 25 ? "chip_selected" : ""
-                    )}
-                    onClick={() => onChipClick(25)}
-                    src={chip25Icon}
-                  />
-                  <img
-                    className={clsx(
-                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      selectedChip === 50 ? "chip_selected" : ""
-                    )}
-                    onClick={() => onChipClick(50)}
-                    src={chip50Icon}
-                  />
                 </div>
               </div>
-              <div className="flex flex-row justify-between">
+              <div className="hidden flex flex-row justify-between">
                 <div className="flex flex-row gap-4">
                   <button className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase">
                     deposit
@@ -584,48 +576,38 @@ const MainPage = () => {
               </p>
               <div className="flex flex-col justify-between gap-4 px-6 py-4 bg-secondary rounded-lg h-[450px] w-[300px]">
                 <div className="flex flex-col gap-4 font-[Poppins-Regular]">
-                  <div className="flex flex-col gap-4">
-                    <div className="flex flex-row gap-2 items-center">
-                      <div className="w-1.5 h-10 bg-[#56BAD7] rounded-sm"></div>
-                      <div className="flex flex-col">
-                        <p className="text-sm font-bold text-chat-green uppercase">
-                          username100
-                        </p>
-                        <p className="text-sm text-primary">
-                          Hey guys, how is it going?
-                        </p>
+                  {messageList.map(message => {
+                    return (
+                      <div key={message.id} className="flex flex-col gap-4">
+                        <div className="flex flex-row gap-2 items-center">
+                          <div
+                            className={clsx(
+                              "w-1.5 h-10 rounded-sm",
+                              message.username === username
+                                ? "bg-[#56BAD7]"
+                                : "bg-[#E54545]"
+                            )}
+                          ></div>
+                          <div className="flex flex-col">
+                            <p
+                              className={clsx(
+                                "text-sm font-bold uppercase",
+                                message.username === username
+                                  ? "text-chat-green"
+                                  : "text-chat-red"
+                              )}
+                            >
+                              {message.username}
+                            </p>
+                            <p className="text-sm text-primary">
+                              {message.message}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="bg-[#4E6670] h-[1px]"></div>
                       </div>
-                    </div>
-                    <div className="bg-[#4E6670] h-[1px]"></div>
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <div className="flex flex-row gap-2 items-center">
-                      <div className="w-1.5 h-10 bg-[#E54545] rounded-sm"></div>
-                      <div className="flex flex-col">
-                        <p className="text-sm font-bold text-chat-green uppercase">
-                          mrfuddies10
-                        </p>
-                        <p className="text-sm text-primary">
-                          Going good thanks, hbu?
-                        </p>
-                      </div>
-                    </div>
-                    <div className="bg-[#4E6670] h-[1px]"></div>
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <div className="flex flex-row gap-2 items-center">
-                      <div className="w-1.5 h-10 bg-[#56BAD7] rounded-sm"></div>
-                      <div className="flex flex-col">
-                        <p className="text-sm font-bold text-chat-green uppercase">
-                          username100
-                        </p>
-                        <p className="text-sm text-primary">
-                          Glad to hear that. LFG! XD
-                        </p>
-                      </div>
-                    </div>
-                    <div className="bg-[#4E6670] h-[1px]"></div>
-                  </div>
+                    );
+                  })}
                 </div>
                 <div className="relative">
                   <input
@@ -634,6 +616,10 @@ const MainPage = () => {
                     placeholder="Message here"
                     value={chatMessage}
                     onChange={(e) => setChatMessage(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter')
+                        onHandleSendMsg();
+                    }}
                   />
                   <button
                     type="button"
@@ -824,7 +810,7 @@ const MainPage = () => {
           onClick={() => setHeroswapDialogview(false)}
         >
           <div
-            className="absolute left-0 right-0 top-0 bottom-0 m-auto w-1/2 h-1/2 bg-secondary"
+            className="absolute left-0 right-0 top-0 bottom-0 m-auto w-3/5 2xl:w-1/2 h-3/5 2xl:h-1/2 bg-secondary"
             onClick={(e) => e.stopPropagation()}
           >
             <img
@@ -844,11 +830,15 @@ const MainPage = () => {
                 </div>
                 <div className="flex flex-row gap-2">
                   <img className="w-8 h-fit" src={heroswap2} />
-                  <p className="text-md">Enter wallet address where you want to receive Sui</p>
+                  <p className="text-md">
+                    Enter wallet address where you want to receive Sui
+                  </p>
                 </div>
                 <div className="flex flex-row gap-2">
                   <img className="w-8 h-fit" src={heroswap3} />
-                  <p className="text-md">Preview your swap amount and send token to specified address</p>
+                  <p className="text-md">
+                    Preview your swap amount and send token to specified address
+                  </p>
                 </div>
                 <div className="flex flex-row gap-2 items-center">
                   <img className="w-8 h-fit" src={heroswap4} />
@@ -856,7 +846,10 @@ const MainPage = () => {
                 </div>
               </div>
             </div>
-            <iframe className="absolute top-0 left-1/2 right-0 bottom-0 m-auto w-[40%] h-[80%]" src='https://heroswap.com/widget?affiliateName=heroswap' />
+            <iframe
+              className="absolute left-1/2 right-0 bottom-0 m-auto w-[40%] h-[90%]"
+              src="https://heroswap.com/widget?affiliateName=heroswap"
+            />
           </div>
         </div>
       )}
