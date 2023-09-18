@@ -4,9 +4,9 @@ import anime from "animejs";
 const Wheel = (props) => {
   const { rouletteData, number } = props;
 
-  const totalNumbers = 37;
-  const singleSpinDuration = 5000;
-  const singleRotationDegree = 360/37;
+  const totalNumbers = 38;
+  const singleSpinDuration = 10000;
+  const singleRotationDegree = 360/38;
   let lastNumber = 0;
 
   const getRouletteIndexFromNumber = (number) => {
@@ -125,11 +125,11 @@ const Wheel = (props) => {
 
 
   return (
-    <div className="absolute w-[35%] 2xl:w-[40%] h-[100%] m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
-      <div className="layer-2 absolute w-[63%] 2xl:w-[75%] h-[100%] m-auto top-[-20px] 2xl:top-[-25px] bottom-0 left-1.5 2xl:left-2.5 right-0 bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center"></div>
+    <div className="absolute w-[35%] left-0 right-1/2 m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
+      <div className="layer-2 absolute w-[63%] 2xl:w-[75%] h-[100%] left-0 right-0 m-auto bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center"></div>
       <div className="ball-container absolute top-0 left-0 w-full h-full will-change-transform rotate-0">
         <div
-          className="ball absolute w-[14px] h-[14px] rounded-[7px] top-[55%] left-1/2 m-[-5px] will-change-transform translate-y-[-116px]"
+          className="ball absolute w-[14px] h-[14px] rounded-[7px] top-[50%] left-1/2 m-[-7px] will-change-transform translate-y-[-116px]"
           style={{
             background: "#fff radial-gradient(circle at 5px 5px, #fff, #444)",
             boxShadow: "1px 1px 4px #000",

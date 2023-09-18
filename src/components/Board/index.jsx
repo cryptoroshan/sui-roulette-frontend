@@ -4,7 +4,7 @@ import classNames from "classnames";
 import ChipComponent from "../ChipComponent/index.jsx";
 import { ValueType } from "../../constant/global.jsx";
 
-const totalNumbers = 37;
+const totalNumbers = 38;
 
 let other_1_12 = { type: ValueType.NUMBERS_1_12 };
 let other_2_12 = { type: ValueType.NUMBERS_2_12 };

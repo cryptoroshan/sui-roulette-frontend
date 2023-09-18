@@ -38,8 +38,8 @@ import heroswap4 from "/imgs/heroswap-4.png";
 const socketServer = io(env.SERVER_URL);
 
 const rouletteWheelNumbers = [
-  0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24,
-  16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26,
+  0, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6, 21, 33, 16, 4, 23, 35, 14, 2, 0, 28,
+  9, 26, 30, 11, 7, 20, 32, 17, 5, 22, 34, 15, 3, 24, 36, 13, 1,
 ];
 
 let nextId = 0;
@@ -126,7 +126,10 @@ const MainPage = () => {
     socketServer.on("receive_message", (data) => {
       const _username = data.username;
       const _message = data.message;
-      setMessageList(arr => [...arr, { id: nextId++, username: _username, message: _message }]);
+      setMessageList((arr) => [
+        ...arr,
+        { id: nextId++, username: _username, message: _message },
+      ]);
       console.log("receive_message");
       console.log(messageList);
     });
@@ -449,7 +452,7 @@ const MainPage = () => {
                   chipsData={chipsData}
                   rouletteData={rouletteWheelNumbers}
                 />
-                <div className="absolute flex flex-row gap-4 left-[55%] top-[75%]">
+                <div className="absolute flex flex-row items-center gap-4 left-[50%] top-[75%]">
                   <img
                     className={clsx(
                       "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
@@ -482,6 +485,9 @@ const MainPage = () => {
                     onClick={() => onChipClick(10)}
                     src={chip10Icon}
                   />
+                  <button className="bg-[#2CB0EE] px-4 h-10 text-primary text-sm font-bold rounded-md uppercase">
+                    place bet
+                  </button>
                 </div>
               </div>
               <div className="hidden flex flex-row justify-between">
@@ -576,7 +582,7 @@ const MainPage = () => {
               </p>
               <div className="flex flex-col justify-between gap-4 px-6 py-4 bg-secondary rounded-lg h-[450px] w-[300px]">
                 <div className="flex flex-col gap-4 font-[Poppins-Regular]">
-                  {messageList.map(message => {
+                  {messageList.map((message) => {
                     return (
                       <div key={message.id} className="flex flex-col gap-4">
                         <div className="flex flex-row gap-2 items-center">
@@ -617,8 +623,7 @@ const MainPage = () => {
                     value={chatMessage}
                     onChange={(e) => setChatMessage(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter')
-                        onHandleSendMsg();
+                      if (e.key === "Enter") onHandleSendMsg();
                     }}
                   />
                   <button
