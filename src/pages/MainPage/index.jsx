@@ -69,7 +69,7 @@ const MainPage = () => {
   const [loadingView, setLoadingView] = useState(false);
   const [username, setUsername] = useState("");
   const [balance, setBalance] = useState(0);
-  const [chat, setChat] = useState("");
+  const [chatMessage, setChatMessage] = useState("");
   const [walletConnectDialogView, setWalletConnectDialogView] = useState(false);
   const [accountCreateDialogView, setAccountCreateDialogView] = useState(false);
   const [allowWalletConnect, setAllowWalletConnect] = useState(false);
@@ -79,6 +79,7 @@ const MainPage = () => {
   const [suietWalletInstalled, setSuietWalletInstalled] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
   const [heroswapDialogview, setHeroswapDialogview] = useState(false);
+  const [liveChatMessage, setLiveChatMessage] = useState([]);
 
   useEffect(() => {
     [...configuredWallets, ...detectedWallets].map((wallet) => {
@@ -121,11 +122,15 @@ const MainPage = () => {
       //   socketServer.emit("enter", this.state.username);
       // });
     });
-  });
+
+    socketServer.on("receive_message", (data) => {
+      console.log("receive_message");
+      const _username = data.username;
+      const _message = data.message;
+    });
+  }, []);
 
   const getUserInfo = async (walletAddress_) => {
-    console.log("--------------getUserInfo-----------------");
-    console.log(walletAddress_);
     setWalletAddress(walletAddress_);
     let _res = await getRequest(
       env.SERVER_URL +
@@ -143,11 +148,12 @@ const MainPage = () => {
       return;
     }
     if (_res.data !== null) {
-      if (walletConnectDialogView === true) {
+      if (walletConnectDialogView === true)
         setWalletConnectDialogView(false);
-        setUsername(_res.data.username);
-        setAccountCreated(true);
-      }
+
+      setUsername(_res.data.username);
+      setAccountCreated(true);
+      socketServer.emit("enter", walletAddress_);
     } else {
       if (walletConnectDialogView === true) {
         setAccountCreateDialogView(true);
@@ -272,6 +278,10 @@ const MainPage = () => {
     setAccountCreateDialogView(false);
     setAccountCreated(true);
   };
+
+  const onHandleSendMsg = () => {
+    socketServer.emit("send_message", { username: username, message: chatMessage });
+  }
 
   return (
     <>
@@ -622,12 +632,13 @@ const MainPage = () => {
                     type="text"
                     className="relative bg-[#060606] rounded-lg text-sm text-primary pl-4 py-4 focus:outline-none font-[Poppins-Regular] w-full"
                     placeholder="Message here"
-                    value={chat}
-                    onChange={(e) => setChat(e.target.value)}
+                    value={chatMessage}
+                    onChange={(e) => setChatMessage(e.target.value)}
                   />
                   <button
                     type="button"
                     className="absolute top-0 bottom-0 m-auto h-fit right-2 bg-[#2CB0EE] hover:bg-blue-800 rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2"
+                    onClick={() => onHandleSendMsg()}
                   >
                     <img className="w-6 h-fit" src={chatsendIcon} />
                   </button>
@@ -827,7 +838,7 @@ const MainPage = () => {
                 <p className="text-xs">Powered by HeroSwap</p>
               </div>
               <div className="flex flex-col gap-6">
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row gap-2 items-center">
                   <img className="w-8 h-fit" src={heroswap1} />
                   <p className="text-md">Select Token Pair</p>
                 </div>
@@ -839,7 +850,7 @@ const MainPage = () => {
                   <img className="w-8 h-fit" src={heroswap3} />
                   <p className="text-md">Preview your swap amount and send token to specified address</p>
                 </div>
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row gap-2 items-center">
                   <img className="w-8 h-fit" src={heroswap4} />
                   <p className="text-md">You&apos;re done!</p>
                 </div>

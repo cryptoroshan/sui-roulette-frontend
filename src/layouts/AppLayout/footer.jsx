@@ -1,3 +1,4 @@
+import footerLogo from "/imgs/footer-logo.png";
 import discordIcon from "/imgs/discord.png";
 import twitterIcon from "/imgs/twitter.png";
 import mailIcon from "/imgs/mail.png";
@@ -8,7 +9,7 @@ const Footer = () => {
       <section className="flex flex-col w-3/4 2xl:w-2/3 mx-auto">
         <div className="flex flex-row justify-between px-16 py-16 w-full">
           <div className="flex flex-col gap-2">
-            <p className="text-3xl text-primary font-bold">DeSuiLabs</p>
+            <img className="w-56 h-fit" src={footerLogo} />
             <p className="text-sm text-secondary">
               SuiRoulette.com is a DeSuiLabs product.
             </p>
