@@ -580,7 +580,7 @@ const MainPage = () => {
               <p className="text-md text-primary uppercase font-[monumentextended-regular]">
                 live chat
               </p>
-              <div className="flex flex-col justify-between gap-4 px-6 py-4 bg-secondary rounded-lg h-[450px] w-[300px]">
+              <div className="flex flex-col justify-between gap-4 px-6 py-4 bg-secondary border border-[#4E6670] rounded-lg h-[450px] w-[300px]">
                 <div className="flex flex-col gap-4 font-[Poppins-Regular] max-h-[calc(35vh)] overflow-y-scroll">
                   {messageList.map((message) => {
                     return (
