@@ -228,22 +228,6 @@ div.chip-10-placed {
   border-radius: 100%;
 }
 
-div.chip-25-placed {
-  background:url('/imgs/chip-25.png') no-repeat;
-  background-size:  40px 40px;
- 
-  transform: scale(0.6) !important;
-  border-radius: 100%;
-}
-
-div.chip-50-placed {
-  background:url('/imgs/chip-50.png') no-repeat;
-  background-size:  40px 40px;
- 
-  transform: scale(0.6) !important;
-  border-radius: 100%;
-}
-
 .chipValueImage { 
   position: absolute;
   width: 40px;

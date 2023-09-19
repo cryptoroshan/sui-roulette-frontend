@@ -291,8 +291,8 @@ const Board = (props) => {
   };
 
   return (
-    <div className="absolute w-[50%] h-[50%] top-[15%] 2xl:top-[17%] right-[8%] bg-[url('/imgs/roulette-board.png')] bg-contain bg-no-repeat bg-center">
-      <div className="grid w-auto h-[67%] ml-[52px] mr-5 mt-4 mb-2">
+    <div className="absolute w-[550px] h-[270px] top-[15%] 2xl:top-[17%] right-[8%] bg-[url('/imgs/roulette-board.png')] bg-contain bg-no-repeat bg-center">
+      <div className="grid h-[60%] mt-7 ml-4 mr-3">
         <table>
           <tbody>
             {numbers.map((item, index) => {
@@ -317,7 +317,7 @@ const Board = (props) => {
                           chipKey={chipKey}
                           cell={cell}
                           cellClass={cellClass}
-                          rowSpan={6}
+                          rowSpan={2}
                           colSpan={1}
                           onCellClick={onCellClick}
                           leftMin={undefined}
@@ -375,6 +375,10 @@ const Board = (props) => {
                         />
                       );
                     } else {
+                      // console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                      // console.log(index);
+                      // console.log(cell);
+
                       let chipKeyValue = cell.value + "";
                       if (cell.value === undefined) {
                         let split = cell.valueSplit + "";
@@ -506,10 +510,7 @@ const Board = (props) => {
                 colSpan={3}
                 leftMin={30}
                 leftMax={60}
-                cellClass={getClassNamesFromCellItemType(
-                  ValueType.EVEN,
-                  null
-                )}
+                cellClass={getClassNamesFromCellItemType(ValueType.EVEN, null)}
                 onCellClick={onCellClick}
                 topMin={undefined}
                 topMax={undefined}
@@ -524,10 +525,7 @@ const Board = (props) => {
                 colSpan={3}
                 leftMin={30}
                 leftMax={60}
-                cellClass={getClassNamesFromCellItemType(
-                  ValueType.RED,
-                  null
-                )}
+                cellClass={getClassNamesFromCellItemType(ValueType.RED, null)}
                 onCellClick={onCellClick}
                 topMin={undefined}
                 topMax={undefined}
@@ -542,10 +540,7 @@ const Board = (props) => {
                 colSpan={3}
                 leftMin={30}
                 leftMax={60}
-                cellClass={getClassNamesFromCellItemType(
-                  ValueType.BLACK,
-                  null
-                )}
+                cellClass={getClassNamesFromCellItemType(ValueType.BLACK, null)}
                 onCellClick={onCellClick}
                 topMin={undefined}
                 topMax={undefined}
@@ -560,10 +555,7 @@ const Board = (props) => {
                 colSpan={3}
                 leftMin={30}
                 leftMax={60}
-                cellClass={getClassNamesFromCellItemType(
-                  ValueType.ODD,
-                  null
-                )}
+                cellClass={getClassNamesFromCellItemType(ValueType.ODD, null)}
                 onCellClick={onCellClick}
                 topMin={undefined}
                 topMax={undefined}

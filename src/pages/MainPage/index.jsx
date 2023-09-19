@@ -34,6 +34,8 @@ import heroswap1 from "/imgs/heroswap-1.png";
 import heroswap2 from "/imgs/heroswap-2.png";
 import heroswap3 from "/imgs/heroswap-3.png";
 import heroswap4 from "/imgs/heroswap-4.png";
+import ballSpinAudio from "/sounds/ball spin.mp3";
+import chipAudio from "/sounds/chip.mp3";
 
 const socketServer = io(env.SERVER_URL);
 
@@ -108,9 +110,13 @@ const MainPage = () => {
       console.log("State-Change Event: Occured");
 
       const gameData = JSON.parse(data);
-      console.log("------gameData--------");
-      console.log(gameData);
+      console.log("------gameData stage--------");
+      console.log(gameData.stage);
       setGameData(gameData);
+      if (gameData.stage === GameStages.NO_MORE_BETS) {
+        const ballspin_audio = document.getElementById('ballSpinAudio');
+        ballspin_audio.play();
+      }
       if (stage == GameStages.WINNERS - 1) clearBet();
     });
 
@@ -202,13 +208,13 @@ const MainPage = () => {
         setWinners(gameData.wins);
         setStage(gameData.stage);
         setTimeRemaining(gameData.time_remaining);
-        setHistory(gameData.history);
+        // setHistory(gameData.history);
       } else {
         setEndTime(endTime);
         setProgressCountdown(endTime - gameData.time_remaining);
         setStage(gameData.stage);
         setTimeRemaining(gameData.time_remaining);
-        setHistory(gameData.history);
+        // setHistory(gameData.history);
       }
     } else {
       // PLACE BET from 0 to 25
@@ -256,6 +262,8 @@ const MainPage = () => {
       selectedChip: chipsData.selectedChip,
       placedChips: currentChips,
     });
+    const chip_audio = document.getElementById('chipAudio');
+    chip_audio.play();
   };
 
   const onChipClick = (chip) => {
@@ -297,6 +305,12 @@ const MainPage = () => {
   return (
     <>
       <section className="relative flex flex-col justify-between min-h-screen bg-primary">
+        <audio id="ballSpinAudio">
+          <source src={ballSpinAudio} type="audio/mp3" />
+        </audio>
+        <audio id="chipAudio">
+          <source src={chipAudio} type="audio/mp3" />
+        </audio>
         <section className="flex flex-col px-14 pt-8 2xl:pt-12">
           <div className="flex flex-row justify-between bg-secondary rounded-3xl px-12 py-4 font-[Poppins-Regular]">
             <img className="w-[320px] h-fit my-auto" src={logoIcon} />
