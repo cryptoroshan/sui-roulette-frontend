@@ -581,7 +581,7 @@ const MainPage = () => {
                 live chat
               </p>
               <div className="flex flex-col justify-between gap-4 px-6 py-4 bg-secondary rounded-lg h-[450px] w-[300px]">
-                <div className="flex flex-col gap-4 font-[Poppins-Regular]">
+                <div className="flex flex-col gap-4 font-[Poppins-Regular] max-h-[calc(35vh)] overflow-y-scroll">
                   {messageList.map((message) => {
                     return (
                       <div key={message.id} className="flex flex-col gap-4">
@@ -594,7 +594,7 @@ const MainPage = () => {
                                 : "bg-[#E54545]"
                             )}
                           ></div>
-                          <div className="flex flex-col">
+                          <div className="flex flex-col overflow-x-hidden">
                             <p
                               className={clsx(
                                 "text-sm font-bold uppercase",
@@ -618,7 +618,7 @@ const MainPage = () => {
                 <div className="relative">
                   <input
                     type="text"
-                    className="relative bg-[#060606] rounded-lg text-sm text-primary pl-4 py-4 focus:outline-none font-[Poppins-Regular] w-full"
+                    className="relative bg-[#060606] rounded-lg text-sm text-primary pl-4 pr-16 py-4 border-none focus:ring-0 font-[Poppins-Regular] w-full"
                     placeholder="Message here"
                     value={chatMessage}
                     onChange={(e) => setChatMessage(e.target.value)}
