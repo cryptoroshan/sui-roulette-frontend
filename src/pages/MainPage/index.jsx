@@ -97,9 +97,6 @@ const MainPage = () => {
   }, [detectedWallets]);
 
   useEffect(() => {
-    console.log("------------connected-------------");
-    console.log(connected);
-    console.log(account?.address);
     if (connected) getUserInfo(account.address);
   }, [connected]);
 
@@ -113,10 +110,10 @@ const MainPage = () => {
       console.log("------gameData stage--------");
       console.log(gameData.stage);
       setGameData(gameData);
-      if (gameData.stage === GameStages.NO_MORE_BETS) {
-        const ballspin_audio = document.getElementById('ballSpinAudio');
-        ballspin_audio.play();
-      }
+      // if (gameData.stage === GameStages.NO_MORE_BETS) {
+      //   const ballspin_audio = document.getElementById('ballSpinAudio');
+      //   ballspin_audio.play();
+      // }
       if (stage == GameStages.WINNERS - 1) clearBet();
     });
 

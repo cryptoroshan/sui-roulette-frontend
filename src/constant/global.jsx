@@ -17,6 +17,7 @@ export const ValueType = {
   NUMBERS_1R_12: 15,
   NUMBERS_2R_12: 16,
   NUMBERS_3R_12: 17,
+  FIVE_SPLIT: 18,
 };
 
 export const GameStages = {

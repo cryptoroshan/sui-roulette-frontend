@@ -101,8 +101,17 @@ const Board = (props) => {
       if (i === 1) {
         let cell = {};
         cell.type = ValueType.NUMBER;
+        cell.value = 37;
+        rowList.push(cell);
+      } else if (i === 3) {
+        let cell = {};
+        cell.type = ValueType.DOUBLE_SPLIT;
+        cell.valueSplit = [37, 0];
+        rowList.push(cell);
+      } else if (i === 4) {
+        let cell = {};
+        cell.type = ValueType.NUMBER;
         cell.value = 0;
-
         rowList.push(cell);
       }
       for (let j = 1; j <= 26; j++) {
@@ -135,7 +144,8 @@ const Board = (props) => {
             let bottomNumber = difference - nextStartNumberSub;
 
             cell.type = ValueType.TRIPLE_SPLIT;
-            cell.valueSplit = [leftNumber, topNumber, bottomNumber];
+            if (i === 2) cell.valueSplit = [37, topNumber, bottomNumber];
+            else cell.valueSplit = [0, topNumber, bottomNumber];
             rowList.push(cell);
           } else {
             if (j % 2 === 0) {
@@ -165,11 +175,21 @@ const Board = (props) => {
         } else {
           // 1, 3, 5 normal rows
           if (j === 1) {
-            let leftNumber = 0;
-            let rightNumber = leftNumber + difference;
-            cell.type = ValueType.DOUBLE_SPLIT;
-            cell.valueSplit = [leftNumber, rightNumber];
-            rowList.push(cell);
+            if (i === 3) {
+              cell.type = ValueType.TRIPLE_SPLIT;
+              cell.valueSplit = [37, 0, 2];
+              rowList.push(cell);
+            } else if (i === 5) {
+              cell.type = ValueType.DOUBLE_SPLIT;
+              cell.valueSplit = [0, 1];
+              rowList.push(cell);
+            } else {
+              let leftNumber = 0;
+              let rightNumber = leftNumber + difference;
+              cell.type = ValueType.DOUBLE_SPLIT;
+              cell.valueSplit = [37, rightNumber];
+              rowList.push(cell);
+            }
           } else {
             if (j % 2 === 0) {
               let currentNumber =
@@ -187,10 +207,12 @@ const Board = (props) => {
           }
         }
       }
+      console.log(rowList);
       colList.push(rowList);
     }
     let rowListLast = [
-      { type: ValueType.QUAD_SPLIT, valueSplit: [0, 1, 2, 3] },
+      { type: ValueType.EMPTY},
+      { type: ValueType.FIVE_SPLIT, valueSplit: [37, 0, 1, 2, 3] },
       { type: ValueType.TRIPLE_SPLIT, valueSplit: [1, 2, 3] },
       { type: ValueType.SIX_SPLIT, valueSplit: [1, 2, 3, 4, 5, 6] },
       { type: ValueType.TRIPLE_SPLIT, valueSplit: [4, 5, 6] },
@@ -218,7 +240,6 @@ const Board = (props) => {
       { type: ValueType.EMPTY },
     ];
     colList.push(rowListLast);
-    console.log(colList);
     // return colList;
     setNumbers(colList);
   };
@@ -234,7 +255,7 @@ const Board = (props) => {
 
   const getClassNamesFromCellItemType = (type, number) => {
     let isEvenOdd = 0;
-    if (number != null && type === ValueType.NUMBER && number !== 0) {
+    if (number != null && type === ValueType.NUMBER && number !== 0 && number !== 37) {
       if (number % 2 === 0) {
         isEvenOdd = 1;
       } else {
@@ -249,6 +270,8 @@ const Board = (props) => {
       "board-cell-quad-split": type === ValueType.QUAD_SPLIT,
       "board-cell-triple-split": type === ValueType.TRIPLE_SPLIT,
       "board-cell-empty": type === ValueType.EMPTY,
+      "board-cell-five-split": type === ValueType.FIVE_SPLIT,
+      "board-cell-six-split": type === ValueType.SIX_SPLIT,
       "board-cell-even": type === ValueType.EVEN || isEvenOdd === 1,
       "board-cell-odd": type === ValueType.ODD || isEvenOdd === 2,
       "board-cell-number-1-18":
@@ -268,23 +291,31 @@ const Board = (props) => {
         (number !== null &&
           number % 3 === 0 &&
           type === ValueType.NUMBER &&
-          number !== 0),
+          number !== 0 &&
+          number !== 37),
       "board-cell-number-2-12":
         type === ValueType.NUMBERS_2_12 ||
-        (number !== null && number % 3 === 2 && type === ValueType.NUMBER),
+        (number !== null && number % 3 === 2 && type === ValueType.NUMBER && number !== 0 && number !== 37),
       "board-cell-number-3-12":
         type === ValueType.NUMBERS_3_12 ||
-        (number !== null && number % 3 === 1 && type === ValueType.NUMBER),
+        (number !== null && number % 3 === 1 && type === ValueType.NUMBER && number !== 0 && number !== 37),
       "board-cell-red":
         type === ValueType.RED ||
         (number !== null &&
           getRouletteColor(number) === "red" &&
-          type === ValueType.NUMBER),
+          type === ValueType.NUMBER &&
+          number !== 0 &&
+          number !== 37),
       "board-cell-black":
         type === ValueType.BLACK ||
         (number !== null &&
           getRouletteColor(number) === "black" &&
-          type === ValueType.NUMBER),
+          type === ValueType.NUMBER &&
+          number !== 0 &&
+          number !== 37),
+      "board-cell-number-1r-12": type === ValueType.NUMBERS_1R_12,
+      "board-cell-number-2r-12": type === ValueType.NUMBERS_2R_12,
+      "board-cell-number-3r-12": type === ValueType.NUMBERS_3R_12,
     });
 
     return cellClass;
@@ -304,7 +335,8 @@ const Board = (props) => {
                       cell.type,
                       cell.value
                     );
-                    if (cell.type === ValueType.NUMBER && cell.value === 0) {
+                    if (cell.type === ValueType.NUMBER && (cell.value === 0 || cell.value === 37)) {
+                      console.log(cellClass);
                       let tdKey = "td_" + cell.type + "_" + cell.value;
                       let chipKey = "chip_" + cell.type + "_" + cell.value;
 
@@ -384,6 +416,7 @@ const Board = (props) => {
                         let split = cell.valueSplit + "";
                         chipKeyValue = "split_" + split;
                       }
+                      console.log(chipKeyValue);
                       let tdKey = "td_" + cell.type + "_" + chipKeyValue;
                       let chipKey = "chip_" + cell.type + "_" + chipKeyValue;
 
@@ -421,7 +454,7 @@ const Board = (props) => {
           </tbody>
         </table>
       </div>
-      <div className="grid w-auto h-[42%] ml-[52px] mr-5 -mt-4 mb-2">
+      <div className="grid w-auto h-[42%] ml-4 mr-3 -mt-3 mb-2">
         <table>
           <tbody>
             <tr>
