@@ -228,19 +228,16 @@ const MainPage = () => {
 
   const onCellClick = (item) => {
     console.log("------------onCellClick-----------");
-    console.log(stage);
     // if (stage !== GameStages.PLACE_BET) return;
     let currentChips = chipsData.placedChips;
     let currentChipIterator = currentChips.values();
     let placedSum = 0;
     let curIteratorValue = currentChipIterator.next().value;
-    console.log(curIteratorValue);
     while (curIteratorValue !== undefined) {
       placedSum += curIteratorValue.sum;
       curIteratorValue = currentChipIterator.next().value;
     }
     let chipValue = chipsData.selectedChip;
-    console.log(chipValue);
     if (chipValue === 0 || chipValue === null || chipValue === undefined) {
       toast.error("You should select the chip.");
       return;

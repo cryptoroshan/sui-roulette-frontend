@@ -10,8 +10,6 @@ const Chip = (props) => {
   //console.log(chipsData);
   function getChipClasses(chip) {
     let cellClass = classNames({
-      "chip-50-placed": chip === 50,
-      "chip-25-placed": chip === 25,
       "chip-10-placed": chip === 10,
       "chip-5-placed": chip === 5,
       "chip-2-placed": chip === 2,
@@ -23,7 +21,7 @@ const Chip = (props) => {
   }
 
   if (currentItemChips !== undefined) {
-    console.log("---------Chip------------");
+    console.log("asdfsafdsafsafd");
     console.log(currentItemChips);
     let total = 0;
     let chipData = currentItemChips;
@@ -80,6 +78,7 @@ const Chip = (props) => {
         };
         style.left = "-7px";
         style.top = "-25px";
+        console.log("chipsImgs", chipsImgs);
         chipsImgs.push(
           <div
             key={key}

@@ -6,7 +6,7 @@ import { ValueType } from "../../constant/global.jsx";
 
 const totalNumbers = 38;
 
-let other_1_12 = { type: ValueType.NUMBERS_1_12 };
+let other_1_12 = { type: ValueType.NUMBERS_1_12, valueSplit: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] };
 let other_2_12 = { type: ValueType.NUMBERS_2_12 };
 let other_3_12 = { type: ValueType.NUMBERS_3_12 };
 let other_1_18 = { type: ValueType.NUMBERS_1_18 };
@@ -22,43 +22,93 @@ let other_black = { type: ValueType.BLACK };
 const Board = (props) => {
   const { chipsData, rouletteData } = props;
   console.log("-------------render-----------");
-  console.log(chipsData);
   console.log(chipsData.placedChips);
   console.log("-------------end-----------");
+  const [currentItemChips_1_12, setCurrentItemChips_1_12] = useState(chipsData.placedChips.get(other_1_12));
+  const [currentItemChips_2_12, setCurrentItemChips_2_12] = useState(chipsData.placedChips.get(other_2_12));
+  const [currentItemChips_3_12, setCurrentItemChips_3_12] = useState(chipsData.placedChips.get(other_3_12));
+  const [currentItemChips_1_18, setCurrentItemChips_1_18] = useState(chipsData.placedChips.get(other_1_18));
+  const [currentItemChips_19_36, setCurrentItemChips_19_36] = useState(chipsData.placedChips.get(other_19_36));
+  const [currentItemChips_even, setCurrentItemChips_even] = useState(chipsData.placedChips.get(other_even));
+  const [currentItemChips_odd, setCurrentItemChips_odd] = useState(chipsData.placedChips.get(other_odd));
+  const [currentItemChips_red, setCurrentItemChips_red] = useState(chipsData.placedChips.get(other_red));
+  const [currentItemChips_black, setCurrentItemChips_black] = useState(chipsData.placedChips.get(other_black));
 
-  let currentItemChips_1R_12 = chipsData.placedChips.get({
-    type: ValueType.NUMBERS_1R_12,
-  });
-  console.log(currentItemChips_1R_12);
-  let currentItemChips_2R_12 = chipsData.placedChips.get({
-    type: ValueType.NUMBERS_2R_12,
-  });
-  let currentItemChips_3R_12 = chipsData.placedChips.get({
-    type: ValueType.NUMBERS_3R_12,
-  });
-  let currentItemChips_1_12 = chipsData.placedChips.get({
-    type: ValueType.NUMBERS_1_12,
-  });
-  let currentItemChips_2_12 = chipsData.placedChips.get({
-    type: ValueType.NUMBERS_2_12,
-  });
-  let currentItemChips_3_12 = chipsData.placedChips.get({
-    type: ValueType.NUMBERS_3_12,
-  });
-  let currentItemChips_1_18 = chipsData.placedChips.get({
-    type: ValueType.NUMBERS_1_18,
-  });
-  let currentItemChips_even = chipsData.placedChips.get({
-    type: ValueType.EVEN,
-  });
-  let currentItemChips_red = chipsData.placedChips.get({ type: ValueType.RED });
-  let currentItemChips_black = chipsData.placedChips.get({
-    type: ValueType.BLACK,
-  });
-  let currentItemChips_odd = chipsData.placedChips.get({ type: ValueType.ODD });
-  let currentItemChips_19_36 = chipsData.placedChips.get({
-    type: ValueType.NUMBERS_19_36,
-  });
+  useEffect(() => {
+    const keys = chipsData.placedChips.keys();
+    let key = keys.next().value;
+    while(key != undefined) {
+      switch(key.type) {
+        case ValueType.NUMBERS_1_12:
+          setCurrentItemChips_1_12(chipsData.placedChips.get(key));
+          break;
+        case ValueType.NUMBERS_2_12:
+          setCurrentItemChips_2_12(chipsData.placedChips.get(key));
+          break;
+        case ValueType.NUMBERS_3_12:
+          setCurrentItemChips_3_12(chipsData.placedChips.get(key));
+          break;
+        case ValueType.NUMBERS_1_18:
+          setCurrentItemChips_1_18(chipsData.placedChips.get(key));
+          break;
+        case ValueType.NUMBERS_19_36:
+          setCurrentItemChips_19_36(chipsData.placedChips.get(key));
+          break;
+        case ValueType.EVEN:
+          setCurrentItemChips_even(chipsData.placedChips.get(key));
+          break;
+        case ValueType.ODD:
+          setCurrentItemChips_odd(chipsData.placedChips.get(key));
+          break;
+        case ValueType.RED:
+          setCurrentItemChips_red(chipsData.placedChips.get(key));
+          break;
+        case ValueType.BLACK:
+          setCurrentItemChips_black(chipsData.placedChips.get(key));
+          break;
+      }
+      key = keys.next().value
+    }
+  }, [chipsData])
+
+  // useEffect(() => {
+  //   console.log(chipsData)
+  //   currentItemChips_1R_12 = chipsData.placedChips.get(other_1R_12);
+  //   currentItemChips_2R_12 = chipsData.placedChips.get({
+  //     type: ValueType.NUMBERS_2R_12,
+  //   });
+  //   currentItemChips_3R_12 = chipsData.placedChips.get({
+  //     type: ValueType.NUMBERS_3R_12,
+  //   });
+  //   currentItemChips_1_12 = chipsData.placedChips.get(other_1_12);
+  //   console.log("---------------------chipsData.placedChipschipsData.placedChips")
+  //   console.log(chipsData.placedChips);
+  //   console.log(currentItemChips_1_12)
+  //   currentItemChips_2_12 = chipsData.placedChips.get({
+  //     type: ValueType.NUMBERS_2_12,
+  //   });
+  //   currentItemChips_3_12 = chipsData.placedChips.get({
+  //     type: ValueType.NUMBERS_3_12,
+  //   });
+  //   currentItemChips_1_18 = chipsData.placedChips.get({
+  //     type: ValueType.NUMBERS_1_18,
+  //   });
+  //   currentItemChips_even = chipsData.placedChips.get({
+  //     type: ValueType.EVEN,
+  //   });
+  //   currentItemChips_red = chipsData.placedChips.get({
+  //     type: ValueType.RED,
+  //   });
+  //   currentItemChips_black = chipsData.placedChips.get({
+  //     type: ValueType.BLACK,
+  //   });
+  //   currentItemChips_odd = chipsData.placedChips.get({
+  //     type: ValueType.ODD,
+  //   });
+  //   currentItemChips_19_36 = chipsData.placedChips.get({
+  //     type: ValueType.NUMBERS_19_36,
+  //   });
+  // }, [chipsData]);
 
   const [numbers, setNumbers] = useState([]);
 
@@ -67,7 +117,6 @@ const Board = (props) => {
   }, []);
 
   const onCellClick = (item) => {
-    console.log("--------Board onCellClick---------");
     props.onCellClick(item);
   };
 
@@ -123,12 +172,18 @@ const Board = (props) => {
           continue;
         } else if (i % 2 == 1 && j > 24) {
           if (j == 26) {
-            if (i == 1) cell.type = ValueType.NUMBERS_1R_12;
-            if (i == 3) cell.type = ValueType.NUMBERS_2R_12;
-            if (i == 5) cell.type = ValueType.NUMBERS_3R_12;
-            // if (i == 1) cell.valueSplit = [3,6,9,12,15,18,21,24,27,30,33,36];
-            // if (i == 3) cell.valueSplit = [2,5,8,11,14,17,20,23,26,29,32,35];
-            // if (i == 5) cell.valueSplit = [1,4,7,10,13,16,19,22,25,28,31,34];
+            if (i == 1) {
+              cell.type = ValueType.NUMBERS_1R_12;
+              cell.valueSplit = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36];
+            }
+            if (i == 3) {
+              cell.type = ValueType.NUMBERS_2R_12;
+              cell.valueSplit = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35];
+            }
+            if (i == 5) {
+              cell.type = ValueType.NUMBERS_3R_12;
+              cell.valueSplit = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34];
+            }
             rowList.push(cell);
           } else {
             cell.type = ValueType.EMPTY;
@@ -207,11 +262,10 @@ const Board = (props) => {
           }
         }
       }
-      console.log(rowList);
       colList.push(rowList);
     }
     let rowListLast = [
-      { type: ValueType.EMPTY},
+      { type: ValueType.EMPTY },
       { type: ValueType.FIVE_SPLIT, valueSplit: [37, 0, 1, 2, 3] },
       { type: ValueType.TRIPLE_SPLIT, valueSplit: [1, 2, 3] },
       { type: ValueType.SIX_SPLIT, valueSplit: [1, 2, 3, 4, 5, 6] },
@@ -255,7 +309,12 @@ const Board = (props) => {
 
   const getClassNamesFromCellItemType = (type, number) => {
     let isEvenOdd = 0;
-    if (number != null && type === ValueType.NUMBER && number !== 0 && number !== 37) {
+    if (
+      number != null &&
+      type === ValueType.NUMBER &&
+      number !== 0 &&
+      number !== 37
+    ) {
       if (number % 2 === 0) {
         isEvenOdd = 1;
       } else {
@@ -287,18 +346,11 @@ const Board = (props) => {
           number <= 36 &&
           type === ValueType.NUMBER),
       "board-cell-number-1-12":
-        type === ValueType.NUMBERS_1_12 ||
-        (number !== null &&
-          number % 3 === 0 &&
-          type === ValueType.NUMBER &&
-          number !== 0 &&
-          number !== 37),
+        type === ValueType.NUMBERS_1_12 || (number >= 1 && number <= 12),
       "board-cell-number-2-12":
-        type === ValueType.NUMBERS_2_12 ||
-        (number !== null && number % 3 === 2 && type === ValueType.NUMBER && number !== 0 && number !== 37),
+        type === ValueType.NUMBERS_2_12 || (number >= 13 && number <= 24),
       "board-cell-number-3-12":
-        type === ValueType.NUMBERS_3_12 ||
-        (number !== null && number % 3 === 1 && type === ValueType.NUMBER && number !== 0 && number !== 37),
+        type === ValueType.NUMBERS_3_12 || (number >= 25 && number <= 36),
       "board-cell-red":
         type === ValueType.RED ||
         (number !== null &&
@@ -313,9 +365,27 @@ const Board = (props) => {
           type === ValueType.NUMBER &&
           number !== 0 &&
           number !== 37),
-      "board-cell-number-1r-12": type === ValueType.NUMBERS_1R_12,
-      "board-cell-number-2r-12": type === ValueType.NUMBERS_2R_12,
-      "board-cell-number-3r-12": type === ValueType.NUMBERS_3R_12,
+      "board-cell-number-1r-12":
+        type === ValueType.NUMBERS_1R_12 ||
+        (number !== null &&
+          number % 3 === 0 &&
+          type === ValueType.NUMBER &&
+          number !== 0 &&
+          number !== 37),
+      "board-cell-number-2r-12":
+        type === ValueType.NUMBERS_2R_12 ||
+        (number !== null &&
+          number % 3 === 2 &&
+          type === ValueType.NUMBER &&
+          number !== 0 &&
+          number !== 37),
+      "board-cell-number-3r-12":
+        type === ValueType.NUMBERS_3R_12 ||
+        (number !== null &&
+          number % 3 === 1 &&
+          type === ValueType.NUMBER &&
+          number !== 0 &&
+          number !== 37),
     });
 
     return cellClass;
@@ -335,8 +405,10 @@ const Board = (props) => {
                       cell.type,
                       cell.value
                     );
-                    if (cell.type === ValueType.NUMBER && (cell.value === 0 || cell.value === 37)) {
-                      console.log(cellClass);
+                    if (
+                      cell.type === ValueType.NUMBER &&
+                      (cell.value === 0 || cell.value === 37)
+                    ) {
                       let tdKey = "td_" + cell.type + "_" + cell.value;
                       let chipKey = "chip_" + cell.type + "_" + cell.value;
 
@@ -370,23 +442,12 @@ const Board = (props) => {
                       }
                       let tdKey = "td_" + cell.type + "_" + chipKeyValue;
                       let chipKey = "chip_" + cell.type + "_" + chipKeyValue;
-                      let cellVal = null;
-                      let cellType = null;
-                      let currentItemChips = null;
+                      let currentItemChips = chipsData.placedChips.get(cell);
                       if (cell.type === ValueType.NUMBERS_1R_12) {
-                        cellVal = other_1R_12;
-                        cellType = ValueType.NUMBERS_1R_12;
-                        currentItemChips = currentItemChips_1R_12;
-                      }
-                      if (cell.type === ValueType.NUMBERS_2R_12) {
-                        cellVal = other_2R_12;
-                        cellType = ValueType.NUMBERS_2R_12;
-                        currentItemChips = currentItemChips_2R_12;
-                      }
-                      if (cell.type === ValueType.NUMBERS_3R_12) {
-                        cellVal = other_3R_12;
-                        cellType = ValueType.NUMBERS_3R_12;
-                        currentItemChips = currentItemChips_3R_12;
+                        console.log("currentItemChips--------------");
+                        console.log(chipsData.placedChips);
+                        console.log(currentItemChips);
+                        console.log(cell);
                       }
 
                       return (
@@ -395,7 +456,7 @@ const Board = (props) => {
                           currentItemChips={currentItemChips}
                           tdKey={tdKey}
                           chipKey={chipKey}
-                          cell={cellVal}
+                          cell={cell}
                           rowSpan={1}
                           colSpan={1}
                           cellClass={cellClass}
@@ -407,16 +468,11 @@ const Board = (props) => {
                         />
                       );
                     } else {
-                      // console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                      // console.log(index);
-                      // console.log(cell);
-
                       let chipKeyValue = cell.value + "";
                       if (cell.value === undefined) {
                         let split = cell.valueSplit + "";
                         chipKeyValue = "split_" + split;
                       }
-                      console.log(chipKeyValue);
                       let tdKey = "td_" + cell.type + "_" + chipKeyValue;
                       let chipKey = "chip_" + cell.type + "_" + chipKeyValue;
 
