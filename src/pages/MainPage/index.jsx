@@ -34,6 +34,10 @@ import heroswap1 from "/imgs/heroswap-1.png";
 import heroswap2 from "/imgs/heroswap-2.png";
 import heroswap3 from "/imgs/heroswap-3.png";
 import heroswap4 from "/imgs/heroswap-4.png";
+import soundonIcon from "/imgs/sound-on.png";
+import soundoffIcon from "/imgs/sound-off.png";
+import backIcon from "/imgs/back.png";
+import backgroundAudio from "/sounds/jazz.mp3";
 import ballSpinAudio from "/sounds/ball spin.mp3";
 import chipAudio from "/sounds/chip.mp3";
 
@@ -82,6 +86,8 @@ const MainPage = () => {
   const [suietWalletInstalled, setSuietWalletInstalled] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
   const [heroswapDialogview, setHeroswapDialogview] = useState(false);
+  const [soundon, setSoundOn] = useState(false);
+  const [soundoff, setSoundOff] = useState(true);
 
   useEffect(() => {
     [...configuredWallets, ...detectedWallets].map((wallet) => {
@@ -256,7 +262,7 @@ const MainPage = () => {
       selectedChip: chipsData.selectedChip,
       placedChips: currentChips,
     });
-    const chip_audio = document.getElementById('chipAudio');
+    const chip_audio = document.getElementById("chipAudio");
     chip_audio.play();
   };
 
@@ -299,6 +305,9 @@ const MainPage = () => {
   return (
     <>
       <section className="relative flex flex-col justify-between min-h-screen bg-primary">
+        <audio id="backgroundAudio" loop>
+          <source src={backgroundAudio} type="audio/mp3" />
+        </audio>
         <audio id="ballSpinAudio">
           <source src={ballSpinAudio} type="audio/mp3" />
         </audio>
@@ -417,39 +426,72 @@ const MainPage = () => {
                   </p>
                   <img className="w-6 h-fit" src={codesvgIcon} />
                 </div>
-                <div className="flex flex-row gap-4 items-center bg-secondary rounded-lg px-5 py-3 font-[monumentextended-regular]">
-                  <p className="text-md text-primary uppercase">recent spins</p>
-                  <div className="flex flex-row gap-1">
-                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                      33
+                <div className="flex flex-row gap-2 items-center h-14">
+                  <div
+                    className={clsx(
+                      "flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer",
+                      soundoff === true ? "bg-secondary" : ""
+                    )}
+                    onClick={() => {
+                      setSoundOff(true);
+                      setSoundOn(false);
+                      document.getElementById("backgroundAudio").muted = true;
+                    }}
+                  >
+                    <img className="h-8 w-fit" src={soundoffIcon} />
+                  </div>
+                  <div
+                    className={clsx(
+                      "flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer",
+                      soundon === true ? "bg-secondary" : ""
+                    )}
+                    onClick={() => {
+                      setSoundOn(true);
+                      setSoundOff(false);
+                      const background_audio =
+                        document.getElementById("backgroundAudio");
+                      background_audio.muted = false;
+                      background_audio.play();
+                    }}
+                  >
+                    <img className="h-8 w-fit" src={soundonIcon} />
+                  </div>
+                  <div className="flex flex-row gap-4 items-center bg-secondary rounded-lg px-5 py-3 font-[monumentextended-regular]">
+                    <p className="text-md text-primary uppercase">
+                      recent spins
                     </p>
-                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                      18
-                    </p>
-                    <p className="bg-number-green py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                      0
-                    </p>
-                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                      11
-                    </p>
-                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                      9
-                    </p>
-                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                      2
-                    </p>
-                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                      10
-                    </p>
-                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                      28
-                    </p>
-                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                      16
-                    </p>
-                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                      1
-                    </p>
+                    <div className="flex flex-row gap-1">
+                      <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                        33
+                      </p>
+                      <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                        18
+                      </p>
+                      <p className="bg-number-green py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                        0
+                      </p>
+                      <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                        11
+                      </p>
+                      <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                        9
+                      </p>
+                      <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                        2
+                      </p>
+                      <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                        10
+                      </p>
+                      <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                        28
+                      </p>
+                      <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                        16
+                      </p>
+                      <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                        1
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -460,38 +502,44 @@ const MainPage = () => {
                   chipsData={chipsData}
                   rouletteData={rouletteWheelNumbers}
                 />
-                <div className="absolute flex flex-row items-center gap-4 left-[50%] top-[75%]">
+                <div className="absolute flex flex-row items-center gap-6 left-[50%] top-[75%]">
+                  <div className="flex gap-4">
+                    <img
+                      className={clsx(
+                        "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        chipsData.selectedChip === 1 ? "chip_selected" : ""
+                      )}
+                      onClick={() => onChipClick(1)}
+                      src={chip1Icon}
+                    />
+                    <img
+                      className={clsx(
+                        "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        chipsData.selectedChip === 2 ? "chip_selected" : ""
+                      )}
+                      onClick={() => onChipClick(2)}
+                      src={chip2Icon}
+                    />
+                    <img
+                      className={clsx(
+                        "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        chipsData.selectedChip === 5 ? "chip_selected" : ""
+                      )}
+                      onClick={() => onChipClick(5)}
+                      src={chip5Icon}
+                    />
+                    <img
+                      className={clsx(
+                        "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        chipsData.selectedChip === 10 ? "chip_selected" : ""
+                      )}
+                      onClick={() => onChipClick(10)}
+                      src={chip10Icon}
+                    />
+                  </div>
                   <img
-                    className={clsx(
-                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      chipsData.selectedChip === 1 ? "chip_selected" : ""
-                    )}
-                    onClick={() => onChipClick(1)}
-                    src={chip1Icon}
-                  />
-                  <img
-                    className={clsx(
-                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      chipsData.selectedChip === 2 ? "chip_selected" : ""
-                    )}
-                    onClick={() => onChipClick(2)}
-                    src={chip2Icon}
-                  />
-                  <img
-                    className={clsx(
-                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      chipsData.selectedChip === 5 ? "chip_selected" : ""
-                    )}
-                    onClick={() => onChipClick(5)}
-                    src={chip5Icon}
-                  />
-                  <img
-                    className={clsx(
-                      "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
-                      chipsData.selectedChip === 10 ? "chip_selected" : ""
-                    )}
-                    onClick={() => onChipClick(10)}
-                    src={chip10Icon}
+                    className="w-6 h-fit hover:cursor-pointer"
+                    src={backIcon}
                   />
                   <button className="bg-[#2CB0EE] px-4 h-10 text-primary text-sm font-bold rounded-md uppercase">
                     place bet

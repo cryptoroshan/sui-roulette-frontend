@@ -18,7 +18,8 @@ export default {
         'wallet': '#0D0E0E',
       },
       borderColor: {
-        'primary': '#323232'
+        'primary': '#323232',
+        'secondary': '#303030'
       },
       textColor: {
         'primary': '#FFF',

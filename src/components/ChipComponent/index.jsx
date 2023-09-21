@@ -46,9 +46,6 @@ const ChipComponent = ({ currentItemChips, tdKey, cellClass, chipKey, cell, left
         currentItem={cell}
       />
       <div className={"chipValue"}>
-        <div style={style} className={"chipSum"}>
-          {sum}
-        </div>
       </div>
     </td>
   );
