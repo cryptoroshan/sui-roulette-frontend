@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import clsx from "clsx";
 import { toast } from "react-toastify";
@@ -38,6 +38,8 @@ import soundonIcon from "/imgs/sound-on.png";
 import soundoffIcon from "/imgs/sound-off.png";
 import backIcon from "/imgs/back.png";
 import musicIcon from "/imgs/music.png";
+import disconnectWalletIcon from "/imgs/disconnect wallet.png";
+
 import backgroundAudio from "/sounds/jazz.mp3";
 import ballSpinAudio from "/sounds/ball spin.mp3";
 import chipAudio from "/sounds/chip.mp3";
@@ -61,6 +63,7 @@ const MainPage = () => {
     detectedWallets,
   } = useWallet();
 
+  const wrapperRef = useRef(null);
   const [number, setNumber] = useState({ next: null });
   const [chipsData, setChipsData] = useState({
     selectedChip: null,
@@ -94,6 +97,7 @@ const MainPage = () => {
   const [betsClosing, setBetsClosing] = useState(false);
   const [noMoreBets, setNoMoreBets] = useState(false);
   const [winners, setWinners] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     [...configuredWallets, ...detectedWallets].map((wallet) => {
@@ -111,6 +115,13 @@ const MainPage = () => {
   useEffect(() => {
     if (connected) getUserInfo(account.address);
   }, [connected]);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, [])
 
   useEffect(() => {
     socketServer.open();
@@ -149,6 +160,16 @@ const MainPage = () => {
       console.log(messageList);
     });
   }, []);
+
+  const handleClickOutside = (event) => {
+    try {
+      if (wrapperRef && !wrapperRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const getUserInfo = async (walletAddress_) => {
     setWalletAddress(walletAddress_);
@@ -337,27 +358,53 @@ const MainPage = () => {
                 <p className="text-primary text-sm font-bold">BUY SUI</p>
                 <img className="w-6" src={repeatIcon} />
               </button>
-              <button
-                className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase"
-                onClick={() => {
-                  if (!account?.address && accountCreated === false)
-                    setWalletConnectDialogView(true);
-                  else if (account?.address && accountCreated === false)
-                    setAccountCreateDialogView(true);
-                  else {
-                    setAccountCreated(false);
-                    setAllowWalletConnect(false);
-                    setUsername("");
-                    disconnect();
-                  }
-                }}
-              >
-                {!account?.address && accountCreated === false
-                  ? "connect wallet"
-                  : account?.address && accountCreated === false
-                  ? "create account"
-                  : username}
-              </button>
+              {accountCreated === false ? (
+                <button
+                  className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase"
+                  onClick={() => {
+                    if (!account?.address && accountCreated === false)
+                      setWalletConnectDialogView(true);
+                    else if (account?.address && accountCreated === false)
+                      setAccountCreateDialogView(true);
+                    else {
+                      setAccountCreated(false);
+                      setAllowWalletConnect(false);
+                      setUsername("");
+                      disconnect();
+                    }
+                  }}
+                >
+                  {!account?.address && accountCreated === false
+                    ? "connect wallet"
+                    : account?.address && accountCreated === false
+                    ? "create account"
+                    : username}
+                </button>
+              ) : (
+                <div className="relative font-[Poppins-Regular] text-md text-primary font-bold">
+                  <button
+                    ref={wrapperRef}
+                    className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase"
+                    onClick={() => {
+                      if (showDropdown === true) setShowDropdown(false);
+                      else setShowDropdown(true);
+                    }}
+                  >
+                    {username}
+                  </button>
+                  {showDropdown === true && (
+                    <div className="absolute right-0 my-2 z-10 bg-[#23262a] divide-y divide-gray-600 rounded-xl shadow w-44">
+                      <div className="px-4 py-3 hover:cursor-pointer">
+                        <p>{username}</p>
+                      </div>
+                      <div className="flex gap-2 items-center px-4 py-3 hover:cursor-pointer">
+                        <img className="w-6 h-fit" src={disconnectWalletIcon} />
+                        <p>Disconnect</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           <div className="flex flex-row justify-between items-center px-6 mt-10 2xl:mt-20 gap-10">
