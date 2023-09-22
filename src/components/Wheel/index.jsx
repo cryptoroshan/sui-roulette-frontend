@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import anime from "animejs";
 
 const Wheel = (props) => {
-  const { rouletteData, number, placeBet, betsClosing, noMoreBets, winners } = props;
+  const { rouletteData, number, placeBet, betsClosing, noMoreBets, winners } =
+    props;
 
   const totalNumbers = 38;
   const singleSpinDuration = 10000;
@@ -125,14 +126,22 @@ const Wheel = (props) => {
 
   return (
     <div className="absolute w-[30%] left-[5%] m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
-      <div className="absolute flex flex-col left-0 right-0 top-[42%] text-center text-primary uppercase font-[monumentextended-regular]">
-        <p className="text-[10px] ">
-          games starts in
-        </p>
-        <p className="text-5xl">
-          50
-        </p>
+      {placeBet === true && (
+        <div className="absolute flex flex-col left-0 right-0 top-[43%] text-center text-primary uppercase font-[monumentextended-regular]">
+          <p className="text-[9px]">games starts in</p>
+          <p className="text-5xl">50</p>
+        </div>
+      )}
+      {betsClosing === true && (
+        <div className="absolute flex flex-col left-0 right-0 top-[49%] text-center text-primary uppercase font-[monumentextended-regular]">
+        <p className="text-[9px]">bets closing</p>
       </div>
+      )}
+      {noMoreBets === true && (
+        <div className="absolute flex flex-col left-0 right-0 top-[49%] text-center text-primary uppercase font-[monumentextended-regular]">
+        <p className="text-[9px]">no more bets</p>
+      </div>
+      )}
       <div className="layer-2 absolute w-[63%] 2xl:w-[75%] h-[100%] left-0 right-0 m-auto bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center"></div>
       <div className="ball-container absolute top-0 left-0 w-full h-full will-change-transform rotate-0">
         <div

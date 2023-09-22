@@ -88,7 +88,7 @@ const MainPage = () => {
   const [heroswapDialogview, setHeroswapDialogview] = useState(false);
   const [soundon, setSoundOn] = useState(false);
   const [soundoff, setSoundOff] = useState(true);
-  const [placeBet, setPlaceBet] = useState(false);
+  const [placeBet, setPlaceBet] = useState(true);
   const [betsClosing, setBetsClosing] = useState(false);
   const [noMoreBets, setNoMoreBets] = useState(false);
   const [winners, setWinners] = useState(false);
@@ -118,12 +118,12 @@ const MainPage = () => {
 
       const gameData = JSON.parse(data);
       console.log("------gameData stage--------");
-      console.log(gameData.stage);
+      console.log(gameData);
       setGameData(gameData);
-      // if (gameData.stage === GameStages.NO_MORE_BETS) {
-      //   const ballspin_audio = document.getElementById('ballSpinAudio');
-      //   ballspin_audio.play();
-      // }
+      if (gameData.stage === GameStages.NO_MORE_BETS) {
+        const ballspin_audio = document.getElementById('ballSpinAudio');
+        ballspin_audio.play();
+      }
       if (stage == GameStages.WINNERS - 1) clearBet();
     });
 
