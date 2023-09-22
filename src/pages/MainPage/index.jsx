@@ -153,8 +153,8 @@ const MainPage = () => {
       const _username = data.username;
       const _message = data.message;
       setMessageList((arr) => [
-        ...arr,
         { id: nextId++, username: _username, message: _message },
+        ...arr,
       ]);
       console.log("receive_message");
       console.log(messageList);
