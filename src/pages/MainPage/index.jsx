@@ -92,7 +92,6 @@ const MainPage = () => {
   const [accountCreated, setAccountCreated] = useState(false);
   const [heroswapDialogview, setHeroswapDialogview] = useState(false);
   const [soundon, setSoundOn] = useState(false);
-  const [soundoff, setSoundOff] = useState(true);
   const [musicon, setMusicOn] = useState(true);
   const [placeBet, setPlaceBet] = useState(true);
   const [betsClosing, setBetsClosing] = useState(false);
@@ -122,7 +121,7 @@ const MainPage = () => {
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
-  }, [])
+  }, []);
 
   useEffect(() => {
     socketServer.open();
@@ -367,12 +366,6 @@ const MainPage = () => {
                       setWalletConnectDialogView(true);
                     else if (account?.address && accountCreated === false)
                       setAccountCreateDialogView(true);
-                    else {
-                      setAccountCreated(false);
-                      setAllowWalletConnect(false);
-                      setUsername("");
-                      disconnect();
-                    }
                   }}
                 >
                   {!account?.address && accountCreated === false
@@ -386,24 +379,30 @@ const MainPage = () => {
                   <button
                     ref={wrapperRef}
                     className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase"
-                    onClick={() => {
-                      if (showDropdown === true) setShowDropdown(false);
-                      else setShowDropdown(true);
+                    onClick={()=> {
+                      setShowDropdown(!showDropdown);
                     }}
                   >
                     {username}
                   </button>
-                  {showDropdown === true && (
-                    <div className="absolute right-0 my-2 z-10 bg-[#23262a] divide-y divide-gray-600 rounded-xl shadow w-44">
-                      <div className="px-4 py-3 hover:cursor-pointer">
-                        <p>{username}</p>
-                      </div>
-                      <div className="flex gap-2 items-center px-4 py-3 hover:cursor-pointer">
-                        <img className="w-6 h-fit" src={disconnectWalletIcon} />
-                        <p>Disconnect</p>
-                      </div>
+                  <div className={clsx("absolute right-0 my-2 z-10 bg-[#23262a] divide-y divide-gray-600 rounded-xl shadow w-44", showDropdown === false ? "hidden" : "")}>
+                    <div className="px-4 py-3 hover:cursor-pointer">
+                      <p>{username}</p>
                     </div>
-                  )}
+                    <div
+                      className="flex gap-2 items-center px-4 py-3 hover:cursor-pointer"
+                      onClick={() => {
+                        console.log("-------------------------------disconnect---------------------------")
+                        setAccountCreated(false);
+                        setAllowWalletConnect(false);
+                        setUsername("");
+                        disconnect();
+                      }}
+                    >
+                      <img className="w-6 h-fit" src={disconnectWalletIcon} />
+                      <p>Disconnect</p>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -487,12 +486,10 @@ const MainPage = () => {
                     className="flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer"
                     onClick={() => {
                       if (soundon === true) {
-                        setSoundOff(true);
                         setSoundOn(false);
                         document.getElementById("backgroundAudio").muted = true;
                       } else {
                         setSoundOn(true);
-                        setSoundOff(false);
                         const background_audio =
                           document.getElementById("backgroundAudio");
                         background_audio.muted = false;
@@ -509,15 +506,9 @@ const MainPage = () => {
                   <div
                     className="flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer"
                     onClick={() => {
-                      if (musicon === true) {
-                        setMusicOn(false);
-                        document.getElementById("ballSpinAudio").muted = true;
-                        document.getElementById("chipAudio").muted = true;
-                      } else {
-                        setMusicOn(true);
-                        document.getElementById("ballSpinAudio").muted = false;
-                        document.getElementById("chipAudio").muted = false;
-                      }
+                      setMusicOn(!musicon);
+                      document.getElementById("ballSpinAudio").muted = !document.getElementById("ballSpinAudio").muted;
+                      document.getElementById("chipAudio").muted = !document.getElementById("chipAudio").muted;
                     }}
                   >
                     {musicon === true ? (
@@ -664,7 +655,7 @@ const MainPage = () => {
                   <div className="flex flex-row gap-3">
                     <img className="w-8 h-fit" src={profileIcon} />
                     <div className="flex flex-col">
-                      <p className="text-sm text-primary">coinfipking</p>
+                      <p className="text-sm text-primary">Player10</p>
                       <p className="text-[8px] text-primary">0x36df...6b69</p>
                     </div>
                   </div>
@@ -679,7 +670,7 @@ const MainPage = () => {
                   <div className="flex flex-row gap-3">
                     <img className="w-8 h-fit" src={profileIcon} />
                     <div className="flex flex-col">
-                      <p className="text-sm text-primary">Lividassasin</p>
+                      <p className="text-sm text-primary">Player10</p>
                       <p className="text-[8px] text-primary">0x36df...6b69</p>
                     </div>
                   </div>
@@ -694,7 +685,7 @@ const MainPage = () => {
                   <div className="flex flex-row gap-3">
                     <img className="w-8 h-fit" src={profileIcon} />
                     <div className="flex flex-col">
-                      <p className="text-sm text-primary">Honeywoman</p>
+                      <p className="text-sm text-primary">Player10</p>
                       <p className="text-[8px] text-primary">0x36df...6b69</p>
                     </div>
                   </div>
