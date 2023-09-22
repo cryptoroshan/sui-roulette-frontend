@@ -37,6 +37,7 @@ import heroswap4 from "/imgs/heroswap-4.png";
 import soundonIcon from "/imgs/sound-on.png";
 import soundoffIcon from "/imgs/sound-off.png";
 import backIcon from "/imgs/back.png";
+import musicIcon from "/imgs/music.png";
 import backgroundAudio from "/sounds/jazz.mp3";
 import ballSpinAudio from "/sounds/ball spin.mp3";
 import chipAudio from "/sounds/chip.mp3";
@@ -44,7 +45,7 @@ import chipAudio from "/sounds/chip.mp3";
 const socketServer = io(env.SERVER_URL);
 
 const rouletteWheelNumbers = [
-  0, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6, 21, 33, 16, 4, 23, 35, 14, 2, 0, 28,
+  37, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6, 21, 33, 16, 4, 23, 35, 14, 2, 0, 28,
   9, 26, 30, 11, 7, 20, 32, 17, 5, 22, 34, 15, 3, 24, 36, 13, 1,
 ];
 
@@ -88,6 +89,7 @@ const MainPage = () => {
   const [heroswapDialogview, setHeroswapDialogview] = useState(false);
   const [soundon, setSoundOn] = useState(false);
   const [soundoff, setSoundOff] = useState(true);
+  const [musicon, setMusicOn] = useState(true);
   const [placeBet, setPlaceBet] = useState(true);
   const [betsClosing, setBetsClosing] = useState(false);
   const [noMoreBets, setNoMoreBets] = useState(false);
@@ -120,8 +122,8 @@ const MainPage = () => {
       console.log("------gameData stage--------");
       console.log(gameData);
       setGameData(gameData);
-      if (gameData.stage === GameStages.NO_MORE_BETS) {
-        const ballspin_audio = document.getElementById('ballSpinAudio');
+      if (gameData.stage === GameStages.NO_MORE_BETS && musicon === true) {
+        const ballspin_audio = document.getElementById("ballSpinAudio");
         ballspin_audio.play();
       }
       if (stage == GameStages.WINNERS - 1) clearBet();
@@ -266,8 +268,10 @@ const MainPage = () => {
       selectedChip: chipsData.selectedChip,
       placedChips: currentChips,
     });
-    const chip_audio = document.getElementById("chipAudio");
-    chip_audio.play();
+    if (musicon === true) {
+      const chip_audio = document.getElementById("chipAudio");
+      chip_audio.play();
+    }
   };
 
   const onChipClick = (chip) => {
@@ -424,13 +428,13 @@ const MainPage = () => {
             </div>
             <div className="flex flex-col gap-2 w-full">
               <div className="flex flex-row justify-between w-full items-center">
-                <div className="flex flex-row gap-4 items-center bg-secondary rounded-md px-4 h-10">
-                  <p className="text-sm font-bold text-primary font-[Poppins-Regular]">
-                    Proof of fairness
-                  </p>
-                  <img className="w-6 h-fit" src={codesvgIcon} />
-                </div>
                 <div className="flex flex-row gap-2 items-center h-10">
+                  <div className="flex flex-row gap-4 items-center bg-secondary rounded-md px-4 h-10">
+                    <p className="text-sm font-bold text-primary font-[Poppins-Regular]">
+                      Proof of fairness
+                    </p>
+                    <img className="w-6 h-fit" src={codesvgIcon} />
+                  </div>
                   <div
                     className={clsx(
                       "flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer",
@@ -452,47 +456,68 @@ const MainPage = () => {
                     }}
                   >
                     {soundon === true ? (
-                      <img className="h-6 w-fit" src={soundonIcon} />
+                      <img className="h-5 w-fit" src={soundonIcon} />
                     ) : (
-                      <img className="h-6 w-fit" src={soundoffIcon} />
+                      <img className="h-5 w-fit" src={soundoffIcon} />
                     )}
                   </div>
-                  <div className="flex flex-row gap-4 items-center bg-secondary rounded-lg px-5 py-3 font-[monumentextended-regular]">
-                    <p className="text-md text-primary uppercase">
-                      recent spins
+                  <div
+                    className={clsx(
+                      "flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer",
+                      musicon === true ? "bg-secondary" : ""
+                    )}
+                    onClick={() => {
+                      if (musicon === true) {
+                        setMusicOn(false);
+                        document.getElementById("ballSpinAudio").muted = true;
+                        document.getElementById("chipAudio").muted = true;
+                      } else {
+                        setMusicOn(true);
+                        document.getElementById("ballSpinAudio").muted = false;
+                        document.getElementById("chipAudio").muted = false;
+                      }
+                    }}
+                  >
+                    {musicon === true ? (
+                      <img className="h-5 w-fit" src={musicIcon} />
+                    ) : (
+                      <img className="h-5 w-fit" src={musicIcon} />
+                    )}
+                  </div>
+                </div>
+                <div className="flex flex-row gap-4 items-center bg-secondary rounded-lg px-5 py-3 font-[monumentextended-regular]">
+                  <p className="text-md text-primary uppercase">recent spins</p>
+                  <div className="flex flex-row gap-1">
+                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                      33
                     </p>
-                    <div className="flex flex-row gap-1">
-                      <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                        33
-                      </p>
-                      <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                        18
-                      </p>
-                      <p className="bg-number-green py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                        0
-                      </p>
-                      <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                        11
-                      </p>
-                      <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                        9
-                      </p>
-                      <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                        2
-                      </p>
-                      <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                        10
-                      </p>
-                      <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                        28
-                      </p>
-                      <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                        16
-                      </p>
-                      <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
-                        1
-                      </p>
-                    </div>
+                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                      18
+                    </p>
+                    <p className="bg-number-green py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                      0
+                    </p>
+                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                      11
+                    </p>
+                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                      9
+                    </p>
+                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                      2
+                    </p>
+                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                      10
+                    </p>
+                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                      28
+                    </p>
+                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                      16
+                    </p>
+                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                      1
+                    </p>
                   </div>
                 </div>
               </div>
