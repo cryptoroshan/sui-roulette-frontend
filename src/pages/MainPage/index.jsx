@@ -38,6 +38,7 @@ import soundonIcon from "/imgs/sound-on.png";
 import soundoffIcon from "/imgs/sound-off.png";
 import backIcon from "/imgs/back.png";
 import musicIcon from "/imgs/music.png";
+import musicMuteIcon from "/imgs/mute music.png";
 import disconnectWalletIcon from "/imgs/disconnect wallet.png";
 
 import backgroundAudio from "/sounds/jazz.mp3";
@@ -343,7 +344,7 @@ const MainPage = () => {
         <audio id="chipAudio">
           <source src={chipAudio} type="audio/mp3" />
         </audio>
-        <section className="flex flex-col px-14 pt-8 2xl:pt-12">
+        <section className="flex flex-col px-[4vw] pt-8 2xl:pt-12">
           <div className="flex flex-row justify-between bg-secondary rounded-3xl px-12 py-4 font-[Poppins-Regular]">
             <img className="w-[320px] h-fit my-auto" src={logoIcon} />
             <div className="flex flex-row gap-6 items-center">
@@ -407,7 +408,7 @@ const MainPage = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-row justify-between items-center px-6 mt-10 2xl:mt-20 gap-10">
+          <div className="flex flex-row justify-between items-center mt-10 2xl:mt-20 gap-10">
             <div className="flex flex-col gap-4 font-[monumentextended-regular]">
               <p className="text-md text-primary">MY RECENT SPINS</p>
               <div className="flex flex-col gap-2 px-6 py-6 bg-secondary rounded-lg">
@@ -483,10 +484,7 @@ const MainPage = () => {
                     <img className="w-6 h-fit" src={codesvgIcon} />
                   </div>
                   <div
-                    className={clsx(
-                      "flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer",
-                      soundoff === true ? "bg-secondary" : ""
-                    )}
+                    className="flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer"
                     onClick={() => {
                       if (soundon === true) {
                         setSoundOff(true);
@@ -509,10 +507,7 @@ const MainPage = () => {
                     )}
                   </div>
                   <div
-                    className={clsx(
-                      "flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer",
-                      musicon === true ? "bg-secondary" : ""
-                    )}
+                    className="flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer"
                     onClick={() => {
                       if (musicon === true) {
                         setMusicOn(false);
@@ -528,7 +523,7 @@ const MainPage = () => {
                     {musicon === true ? (
                       <img className="h-5 w-fit" src={musicIcon} />
                     ) : (
-                      <img className="h-5 w-fit" src={musicIcon} />
+                      <img className="h-5 w-fit" src={musicMuteIcon} />
                     )}
                   </div>
                 </div>
@@ -582,7 +577,7 @@ const MainPage = () => {
                   chipsData={chipsData}
                   rouletteData={rouletteWheelNumbers}
                 />
-                <div className="absolute flex flex-row items-center gap-6 left-[45%] top-[77%]">
+                <div className="absolute flex flex-row items-center gap-6 left-[48%] top-[75%]">
                   <div className="flex gap-4">
                     <img
                       className={clsx(
@@ -649,7 +644,7 @@ const MainPage = () => {
                   </button>
                 </div>
               </div>
-              <div className="flex flex-nowrap px-8 py-4 bg-secondary gap-6 rounded-xl font-[monumentextended-regular] text-ellipsis whitespace-nowrap overflow-hidden">
+              <div className="flex flex-row px-8 py-4 bg-secondary gap-6 rounded-xl font-[monumentextended-regular]">
                 <div className="flex flex-row gap-3 items-center min-w-fit">
                   <div className="flex flex-row gap-3">
                     <img className="w-8 h-fit" src={profileIcon} />
@@ -665,7 +660,7 @@ const MainPage = () => {
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="flex flex-row gap-3 items-center min-w-fit">
+                <div className="flex flex-row items-center">
                   <div className="flex flex-row gap-3">
                     <img className="w-8 h-fit" src={profileIcon} />
                     <div className="flex flex-col">
@@ -704,7 +699,7 @@ const MainPage = () => {
                     </div>
                   </div>
                   <div className="w-[2px] h-full bg-[#323232]"></div>
-                  <div className="flex flex-row gap-2 text-sm bg-clip-text text-transparent bg-gradient-to-r from-[#C92A34]">
+                  <div className="flex flex-row gap-2 text-sm text-number-red">
                     <p>-</p>
                     <p>5</p>
                     <p>SUI</p>

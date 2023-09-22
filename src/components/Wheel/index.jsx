@@ -125,21 +125,21 @@ const Wheel = (props) => {
   }, [number]);
 
   return (
-    <div className="absolute w-[30%] left-[5%] m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
+    <div className="absolute w-[33%] 2xl:w-[30%] left-[3vw] 2xl:left-[5vw] m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
       {placeBet === true && (
         <div className="absolute flex flex-col left-0 right-0 top-[43%] text-center text-primary uppercase font-[monumentextended-regular]">
-          <p className="text-[9px]">games starts in</p>
-          <p className="text-5xl">50</p>
+          <p className="text-[7px] 2xl:text-[9px]">games starts in</p>
+          <p className="text-4xl 2xl:text-5xl">50</p>
         </div>
       )}
       {betsClosing === true && (
         <div className="absolute flex flex-col left-0 right-0 top-[49%] text-center text-primary uppercase font-[monumentextended-regular]">
-        <p className="text-[9px]">bets closing</p>
+        <p className="text-[7px] 2xl:text-[9px]">bets closing</p>
       </div>
       )}
       {noMoreBets === true && (
         <div className="absolute flex flex-col left-0 right-0 top-[49%] text-center text-primary uppercase font-[monumentextended-regular]">
-        <p className="text-[9px]">no more bets</p>
+        <p className="text-[7px] 2xl:text-[9px]">no more bets</p>
       </div>
       )}
       <div className="layer-2 absolute w-[63%] 2xl:w-[75%] h-[100%] left-0 right-0 m-auto bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center"></div>
