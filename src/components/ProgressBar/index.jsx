@@ -4,10 +4,8 @@ import anime from "animejs";
 import { GameStages } from "../../constant/global";
 
 const ProgressBar = ({ stage, maxDuration, currentDuration }) => {
-  console.log(stage);
   useEffect(() => {
     let duration = (maxDuration - currentDuration) * 1000;
-    console.log(duration);
     anime({
       targets: "progress",
       value: [0, 100],

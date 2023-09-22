@@ -21,8 +21,6 @@ const Chip = (props) => {
   }
 
   if (currentItemChips !== undefined) {
-    console.log("asdfsafdsafsafd");
-    console.log(currentItemChips);
     let total = 0;
     let chipData = currentItemChips;
     const chipsImgs = [];
@@ -78,7 +76,6 @@ const Chip = (props) => {
         };
         style.left = "-7px";
         style.top = "-25px";
-        console.log("chipsImgs", chipsImgs);
         chipsImgs.push(
           <div
             key={key}

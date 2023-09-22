@@ -21,9 +21,6 @@ let other_black = { type: ValueType.BLACK };
 
 const Board = (props) => {
   const { chipsData, rouletteData } = props;
-  console.log("-------------render-----------");
-  console.log(chipsData.placedChips);
-  console.log("-------------end-----------");
   const [currentItemChips_1_12, setCurrentItemChips_1_12] = useState(chipsData.placedChips.get(other_1_12));
   const [currentItemChips_2_12, setCurrentItemChips_2_12] = useState(chipsData.placedChips.get(other_2_12));
   const [currentItemChips_3_12, setCurrentItemChips_3_12] = useState(chipsData.placedChips.get(other_3_12));
@@ -443,12 +440,6 @@ const Board = (props) => {
                       let tdKey = "td_" + cell.type + "_" + chipKeyValue;
                       let chipKey = "chip_" + cell.type + "_" + chipKeyValue;
                       let currentItemChips = chipsData.placedChips.get(cell);
-                      if (cell.type === ValueType.NUMBERS_1R_12) {
-                        console.log("currentItemChips--------------");
-                        console.log(chipsData.placedChips);
-                        console.log(currentItemChips);
-                        console.log(cell);
-                      }
 
                       return (
                         <ChipComponent

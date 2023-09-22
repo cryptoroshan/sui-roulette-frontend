@@ -1,5 +1,11 @@
 import { useEffect } from "react";
+import clsx from "clsx";
 import anime from "animejs";
+
+import greenBackground from "/imgs/green-background.png";
+import redBackground from "/imgs/red-background.png";
+
+const red_number = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
 
 const Wheel = (props) => {
   const { rouletteData, number, placeBet, betsClosing, noMoreBets, winners } =
@@ -117,9 +123,7 @@ const Wheel = (props) => {
   useEffect(() => {
     var nextNubmer = number.next;
     if (nextNubmer != null && nextNubmer !== "") {
-      console.log("spinWheel");
       var nextNumberInt = parseInt(nextNubmer);
-      console.log(nextNumberInt);
       spinWheel(nextNumberInt);
     }
   }, [number]);
@@ -134,13 +138,19 @@ const Wheel = (props) => {
       )}
       {betsClosing === true && (
         <div className="absolute flex flex-col left-0 right-0 top-[49%] text-center text-primary uppercase font-[monumentextended-regular]">
-        <p className="text-[7px] 2xl:text-[9px]">bets closing</p>
-      </div>
+          <p className="text-[7px] 2xl:text-[9px]">bets closing</p>
+        </div>
       )}
       {noMoreBets === true && (
         <div className="absolute flex flex-col left-0 right-0 top-[49%] text-center text-primary uppercase font-[monumentextended-regular]">
-        <p className="text-[7px] 2xl:text-[9px]">no more bets</p>
-      </div>
+          <p className="text-[7px] 2xl:text-[9px]">no more bets</p>
+        </div>
+      )}
+      {winners === true && (
+        <div className="absolute flex flex-col left-0 right-0 top-[45%] text-center text-primary uppercase font-[monumentextended-regular]">
+          <img className={clsx("absolute left-0 right-0 m-auto top-0 bottom-0 w-1/2", red_number.includes(number.next) === false ? "hidden" : "")} src={(number.next === 0 || number.next === 37) ? greenBackground : redBackground} />
+          <p className="z-50 text-4xl 2xl:text-5xl">{number.next === 37 ? "00" : number.next}</p>
+        </div>
       )}
       <div className="layer-2 absolute w-[63%] 2xl:w-[75%] h-[100%] left-0 right-0 m-auto bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center"></div>
       <div className="ball-container absolute top-0 left-0 w-full h-full will-change-transform rotate-0">

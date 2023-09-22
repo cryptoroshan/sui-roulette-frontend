@@ -134,8 +134,18 @@ const MainPage = () => {
       console.log(gameData);
       setGameData(gameData);
       if (gameData.stage === GameStages.NO_MORE_BETS && musicon === true) {
+        setPlaceBet(false);
+        setNoMoreBets(true);
         const ballspin_audio = document.getElementById("ballSpinAudio");
         ballspin_audio.play();
+      }
+      else if (gameData.stage === GameStages.WINNERS) {
+        setNoMoreBets(false);
+        setWinners(true);
+      }
+      else if(gameData.stage === GameStages.PLACE_BET) {
+        setWinners(false);
+        setPlaceBet(true);
       }
       if (stage == GameStages.WINNERS - 1) clearBet();
     });
@@ -156,8 +166,6 @@ const MainPage = () => {
         { id: nextId++, username: _username, message: _message },
         ...arr,
       ]);
-      console.log("receive_message");
-      console.log(messageList);
     });
   }, []);
 
@@ -260,7 +268,6 @@ const MainPage = () => {
   const clearBet = () => {};
 
   const onCellClick = (item) => {
-    console.log("------------onCellClick-----------");
     // if (stage !== GameStages.PLACE_BET) return;
     let currentChips = chipsData.placedChips;
     let currentChipIterator = currentChips.values();
@@ -392,7 +399,6 @@ const MainPage = () => {
                     <div
                       className="flex gap-2 items-center px-4 py-3 hover:cursor-pointer"
                       onClick={() => {
-                        console.log("-------------------------------disconnect---------------------------")
                         setAccountCreated(false);
                         setAllowWalletConnect(false);
                         setUsername("");

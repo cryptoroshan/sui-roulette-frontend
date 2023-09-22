@@ -1,7 +1,6 @@
 import Chip from "../Chip";
 
 const ChipComponent = ({ currentItemChips, tdKey, cellClass, chipKey, cell, leftMin, leftMax, topMin, topMax, rowSpan, colSpan, onCellClick }) => {
-  console.log(currentItemChips);
   let sum = "";
   if (currentItemChips !== undefined) {
     if (currentItemChips.sum !== 0) {
@@ -31,8 +30,6 @@ const ChipComponent = ({ currentItemChips, tdKey, cellClass, chipKey, cell, left
       rowSpan={rowSpan}
       colSpan={colSpan}
       onClick={() => {
-        console.log("chipcomponent")
-        console.log(cell);
         onCellClick(cell);
       }}
     >
