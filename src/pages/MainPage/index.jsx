@@ -88,6 +88,10 @@ const MainPage = () => {
   const [heroswapDialogview, setHeroswapDialogview] = useState(false);
   const [soundon, setSoundOn] = useState(false);
   const [soundoff, setSoundOff] = useState(true);
+  const [placeBet, setPlaceBet] = useState(false);
+  const [betsClosing, setBetsClosing] = useState(false);
+  const [noMoreBets, setNoMoreBets] = useState(false);
+  const [winners, setWinners] = useState(false);
 
   useEffect(() => {
     [...configuredWallets, ...detectedWallets].map((wallet) => {
@@ -420,41 +424,38 @@ const MainPage = () => {
             </div>
             <div className="flex flex-col gap-2 w-full">
               <div className="flex flex-row justify-between w-full items-center">
-                <div className="flex flex-row gap-4 items-center bg-secondary rounded-md px-4 py-1.5">
+                <div className="flex flex-row gap-4 items-center bg-secondary rounded-md px-4 h-10">
                   <p className="text-sm font-bold text-primary font-[Poppins-Regular]">
                     Proof of fairness
                   </p>
                   <img className="w-6 h-fit" src={codesvgIcon} />
                 </div>
-                <div className="flex flex-row gap-2 items-center h-14">
+                <div className="flex flex-row gap-2 items-center h-10">
                   <div
                     className={clsx(
                       "flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer",
                       soundoff === true ? "bg-secondary" : ""
                     )}
                     onClick={() => {
-                      setSoundOff(true);
-                      setSoundOn(false);
-                      document.getElementById("backgroundAudio").muted = true;
+                      if (soundon === true) {
+                        setSoundOff(true);
+                        setSoundOn(false);
+                        document.getElementById("backgroundAudio").muted = true;
+                      } else {
+                        setSoundOn(true);
+                        setSoundOff(false);
+                        const background_audio =
+                          document.getElementById("backgroundAudio");
+                        background_audio.muted = false;
+                        background_audio.play();
+                      }
                     }}
                   >
-                    <img className="h-8 w-fit" src={soundoffIcon} />
-                  </div>
-                  <div
-                    className={clsx(
-                      "flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer",
-                      soundon === true ? "bg-secondary" : ""
+                    {soundon === true ? (
+                      <img className="h-6 w-fit" src={soundonIcon} />
+                    ) : (
+                      <img className="h-6 w-fit" src={soundoffIcon} />
                     )}
-                    onClick={() => {
-                      setSoundOn(true);
-                      setSoundOff(false);
-                      const background_audio =
-                        document.getElementById("backgroundAudio");
-                      background_audio.muted = false;
-                      background_audio.play();
-                    }}
-                  >
-                    <img className="h-8 w-fit" src={soundonIcon} />
                   </div>
                   <div className="flex flex-row gap-4 items-center bg-secondary rounded-lg px-5 py-3 font-[monumentextended-regular]">
                     <p className="text-md text-primary uppercase">
@@ -496,13 +497,20 @@ const MainPage = () => {
                 </div>
               </div>
               <div className="relative h-[calc(60vh)] 2xl:h-[calc(50vh)] bg-[url('/imgs/roulette-background.png')] bg-contain bg-no-repeat bg-center">
-                <Wheel rouletteData={rouletteWheelNumbers} number={number} />
+                <Wheel
+                  rouletteData={rouletteWheelNumbers}
+                  number={number}
+                  placeBet={placeBet}
+                  betsClosing={betsClosing}
+                  noMoreBets={noMoreBets}
+                  winners={winners}
+                />
                 <Board
                   onCellClick={onCellClick}
                   chipsData={chipsData}
                   rouletteData={rouletteWheelNumbers}
                 />
-                <div className="absolute flex flex-row items-center gap-6 left-[50%] top-[75%]">
+                <div className="absolute flex flex-row items-center gap-6 left-[45%] top-[77%]">
                   <div className="flex gap-4">
                     <img
                       className={clsx(

@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import anime from "animejs";
 
 const Wheel = (props) => {
-  const { rouletteData, number } = props;
+  const { rouletteData, number, placeBet, betsClosing, noMoreBets, winners } = props;
 
   const totalNumbers = 38;
   const singleSpinDuration = 10000;
-  const singleRotationDegree = 360/38;
+  const singleRotationDegree = 360 / 38;
   let lastNumber = 0;
 
   const getRouletteIndexFromNumber = (number) => {
@@ -23,7 +23,7 @@ const Wheel = (props) => {
     return singleRotationDegree * index;
   };
 
-    // rotateTo randomizes the end outcome of the wheel
+  // rotateTo randomizes the end outcome of the wheel
   // so it doesn't only end at 0 at the top
   const getRandomEndRotation = (minNumberOfSpins, maxNumberOfSpins) => {
     var rotateTo = anime.random(
@@ -78,13 +78,13 @@ const Wheel = (props) => {
     anime.set([".layer-2"], {
       rotate: function () {
         return lastNumberRotation;
-      }
+      },
     });
     // reset zero
     anime.set(".ball-container", {
       rotate: function () {
         return 0;
-      }
+      },
     });
 
     anime({
@@ -96,7 +96,7 @@ const Wheel = (props) => {
       easing: `cubicBezier(${bezier.join(",")})`,
       complete: function (anim) {
         lastNumber = currentNumber;
-      }
+      },
     });
     // aniamte ball
     anime({
@@ -105,11 +105,11 @@ const Wheel = (props) => {
         { value: 0, duration: 2000 },
         { value: 20, duration: 1000 },
         { value: 25, duration: 900 },
-        { value: 50, duration: 1000 }
+        { value: 50, duration: 1000 },
       ],
       rotate: [{ value: ballEndRotation, duration: singleSpinDuration }],
       loop: 1,
-      easing: `cubicBezier(${bezier.join(",")})`
+      easing: `cubicBezier(${bezier.join(",")})`,
     });
   }
 
@@ -123,17 +123,24 @@ const Wheel = (props) => {
     }
   }, [number]);
 
-
   return (
-    <div className="absolute w-[35%] left-0 right-1/2 m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
+    <div className="absolute w-[30%] left-[5%] m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
+      <div className="absolute flex flex-col left-0 right-0 top-[42%] text-center text-primary uppercase font-[monumentextended-regular]">
+        <p className="text-[10px] ">
+          games starts in
+        </p>
+        <p className="text-5xl">
+          50
+        </p>
+      </div>
       <div className="layer-2 absolute w-[63%] 2xl:w-[75%] h-[100%] left-0 right-0 m-auto bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center"></div>
       <div className="ball-container absolute top-0 left-0 w-full h-full will-change-transform rotate-0">
         <div
-          className="ball absolute w-[14px] h-[14px] rounded-[7px] top-[50%] left-1/2 m-[-7px] will-change-transform translate-y-[-116px]"
+          className="ball absolute w-[14px] h-[14px] rounded-[7px] top-[55%] left-1/2 m-[-7px] will-change-transform translate-y-[-116px]"
           style={{
             background: "#fff radial-gradient(circle at 5px 5px, #fff, #444)",
             boxShadow: "1px 1px 4px #000",
-            transform: "translate(0, -163.221px)"
+            transform: "translate(0, -163.221px)",
           }}
         ></div>
       </div>
