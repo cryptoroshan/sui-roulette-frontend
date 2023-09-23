@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import clsx from "clsx";
 import classNames from "classnames";
 
 import ChipComponent from "../ChipComponent/index.jsx";
@@ -389,8 +390,8 @@ const Board = (props) => {
   };
 
   return (
-    <div className="absolute w-[550px] h-[270px] top-[15%] 2xl:top-[15%] right-[3vw] 2xl:right-[5vw] bg-[url('/imgs/roulette-board.png')] bg-contain bg-no-repeat bg-center">
-      <div className="grid h-[60%] mt-7 ml-4 mr-3">
+    <div className="absolute w-[400px] h-[200px] 2xl:w-[550px] 2xl:h-[270px] top-[10%] right-[3vw] 2xl:right-[2vw] bg-[url('/imgs/roulette-board.png')] bg-contain bg-no-repeat bg-center">
+      <div className="grid h-[60%] mt-5 2xl:mt-7 ml-4 mr-3">
         <table>
           <tbody>
             {numbers.map((item, index) => {
@@ -501,7 +502,7 @@ const Board = (props) => {
           </tbody>
         </table>
       </div>
-      <div className="grid w-auto h-[42%] ml-4 mr-3 -mt-3 mb-2">
+      <div className="grid w-auto h-[42%] ml-4 mr-3 -mt-2 2xl:-mt-3 mb-2">
         <table>
           <tbody>
             <tr>

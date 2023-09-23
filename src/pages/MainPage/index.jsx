@@ -350,7 +350,7 @@ const MainPage = () => {
         <audio id="chipAudio">
           <source src={chipAudio} type="audio/mp3" />
         </audio>
-        <section className="flex flex-col px-[4vw] pt-8 2xl:pt-12">
+        <section className="flex flex-col px-[1vw] 2xl:px-[3vw] pt-8 2xl:pt-12">
           <div className="flex flex-row justify-between bg-secondary rounded-3xl px-12 py-4 font-[Poppins-Regular]">
             <img className="w-[320px] h-fit my-auto" src={logoIcon} />
             <div className="flex flex-row gap-6 items-center">
@@ -413,10 +413,10 @@ const MainPage = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-row justify-between items-center mt-10 2xl:mt-20 gap-10">
+          <div className="flex flex-row justify-between items-center mt-10 2xl:mt-20 gap-4">
             <div className="flex flex-col gap-4 font-[monumentextended-regular]">
               <p className="text-md text-primary">MY RECENT SPINS</p>
-              <div className="flex flex-col gap-2 px-6 py-6 bg-secondary rounded-lg">
+              <div className="flex flex-col gap-2 px-3 py-3 bg-secondary rounded-lg">
                 <div className="flex flex-row items-center px-4 py-3 gap-4 bg-[#0E0E0E] rounded-lg">
                   <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
                     33
@@ -479,7 +479,7 @@ const MainPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-2 w-full">
+            <div className="flex flex-col gap-2 w-[55vw] 2xl:w-[1063px]">
               <div className="flex flex-row justify-between w-full items-center">
                 <div className="flex flex-row gap-2 items-center h-10">
                   <div className="flex flex-row gap-4 items-center bg-secondary rounded-md px-4 h-10">
@@ -539,28 +539,28 @@ const MainPage = () => {
                     <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
                       11
                     </p>
-                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
                       9
                     </p>
-                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
                       2
                     </p>
-                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
                       10
                     </p>
-                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
                       28
                     </p>
-                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
                       16
                     </p>
-                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
                       1
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="relative h-[calc(60vh)] 2xl:h-[calc(50vh)] bg-[url('/imgs/roulette-background.png')] bg-contain bg-no-repeat bg-center">
+              <div className="relative min-h-[320px] 2xl:min-h-[435px] bg-[url('/imgs/roulette-background.png')] bg-contain bg-no-repeat bg-center">
                 <Wheel
                   rouletteData={rouletteWheelNumbers}
                   number={number}
@@ -574,11 +574,11 @@ const MainPage = () => {
                   chipsData={chipsData}
                   rouletteData={rouletteWheelNumbers}
                 />
-                <div className="absolute flex flex-row items-center gap-6 left-[48%] top-[75%]">
-                  <div className="flex gap-4">
+                <div className="absolute flex flex-row items-center gap-4 2xl:gap-6 left-[47%] 2xl:left-[48%] top-[75%]">
+                  <div className="flex gap-2 2xl:gap-4">
                     <img
                       className={clsx(
-                        "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        "w-10 h-fit 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
                         chipsData.selectedChip === 1 ? "chip_selected" : ""
                       )}
                       onClick={() => onChipClick(1)}
@@ -586,7 +586,7 @@ const MainPage = () => {
                     />
                     <img
                       className={clsx(
-                        "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        "w-10 h-fit 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
                         chipsData.selectedChip === 2 ? "chip_selected" : ""
                       )}
                       onClick={() => onChipClick(2)}
@@ -594,7 +594,7 @@ const MainPage = () => {
                     />
                     <img
                       className={clsx(
-                        "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        "w-10 h-fit 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
                         chipsData.selectedChip === 5 ? "chip_selected" : ""
                       )}
                       onClick={() => onChipClick(5)}
@@ -602,7 +602,7 @@ const MainPage = () => {
                     />
                     <img
                       className={clsx(
-                        "w-12 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        "w-10 h-fit 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
                         chipsData.selectedChip === 10 ? "chip_selected" : ""
                       )}
                       onClick={() => onChipClick(10)}
@@ -610,10 +610,10 @@ const MainPage = () => {
                     />
                   </div>
                   <img
-                    className="w-6 h-fit hover:cursor-pointer"
+                    className="w-5 2xl:w-6 h-fit hover:cursor-pointer"
                     src={backIcon}
                   />
-                  <button className="bg-[#2CB0EE] px-4 h-10 text-primary text-sm font-bold rounded-md uppercase">
+                  <button className="bg-[#2CB0EE] px-2 2xl:px-4 h-10 text-primary text-sm font-bold rounded-md uppercase">
                     place bet
                   </button>
                 </div>
@@ -657,7 +657,7 @@ const MainPage = () => {
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="flex flex-row items-center">
+                <div className="flex flex-row gap-3 items-center">
                   <div className="flex flex-row gap-3">
                     <img className="w-8 h-fit" src={profileIcon} />
                     <div className="flex flex-col">
@@ -687,7 +687,7 @@ const MainPage = () => {
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="flex flex-row gap-3 items-center min-w-fit">
+                <div className="hidden 2xl:flex flex-row gap-3 items-center min-w-fit">
                   <div className="flex flex-row gap-3">
                     <img className="w-8 h-fit" src={profileIcon} />
                     <div className="flex flex-col">
@@ -704,7 +704,7 @@ const MainPage = () => {
                 </div>
               </div>
             </div>
-            <div className="hidden 2xl:flex flex-col gap-2">
+            <div className="hidden xl:flex flex-col gap-2">
               <p className="text-md text-primary uppercase font-[monumentextended-regular]">
                 live chat
               </p>
