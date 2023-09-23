@@ -415,9 +415,9 @@ const MainPage = () => {
           </div>
           <div className="flex flex-row justify-between items-center mt-10 2xl:mt-20 gap-4">
             <div className="flex flex-col gap-4 font-[monumentextended-regular]">
-              <p className="text-md text-primary">MY RECENT SPINS</p>
+              <p className="text-sm 2xl:text-md text-primary">MY RECENT SPINS</p>
               <div className="flex flex-col gap-2 px-3 py-3 bg-secondary rounded-lg">
-                <div className="flex flex-row items-center px-4 py-3 gap-4 bg-[#0E0E0E] rounded-lg">
+                <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
                   <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
                     33
                   </p>
@@ -427,7 +427,7 @@ const MainPage = () => {
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="flex flex-row items-center px-4 py-3 gap-4 bg-[#0E0E0E] rounded-lg">
+                <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
                   <p className="bg-number-green py text-md leading-7 text-primary rounded-xl w-10 text-center">
                     0
                   </p>
@@ -437,7 +437,7 @@ const MainPage = () => {
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="flex flex-row items-center px-4 py-3 gap-4 bg-[#0E0E0E] rounded-lg">
+                <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
                   <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
                     18
                   </p>
@@ -447,7 +447,7 @@ const MainPage = () => {
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="flex flex-row items-center px-4 py-3 gap-4 bg-[#0E0E0E] rounded-lg">
+                <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
                   <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
                     33
                   </p>
@@ -457,7 +457,7 @@ const MainPage = () => {
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="flex flex-row items-center px-4 py-3 gap-4 bg-[#0E0E0E] rounded-lg">
+                <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
                   <p className="bg-number-green py text-md leading-7 text-primary rounded-xl w-10 text-center">
                     0
                   </p>
@@ -467,7 +467,7 @@ const MainPage = () => {
                     <p>SUI</p>
                   </div>
                 </div>
-                <div className="flex flex-row items-center px-4 py-3 gap-4 bg-[#0E0E0E] rounded-lg">
+                <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
                   <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
                     18
                   </p>
@@ -705,10 +705,10 @@ const MainPage = () => {
               </div>
             </div>
             <div className="hidden xl:flex flex-col gap-2">
-              <p className="text-md text-primary uppercase font-[monumentextended-regular]">
+              <p className="text-sm 2xl:text-md text-primary uppercase font-[monumentextended-regular]">
                 live chat
               </p>
-              <div className="flex flex-col justify-between gap-4 px-6 py-4 bg-secondary border border-[#4E6670] rounded-lg h-[450px] w-[300px]">
+              <div className="flex flex-col justify-between gap-4 px-6 py-4 bg-secondary border border-[#4E6670] rounded-lg h-[450px] w-[250px] 2xl:w-[300px]">
                 <div className="flex flex-col gap-4 font-[Poppins-Regular] max-h-[calc(35vh)] overflow-y-scroll">
                   {messageList.map((message) => {
                     return (
