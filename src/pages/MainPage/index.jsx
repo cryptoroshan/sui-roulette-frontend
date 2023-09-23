@@ -91,8 +91,8 @@ const MainPage = () => {
   const [suietWalletInstalled, setSuietWalletInstalled] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
   const [heroswapDialogview, setHeroswapDialogview] = useState(false);
-  const [soundon, setSoundOn] = useState(false);
-  const [musicon, setMusicOn] = useState(true);
+  const [soundon, setSoundOn] = useState(true);
+  const [musicon, setMusicOn] = useState(false);
   const [placeBet, setPlaceBet] = useState(true);
   const [betsClosing, setBetsClosing] = useState(false);
   const [noMoreBets, setNoMoreBets] = useState(false);
@@ -133,7 +133,7 @@ const MainPage = () => {
       console.log("------gameData stage--------");
       console.log(gameData);
       setGameData(gameData);
-      if (gameData.stage === GameStages.NO_MORE_BETS && musicon === true) {
+      if (gameData.stage === GameStages.NO_MORE_BETS && soundon === true) {
         setPlaceBet(false);
         setNoMoreBets(true);
         const ballspin_audio = document.getElementById("ballSpinAudio");
@@ -296,7 +296,7 @@ const MainPage = () => {
       selectedChip: chipsData.selectedChip,
       placedChips: currentChips,
     });
-    if (musicon === true) {
+    if (soundon === true) {
       const chip_audio = document.getElementById("chipAudio");
       chip_audio.play();
     }
@@ -491,16 +491,9 @@ const MainPage = () => {
                   <div
                     className="flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer"
                     onClick={() => {
-                      if (soundon === true) {
-                        setSoundOn(false);
-                        document.getElementById("backgroundAudio").muted = true;
-                      } else {
-                        setSoundOn(true);
-                        const background_audio =
-                          document.getElementById("backgroundAudio");
-                        background_audio.muted = false;
-                        background_audio.play();
-                      }
+                      setSoundOn(!soundon);
+                      document.getElementById("ballSpinAudio").muted = !document.getElementById("ballSpinAudio").muted;
+                      document.getElementById("chipAudio").muted = !document.getElementById("chipAudio").muted;
                     }}
                   >
                     {soundon === true ? (
@@ -512,9 +505,16 @@ const MainPage = () => {
                   <div
                     className="flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer"
                     onClick={() => {
-                      setMusicOn(!musicon);
-                      document.getElementById("ballSpinAudio").muted = !document.getElementById("ballSpinAudio").muted;
-                      document.getElementById("chipAudio").muted = !document.getElementById("chipAudio").muted;
+                      if (musicon === true) {
+                        setMusicOn(false);
+                        document.getElementById("backgroundAudio").muted = true;
+                      } else {
+                        setMusicOn(true);
+                        const background_audio =
+                          document.getElementById("backgroundAudio");
+                        background_audio.muted = false;
+                        background_audio.play();
+                      }
                     }}
                   >
                     {musicon === true ? (

@@ -390,7 +390,7 @@ const Board = (props) => {
   };
 
   return (
-    <div className="absolute w-[400px] h-[200px] 2xl:w-[550px] 2xl:h-[270px] top-[10%] right-[3vw] 2xl:right-[2vw] bg-[url('/imgs/roulette-board.png')] bg-contain bg-no-repeat bg-center">
+    <div className="absolute w-[400px] h-[200px] 2xl:w-[550px] 2xl:h-[270px] top-[10%] right-[3vw] bg-[url('/imgs/roulette-board.png')] bg-contain bg-no-repeat bg-center">
       <div className="grid h-[60%] mt-5 2xl:mt-7 ml-4 mr-3">
         <table>
           <tbody>
