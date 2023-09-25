@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import clsx from "clsx";
 import classNames from "classnames";
 
 import ChipComponent from "../ChipComponent/index.jsx";
@@ -11,9 +10,9 @@ let other_1_12 = { type: ValueType.NUMBERS_1_12, valueSplit: [1, 2, 3, 4, 5, 6, 
 let other_2_12 = { type: ValueType.NUMBERS_2_12 };
 let other_3_12 = { type: ValueType.NUMBERS_3_12 };
 let other_1_18 = { type: ValueType.NUMBERS_1_18 };
-let other_1R_12 = { type: ValueType.NUMBERS_1R_12 };
-let other_2R_12 = { type: ValueType.NUMBERS_2R_12 };
-let other_3R_12 = { type: ValueType.NUMBERS_3R_12 };
+// let other_1R_12 = { type: ValueType.NUMBERS_1R_12 };
+// let other_2R_12 = { type: ValueType.NUMBERS_2R_12 };
+// let other_3R_12 = { type: ValueType.NUMBERS_3R_12 };
 let other_19_36 = { type: ValueType.NUMBERS_19_36 };
 let other_even = { type: ValueType.EVEN };
 let other_odd = { type: ValueType.ODD };

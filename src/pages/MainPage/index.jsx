@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import clsx from "clsx";
 import { toast } from "react-toastify";
-import { ConnectButton, useWallet, addressEllipsis } from "@suiet/wallet-kit";
+import { useWallet } from "@suiet/wallet-kit";
 import "@suiet/wallet-kit/style.css";
 
 import { getRequest, postRequest } from "../../components/api/apiRequests";
@@ -138,12 +138,10 @@ const MainPage = () => {
         setNoMoreBets(true);
         const ballspin_audio = document.getElementById("ballSpinAudio");
         ballspin_audio.play();
-      }
-      else if (gameData.stage === GameStages.WINNERS) {
+      } else if (gameData.stage === GameStages.WINNERS) {
         setNoMoreBets(false);
         setWinners(true);
-      }
-      else if(gameData.stage === GameStages.PLACE_BET) {
+      } else if (gameData.stage === GameStages.PLACE_BET) {
         setWinners(false);
         setPlaceBet(true);
       }
@@ -386,13 +384,18 @@ const MainPage = () => {
                   <button
                     ref={wrapperRef}
                     className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase"
-                    onClick={()=> {
+                    onClick={() => {
                       setShowDropdown(!showDropdown);
                     }}
                   >
                     {username}
                   </button>
-                  <div className={clsx("absolute right-0 my-2 z-10 bg-[#23262a] divide-y divide-gray-600 rounded-xl shadow w-44", showDropdown === false ? "hidden" : "")}>
+                  <div
+                    className={clsx(
+                      "absolute right-0 my-2 z-10 bg-[#23262a] divide-y divide-gray-600 rounded-xl shadow w-44",
+                      showDropdown === false ? "hidden" : ""
+                    )}
+                  >
                     <div className="px-4 py-3 hover:cursor-pointer">
                       <p>{username}</p>
                     </div>
@@ -415,7 +418,9 @@ const MainPage = () => {
           </div>
           <div className="flex flex-row justify-between items-center mt-10 2xl:mt-20 gap-4">
             <div className="flex flex-col gap-4 font-[monumentextended-regular]">
-              <p className="text-sm 2xl:text-md text-primary">MY RECENT SPINS</p>
+              <p className="text-sm 2xl:text-md text-primary">
+                MY RECENT SPINS
+              </p>
               <div className="flex flex-col gap-2 px-3 py-3 bg-secondary rounded-lg">
                 <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
                   <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
@@ -492,8 +497,10 @@ const MainPage = () => {
                     className="flex items-center h-full px-3 rounded-md hover:bg-secondary border border-secondary hover:cursor-pointer"
                     onClick={() => {
                       setSoundOn(!soundon);
-                      document.getElementById("ballSpinAudio").muted = !document.getElementById("ballSpinAudio").muted;
-                      document.getElementById("chipAudio").muted = !document.getElementById("chipAudio").muted;
+                      document.getElementById("ballSpinAudio").muted =
+                        !document.getElementById("ballSpinAudio").muted;
+                      document.getElementById("chipAudio").muted =
+                        !document.getElementById("chipAudio").muted;
                     }}
                   >
                     {soundon === true ? (

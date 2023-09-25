@@ -5,7 +5,9 @@ import anime from "animejs";
 import greenBackground from "/imgs/green-background.png";
 import redBackground from "/imgs/red-background.png";
 
-const red_number = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
+const red_number = [
+  1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36,
+];
 
 const Wheel = (props) => {
   const { rouletteData, number, placeBet, betsClosing, noMoreBets, winners } =
@@ -80,6 +82,9 @@ const Wheel = (props) => {
     var ballEndRotation =
       getBallNumberOfRotations(wheelMinNumberOfSpins, wheelMaxNumberOfSpins) +
       getBallEndRotation(zeroFromEndRotation, currentNumber);
+    console.log(endRotation)
+    console.log(zeroFromEndRotation)
+    console.log(ballEndRotation)
 
     // reset to the last number
     anime.set([".layer-2"], {
@@ -101,7 +106,7 @@ const Wheel = (props) => {
       },
       duration: singleSpinDuration, // random duration
       easing: `cubicBezier(${bezier.join(",")})`,
-      complete: function (anim) {
+      complete: function () {
         lastNumber = currentNumber;
       },
     });
