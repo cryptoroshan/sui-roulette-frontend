@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import classNames from "classnames";
 
 const Chip = (props) => {
@@ -80,7 +81,7 @@ const Chip = (props) => {
           <div
             key={key}
             style={style}
-            className={getChipClasses(currentChip)}
+            className={clsx(getChipClasses(currentChip), "w-8 h-8 xl:w-9 xl:h-9 2xl:w-10 2xl:h-10")}
           ></div>
         );
       }

@@ -17,6 +17,7 @@ import LoadingLayout from "../../components/LoadingLayout";
 import { GameStages } from "../../constant/global";
 
 import logoIcon from "/imgs/logo.png";
+import smallLogoIcon from "/sui roulette.png";
 import repeatIcon from "/imgs/repeat.png";
 import suiIcon from "/imgs/sui.png";
 import codesvgIcon from "/imgs/code-svgrepo.png";
@@ -349,7 +350,7 @@ const MainPage = () => {
           <source src={chipAudio} type="audio/mp3" />
         </audio>
         <section className="flex flex-col px-[3vw] pt-8 2xl:pt-12">
-          <div className="flex flex-row justify-between bg-secondary rounded-3xl px-12 py-4 font-[Poppins-Regular]">
+          <div className="hidden xl:flex flex-row justify-between bg-secondary rounded-3xl px-12 py-4 font-[Poppins-Regular]">
             <img className="w-[320px] h-fit my-auto" src={logoIcon} />
             <div className="flex flex-row gap-6 items-center">
               <div className="flex flex-row gap-4 items-center">
@@ -416,8 +417,68 @@ const MainPage = () => {
               )}
             </div>
           </div>
+          <div className="md:hidden flex flex-row justify-between bg-secondary rounded-xl px-2 py-4 font-[Poppins-Regular]">
+            <img className="w-10 h-fit my-auto" src={smallLogoIcon} />
+            <div className="flex flex-row gap-2 items-center">
+              <div className="flex flex-row gap-2 items-center">
+                <img className="w-6 h-fit" src={suiIcon} />
+                <p className="text-primary text-md font-bold">$0.4982</p>
+              </div>
+              {accountCreated === false ? (
+                <button
+                  className="bg-wallet-color px-2 h-10 text-primary text-xs font-bold rounded-md uppercase"
+                  onClick={() => {
+                    if (!account?.address && accountCreated === false)
+                      setWalletConnectDialogView(true);
+                    else if (account?.address && accountCreated === false)
+                      setAccountCreateDialogView(true);
+                  }}
+                >
+                  {!account?.address && accountCreated === false
+                    ? "connect wallet"
+                    : account?.address && accountCreated === false
+                    ? "create account"
+                    : username}
+                </button>
+              ) : (
+                <div className="relative font-[Poppins-Regular] text-md text-primary font-bold">
+                  <button
+                    ref={wrapperRef}
+                    className="bg-wallet-color px-6 h-10 text-primary text-sm font-bold rounded-md uppercase"
+                    onClick={() => {
+                      setShowDropdown(!showDropdown);
+                    }}
+                  >
+                    {username}
+                  </button>
+                  <div
+                    className={clsx(
+                      "absolute right-0 my-2 z-10 bg-[#23262a] divide-y divide-gray-600 rounded-xl shadow w-44",
+                      showDropdown === false ? "hidden" : ""
+                    )}
+                  >
+                    <div className="px-4 py-3 hover:cursor-pointer">
+                      <p>{username}</p>
+                    </div>
+                    <div
+                      className="flex gap-2 items-center px-4 py-3 hover:cursor-pointer"
+                      onClick={() => {
+                        setAccountCreated(false);
+                        setAllowWalletConnect(false);
+                        setUsername("");
+                        disconnect();
+                      }}
+                    >
+                      <img className="w-6 h-fit" src={disconnectWalletIcon} />
+                      <p>Disconnect</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
           <div className="flex flex-row justify-between items-center mt-10 2xl:mt-20 gap-4">
-            <div className="flex flex-col gap-4 font-[monumentextended-regular]">
+            <div className="hidden xl:flex flex-col gap-4 font-[monumentextended-regular]">
               <p className="text-sm 2xl:text-md text-primary">
                 MY RECENT SPINS
               </p>
@@ -484,9 +545,9 @@ const MainPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-2 w-[55vw] 2xl:w-[1063px]">
+            <div className="flex flex-col gap-2 w-full xl:w-[55vw] 2xl:w-[1063px]">
               <div className="flex flex-row justify-between w-full items-center">
-                <div className="flex flex-row gap-2 items-center h-10">
+                <div className="hidden xl:flex flex-row gap-2 items-center h-10">
                   <div className="flex flex-row gap-4 items-center bg-secondary rounded-md px-4 h-10">
                     <p className="text-sm font-bold text-primary font-[Poppins-Regular]">
                       Proof of fairness
@@ -531,8 +592,10 @@ const MainPage = () => {
                     )}
                   </div>
                 </div>
-                <div className="flex flex-row gap-4 items-center bg-secondary rounded-lg px-5 py-3 font-[monumentextended-regular]">
-                  <p className="text-md text-primary uppercase">recent spins</p>
+                <div className="flex flex-row w-full xl:w-auto justify-between xl:gap-4 items-center bg-secondary rounded-lg px-2 xl:px-5 py-3 font-[monumentextended-regular]">
+                  <p className="text-xs xl:text-md text-primary uppercase">
+                    recent spins
+                  </p>
                   <div className="flex flex-row gap-1">
                     <p className="bg-number-red py-1 text-sm text-primary rounded-xl w-10 text-center">
                       33
@@ -567,7 +630,67 @@ const MainPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="relative min-h-[320px] 2xl:min-h-[435px] bg-[url('/imgs/roulette-background.png')] bg-contain bg-no-repeat bg-center">
+              <div className="hidden xl:block relative min-h-[320px] 2xl:min-h-[435px] bg-[url('/imgs/roulette-background.png')] bg-contain bg-no-repeat bg-center">
+                <div className="absolute xl:w-[300px] xl:h-[300px] 2xl:w-[350px] 2xl:h-[350px]">
+                  <Wheel
+                    rouletteData={rouletteWheelNumbers}
+                    number={number}
+                    placeBet={placeBet}
+                    betsClosing={betsClosing}
+                    noMoreBets={noMoreBets}
+                    winners={winners}
+                  />
+                </div>
+                <Board
+                  onCellClick={onCellClick}
+                  chipsData={chipsData}
+                  rouletteData={rouletteWheelNumbers}
+                />
+                <div className="absolute flex flex-row items-center gap-4 2xl:gap-6 left-[47%] 2xl:left-[48%] top-[75%]">
+                  <div className="flex gap-2 2xl:gap-4">
+                    <img
+                      className={clsx(
+                        "w-10 h-fit 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        chipsData.selectedChip === 1 ? "chip_selected" : ""
+                      )}
+                      onClick={() => onChipClick(1)}
+                      src={chip1Icon}
+                    />
+                    <img
+                      className={clsx(
+                        "w-10 h-fit 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        chipsData.selectedChip === 2 ? "chip_selected" : ""
+                      )}
+                      onClick={() => onChipClick(2)}
+                      src={chip2Icon}
+                    />
+                    <img
+                      className={clsx(
+                        "w-10 h-fit 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        chipsData.selectedChip === 5 ? "chip_selected" : ""
+                      )}
+                      onClick={() => onChipClick(5)}
+                      src={chip5Icon}
+                    />
+                    <img
+                      className={clsx(
+                        "w-10 h-fit 2xl:w-14 cursor-pointer hover:scale-[1.2] hover:transition hover:duration-500 hover:ease-out rounded-full",
+                        chipsData.selectedChip === 10 ? "chip_selected" : ""
+                      )}
+                      onClick={() => onChipClick(10)}
+                      src={chip10Icon}
+                    />
+                  </div>
+                  <img
+                    className="w-5 2xl:w-6 h-fit hover:cursor-pointer"
+                    src={backIcon}
+                  />
+                  <button className="bg-[#2CB0EE] px-2 2xl:px-4 h-10 text-primary text-sm font-bold rounded-md uppercase">
+                    place bet
+                  </button>
+                </div>
+              </div>
+              <div className="xl:hidden w-[350px] h-[350px] m-auto">
                 <Wheel
                   rouletteData={rouletteWheelNumbers}
                   number={number}
@@ -576,12 +699,14 @@ const MainPage = () => {
                   noMoreBets={noMoreBets}
                   winners={winners}
                 />
+              </div>
+              <div className="xl:hidden relative min-h-[400px] bg-[url('/imgs/mobile-roulette-background.png')] bg-contain bg-no-repeat bg-center">
                 <Board
                   onCellClick={onCellClick}
                   chipsData={chipsData}
                   rouletteData={rouletteWheelNumbers}
                 />
-                <div className="absolute flex flex-row items-center gap-4 2xl:gap-6 left-[47%] 2xl:left-[48%] top-[75%]">
+                <div className="absolute flex flex-row items-center justify-center gap-4 2xl:gap-6 left-0 right-0 bottom-20">
                   <div className="flex gap-2 2xl:gap-4">
                     <img
                       className={clsx(
@@ -648,7 +773,7 @@ const MainPage = () => {
                   </button>
                 </div>
               </div>
-              <div className="flex flex-row px-8 py-4 bg-secondary gap-6 rounded-xl font-[monumentextended-regular]">
+              <div className="hidden flex flex-row px-8 py-4 bg-secondary gap-6 rounded-xl font-[monumentextended-regular]">
                 <div className="flex flex-row gap-3 items-center min-w-fit">
                   <div className="flex flex-row gap-3">
                     <img className="w-8 h-fit" src={profileIcon} />
@@ -987,7 +1112,7 @@ const MainPage = () => {
               </div>
             </div>
             <iframe
-              className="absolute left-1/2 right-0 bottom-0 m-auto w-[40%] h-[90%]"
+              className="absolute left-1/2 right-0 xl:top-8 2xl:top-10 m-auto w-[40%] h-full"
               src="https://heroswap.com/widget?affiliateName=heroswap"
             />
           </div>

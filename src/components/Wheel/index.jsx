@@ -134,33 +134,33 @@ const Wheel = (props) => {
   }, [number]);
 
   return (
-    <div className="absolute w-[33%] 2xl:w-[30%] left-[3vw] m-auto top-0 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
+    <div className="relative w-full h-full xl:w-[90%] 2xl:w-[90%] left-0 right-0 xl:right-full xl:left-[3vw] m-auto top-6 xl:top-3 2xl:top-12 bottom-0 bg-[url('/imgs/roulette-outline.png')] bg-contain bg-no-repeat bg-center">
       {placeBet === true && (
-        <div className="absolute flex flex-col left-0 right-0 top-[43%] text-center text-primary uppercase font-[monumentextended-regular]">
-          <p className="text-[6px] 2xl:text-[8px]">games starts in</p>
-          <p className="text-3xl 2xl:text-5xl">50</p>
+        <div className="absolute flex flex-col left-0 right-0 top-[40%] xl:top-[43%] text-center text-primary uppercase font-[monumentextended-regular]">
+          <p className="text-[8px] xl:text-[6px] 2xl:text-[8px]">games starts in</p>
+          <p className="text-5xl xl:text-3xl 2xl:text-5xl">50</p>
         </div>
       )}
       {betsClosing === true && (
         <div className="absolute flex flex-col left-0 right-0 top-[49%] text-center text-primary uppercase font-[monumentextended-regular]">
-          <p className="text-[6px] 2xl:text-[8px]">bets closing</p>
+          <p className="text-[9px] xl:text-[6px] 2xl:text-[8px]">bets closing</p>
         </div>
       )}
       {noMoreBets === true && (
         <div className="absolute flex flex-col left-0 right-0 top-[49%] text-center text-primary uppercase font-[monumentextended-regular]">
-          <p className="text-[6px] 2xl:text-[8px]">no more bets</p>
+          <p className="text-[9px] xl:text-[6px] 2xl:text-[8px]">no more bets</p>
         </div>
       )}
       {winners === true && (
         <div className="absolute flex flex-col left-0 right-0 top-[45%] text-center text-primary uppercase font-[monumentextended-regular]">
           <img className={clsx("absolute left-0 right-0 m-auto top-0 bottom-0 w-1/2", red_number.includes(number.next) === false ? "hidden" : "")} src={(number.next === 0 || number.next === 37) ? greenBackground : redBackground} />
-          <p className="z-50 text-3xl 2xl:text-5xl">{number.next === 37 ? "00" : number.next}</p>
+          <p className="z-50 text-5xl xl:text-3xl 2xl:text-5xl">{number.next === 37 ? "00" : number.next}</p>
         </div>
       )}
       <div className="layer-2 absolute w-[65%] 2xl:w-[75%] h-[100%] left-0 right-0 m-auto bg-[url('/imgs/roulette-numberpad.png')] bg-contain bg-no-repeat bg-center"></div>
       <div className="ball-container absolute top-0 left-0 w-full h-full will-change-transform rotate-0">
         <div
-          className="ball absolute w-[10px] h-[10px] 2xl:w-[14px] 2xl:h-[14px] rounded-[7px] top-[68%] 2xl:top-[57%] left-1/2 m-[-7px] will-change-transform translate-y-[-116px]"
+          className="ball absolute w-[10px] h-[10px] 2xl:w-[14px] 2xl:h-[14px] rounded-[7px] top-[61%] xl:top-[68%] 2xl:top-[57%] left-1/2 m-[-7px] will-change-transform translate-y-[-116px]"
           style={{
             background: "#fff radial-gradient(circle at 5px 5px, #fff, #444)",
             boxShadow: "1px 1px 4px #000",

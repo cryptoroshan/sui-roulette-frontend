@@ -8,17 +8,12 @@ const Footer = () => {
     <footer className="bg-footer font-[Poppins-Regular]">
       <section className="flex flex-col w-3/4 2xl:w-2/3 mx-auto">
         <div className="flex flex-row justify-between px-16 py-16 w-full">
-          <div className="flex flex-col gap-2">
-            <img className="w-56 h-fit" src={footerLogo} />
-            <p className="text-sm text-secondary">
-              SuiRoulette.com is a DeSuiLabs product.
-            </p>
-          </div>
+          <img className="w-56 h-fit" src={footerLogo} />
           <div className="flex flex-col gap-5">
             <p className="text-sm text-primary">Platform</p>
             <div className="flex flex-col gap-3">
               <p className="text-sm text-secondary">Provability Explained</p>
-              <p className="text-sm text-secondary">Source Code</p>
+              <p className="text-sm text-secondary">Smart Contract</p>
             </div>
           </div>
           <div className="flex flex-col gap-5">
@@ -37,7 +32,11 @@ const Footer = () => {
               <a href="https://twitter.com/" target="_blank" rel="noreferrer">
                 <img className="w-6" src={twitterIcon} />
               </a>
-              <a href="https://mail.google.com/" target="_blank" rel="noreferrer">
+              <a
+                href="https://mail.google.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <img className="w-6" src={mailIcon} />
               </a>
             </div>

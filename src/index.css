@@ -42,7 +42,7 @@
 
 div.chip-1-placed {
   background:url('/imgs/chip-1.png') no-repeat;
-  background-size:  40px 40px;
+  background-size: contain;
  
   transform: scale(0.6) !important;
   border-radius: 100%;
@@ -50,7 +50,7 @@ div.chip-1-placed {
 
 div.chip-2-placed {
   background:url('/imgs/chip-2.png') no-repeat;
-  background-size:  40px 40px;
+  background-size: contain;
  
   transform: scale(0.6) !important;
   border-radius: 100%;
@@ -58,7 +58,7 @@ div.chip-2-placed {
 
 div.chip-5-placed {
   background:url('/imgs/chip-5.png') no-repeat;
-  background-size:  40px 40px;
+  background-size: contain;
  
   transform: scale(0.6) !important;
   border-radius: 100%;
@@ -66,7 +66,7 @@ div.chip-5-placed {
 
 div.chip-10-placed {
   background:url('/imgs/chip-10.png') no-repeat;
-  background-size:  40px 40px;
+  background-size: contain;
  
   transform: scale(0.6) !important;
   border-radius: 100%;
@@ -74,8 +74,6 @@ div.chip-10-placed {
 
 .chipValueImage { 
   position: absolute;
-  width: 40px;
-  height:40px;
   animation-name: pulse;
   animation-duration: 500ms;
   animation-timing-function: ease-out;
