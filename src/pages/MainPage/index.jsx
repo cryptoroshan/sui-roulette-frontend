@@ -348,7 +348,7 @@ const MainPage = () => {
         <audio id="chipAudio">
           <source src={chipAudio} type="audio/mp3" />
         </audio>
-        <section className="flex flex-col px-[1vw] 2xl:px-[3vw] pt-8 2xl:pt-12">
+        <section className="flex flex-col px-[3vw] pt-8 2xl:pt-12">
           <div className="flex flex-row justify-between bg-secondary rounded-3xl px-12 py-4 font-[Poppins-Regular]">
             <img className="w-[320px] h-fit my-auto" src={logoIcon} />
             <div className="flex flex-row gap-6 items-center">
@@ -423,7 +423,7 @@ const MainPage = () => {
               </p>
               <div className="flex flex-col gap-2 px-3 py-3 bg-secondary rounded-lg">
                 <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
-                  <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                  <p className="bg-number-red py-1 text-sm text-primary rounded-xl w-10 text-center">
                     33
                   </p>
                   <div className="flex flex-row gap-2 text-md text-number-green">
@@ -433,7 +433,7 @@ const MainPage = () => {
                   </div>
                 </div>
                 <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
-                  <p className="bg-number-green py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                  <p className="bg-number-green py-1 text-sm text-primary rounded-xl w-10 text-center">
                     0
                   </p>
                   <div className="flex flex-row gap-2 text-md text-number-red">
@@ -443,7 +443,7 @@ const MainPage = () => {
                   </div>
                 </div>
                 <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
-                  <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                  <p className="bg-number-black py-1 text-sm text-primary rounded-xl w-10 text-center">
                     18
                   </p>
                   <div className="flex flex-row gap-2 text-md text-number-green">
@@ -453,7 +453,7 @@ const MainPage = () => {
                   </div>
                 </div>
                 <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
-                  <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                  <p className="bg-number-red py-1 text-sm text-primary rounded-xl w-10 text-center">
                     33
                   </p>
                   <div className="flex flex-row gap-2 text-md text-number-green">
@@ -463,7 +463,7 @@ const MainPage = () => {
                   </div>
                 </div>
                 <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
-                  <p className="bg-number-green py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                  <p className="bg-number-green py-1 text-sm text-primary rounded-xl w-10 text-center">
                     0
                   </p>
                   <div className="flex flex-row gap-2 text-md text-number-red">
@@ -473,7 +473,7 @@ const MainPage = () => {
                   </div>
                 </div>
                 <div className="flex flex-row items-center px-4 py-3 gap-2 bg-[#0E0E0E] rounded-lg">
-                  <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                  <p className="bg-number-black py-1 text-sm text-primary rounded-xl w-10 text-center">
                     18
                   </p>
                   <div className="flex flex-row gap-2 text-md text-number-green">
@@ -534,34 +534,34 @@ const MainPage = () => {
                 <div className="flex flex-row gap-4 items-center bg-secondary rounded-lg px-5 py-3 font-[monumentextended-regular]">
                   <p className="text-md text-primary uppercase">recent spins</p>
                   <div className="flex flex-row gap-1">
-                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="bg-number-red py-1 text-sm text-primary rounded-xl w-10 text-center">
                       33
                     </p>
-                    <p className="bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="bg-number-black py-1 text-sm text-primary rounded-xl w-10 text-center">
                       18
                     </p>
-                    <p className="bg-number-green py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="bg-number-green py-1 text-sm text-primary rounded-xl w-10 text-center">
                       0
                     </p>
-                    <p className="bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="bg-number-red py-1 text-sm text-primary rounded-xl w-10 text-center">
                       11
                     </p>
-                    <p className="hidden 2xl:block bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-red py-1 text-sm text-primary rounded-xl w-10 text-center">
                       9
                     </p>
-                    <p className="hidden 2xl:block bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-black py-1 text-sm text-primary rounded-xl w-10 text-center">
                       2
                     </p>
-                    <p className="hidden 2xl:block bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-black py-1 text-sm text-primary rounded-xl w-10 text-center">
                       10
                     </p>
-                    <p className="hidden 2xl:block bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-black py-1 text-sm text-primary rounded-xl w-10 text-center">
                       28
                     </p>
-                    <p className="hidden 2xl:block bg-number-black py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-black py-1 text-sm text-primary rounded-xl w-10 text-center">
                       16
                     </p>
-                    <p className="hidden 2xl:block bg-number-red py text-md leading-7 text-primary rounded-xl w-10 text-center">
+                    <p className="hidden 2xl:block bg-number-red py-1 text-sm text-primary rounded-xl w-10 text-center">
                       1
                     </p>
                   </div>
