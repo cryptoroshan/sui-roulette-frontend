@@ -41,6 +41,7 @@ import backIcon from "/imgs/back.png";
 import musicIcon from "/imgs/music.png";
 import musicMuteIcon from "/imgs/mute music.png";
 import disconnectWalletIcon from "/imgs/disconnect wallet.png";
+import walletIcon from "/imgs/wallet.png";
 
 import backgroundAudio from "/sounds/jazz.mp3";
 import ballSpinAudio from "/sounds/ball spin.mp3";
@@ -92,6 +93,7 @@ const MainPage = () => {
   const [martianWalletInstalled, setMartianWalletInstalled] = useState(false);
   const [suietWalletInstalled, setSuietWalletInstalled] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
+  const [walletBalance, setWalletBalance] = useState("0.00");
   const [heroswapDialogview, setHeroswapDialogview] = useState(false);
   const [soundon, setSoundOn] = useState(true);
   const [musicon, setMusicOn] = useState(false);
@@ -115,7 +117,8 @@ const MainPage = () => {
   }, [detectedWallets]);
 
   useEffect(() => {
-    if (connected) getUserInfo(account.address);
+    console.log(account)
+    if (connected && account !== undefined) getUserInfo(account.address);
   }, [connected]);
 
   useEffect(() => {
@@ -361,6 +364,10 @@ const MainPage = () => {
         <section className="flex flex-col px-[3vw] pt-8 2xl:pt-12">
           <div className="hidden xl:flex flex-row justify-between bg-secondary rounded-3xl px-12 py-4 font-[Poppins-Regular]">
             <img className="w-[320px] h-fit my-auto" src={logoIcon} />
+            <div className="flex items-center gap-8 px-4 h-10 rounded-md bg-[#0B0B0B] border border-primary">
+              <img className="w-6 h-fit" src={walletIcon} />
+              <p className="text-primary text-md font-bold">0.00 SUI</p>
+            </div>
             <div className="flex flex-row gap-6 items-center">
               <div className="flex flex-row gap-4 items-center">
                 <img className="w-6 h-fit" src={suiIcon} />
