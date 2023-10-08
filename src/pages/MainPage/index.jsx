@@ -66,6 +66,7 @@ const MainPage = () => {
   } = useWallet();
 
   const wrapperRef = useRef(null);
+  const chatRef = useRef(null);
   const [number, setNumber] = useState({ next: null });
   const [chipsData, setChipsData] = useState({
     selectedChip: null,
@@ -162,11 +163,19 @@ const MainPage = () => {
       const _username = data.username;
       const _message = data.message;
       setMessageList((arr) => [
-        { id: nextId++, username: _username, message: _message },
         ...arr,
+        { id: nextId++, username: _username, message: _message },
       ]);
     });
   }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageList]);
+
+  const scrollToBottom = () => {
+    chatRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }
 
   const handleClickOutside = (event) => {
     try {
@@ -841,7 +850,7 @@ const MainPage = () => {
                 live chat
               </p>
               <div className="flex flex-col justify-between gap-4 px-6 py-4 bg-secondary border border-[#4E6670] rounded-lg h-[450px] w-[250px] 2xl:w-[300px]">
-                <div className="flex flex-col gap-4 font-[Poppins-Regular] max-h-[calc(35vh)] overflow-y-scroll">
+                <div className="flex flex-col gap-4 font-[Poppins-Regular] max-h-[calc(35vh)] overflow-y-auto">
                   {messageList.map((message) => {
                     return (
                       <div key={message.id} className="flex flex-col gap-4">
@@ -874,6 +883,7 @@ const MainPage = () => {
                       </div>
                     );
                   })}
+                  <div ref={chatRef}></div>
                 </div>
                 <div className="relative">
                   <input
@@ -1029,7 +1039,7 @@ const MainPage = () => {
               <img className="w-[320px] h-fit mt-16" src={logoIcon} />
               <div className="flex flex-col px-24 gap-1 w-full pt-4">
                 <p className="text-sm text-[#CFCFCF]">
-                  Nickname *(can be changed later)
+                  Nickname *(can't be changed later)
                 </p>
                 <input
                   type="text"
